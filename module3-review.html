@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 3 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .code-example h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .code-example pre {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #4A90E2;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔗</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 3 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Model Context Protocol (MCP)</h2>
+                <p>This review guide covers the key concepts from Module 3. Use it to reinforce your understanding of MCP - the universal standard for AI tool integration. Master these concepts to pass your checkpoint quiz and advance your integration architecture skills.</p>
+            </div>
+
+            <!-- The N×M Problem -->
+            <div class="concept-section">
+                <div class="concept-title">The N×M Problem MCP Solves</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Before MCP</h4>
+                        <ul>
+                            <li>• 3 AI platforms (Claude, ChatGPT, Gemini)</li>
+                            <li>• 10 data sources (databases, docs, etc.)</li>
+                            <li>• Required: 30 custom integrations (3 × 10)</li>
+                            <li>• Each needs custom code for both sides</li>
+                            <li>• Duplicate effort, ongoing maintenance</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>With MCP</h4>
+                        <ul>
+                            <li>• 3 AI platforms implement MCP client (once)</li>
+                            <li>• 10 data sources implement MCP server (once)</li>
+                            <li>• Total: 13 integrations (3 + 10)</li>
+                            <li>• Universal standard interface</li>
+                            <li>• Build once, works everywhere</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The USB-C Analogy</h4>
+                    <p>Think of MCP like USB-C for AI integration:</p>
+                    <ul>
+                        <li>Before USB-C: Every device needed its own proprietary cable</li>
+                        <li>After USB-C: One universal connector works with any device</li>
+                        <li>Before MCP: Every AI-data combination needed custom code</li>
+                        <li>After MCP: One standard interface works across platforms</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="concept-section">
+                <div class="concept-title">Client-Server Architecture</div>
+                
+                <div class="steps-box">
+                    <h4>Three Layers</h4>
+                    <ol>
+                        <li><strong>MCP Host (The Application):</strong> AI-powered application users interact with (Claude Desktop, ChatGPT, Cursor, VS Code). Manages multiple client connections.</li>
+                        <li><strong>MCP Client (The Protocol Handler):</strong> Translator that sits between AI and external tools. Converts AI requests to MCP protocol messages, sends to servers, translates responses back. Built into or added to host application.</li>
+                        <li><strong>MCP Server (The Tool Provider):</strong> Lightweight program that exposes specific capabilities (GitHub server, Slack server, database server). Provides tools, resources, and prompts to clients.</li>
+                    </ol>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Embassy Analogy</h4>
+                    <ul>
+                        <li><strong>You:</strong> The AI application</li>
+                        <li><strong>Embassy staff:</strong> MCP Clients (they speak both languages)</li>
+                        <li><strong>Foreign officials:</strong> MCP Servers (they have the information you need)</li>
+                    </ul>
+                    <p>You don't speak the foreign language directly. Embassy staff (MCP Client) translates your requests, gets information from officials (MCP Server), and translates it back to you.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Communication Flow</h4>
+                    <p>User → Host Application → MCP Client → MCP Server → Data Source/Tool</p>
+                    <p>Standard Protocol (JSON-RPC 2.0) used throughout</p>
+                </div>
+            </div>
+
+            <!-- Three Core Capabilities -->
+            <div class="concept-section">
+                <div class="concept-title">The Three Core Capabilities</div>
+                
+                <div class="concept-box">
+                    <h4>1. Tools (Actions AI Can Perform)</h4>
+                    <p><strong>What they are:</strong> Actual functions that perform actions on external systems</p>
+                    <p><strong>Examples:</strong> create_support_ticket, search_database, send_email, update_calendar, commit_code</p>
+                    <p><strong>How they work:</strong> Each tool has defined input parameters, returns structured output, AI decides when to use based on user request</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>2. Resources (Data AI Can Access)</h4>
+                    <p><strong>What they are:</strong> Information the server manages that AI can read</p>
+                    <p><strong>Examples:</strong> File contents, database records, API responses, document contents, configuration data</p>
+                    <p><strong>How they work:</strong> Typically read-only access, structured data AI can process, no action required</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>3. Prompts (Templates for Common Tasks)</h4>
+                    <p><strong>What they are:</strong> Pre-defined prompt templates that guide AI for common workflows</p>
+                    <p><strong>Examples:</strong> "Analyze customer feedback," "Generate monthly report," "Code review checklist"</p>
+                    <p><strong>How they work:</strong> Server provides template structure, AI fills in with current data, makes complex workflows repeatable</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Claude Skills</h4>
+                        <ul>
+                            <li>• Instructions that guide AI behavior</li>
+                            <li>• Live entirely within Claude</li>
+                            <li>• You create and manage them</li>
+                            <li>• Only work in Claude</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>MCP Tools & Prompts</h4>
+                        <ul>
+                            <li>• Actions AI can take in real world</li>
+                            <li>• Connect to external systems</li>
+                            <li>• Server provides and manages them</li>
+                            <li>• Work across all AI platforms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Key Distinction</h4>
+                    <p><strong>Skills = Instructions for the AI</strong></p>
+                    <p><strong>MCP Tools = Actions the AI can take in the real world</strong></p>
+                </div>
+            </div>
+
+            <!-- Transport Mechanisms -->
+            <div class="concept-section">
+                <div class="concept-title">Transport Mechanisms</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>stdio (Standard Input/Output)</h4>
+                        <ul>
+                            <li>• For local servers on your machine</li>
+                            <li>• Lightweight and simple</li>
+                            <li>• Development tools, file access</li>
+                            <li>• Personal productivity</li>
+                            <li>• Security through isolation</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>HTTP with SSE / Streamable HTTP</h4>
+                        <ul>
+                            <li>• For remote servers over network</li>
+                            <li>• Shared resources, cloud services</li>
+                            <li>• Team collaboration</li>
+                            <li>• Enterprise deployments</li>
+                            <li>• Centralized management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Decision Principle</h4>
+                    <p><strong>Local servers use stdio, remote servers use HTTP.</strong></p>
+                    <p>The protocol is transport-agnostic - the package contents (MCP messages) are the same, only the delivery method changes.</p>
+                </div>
+            </div>
+
+            <!-- Cross-Platform Adoption -->
+            <div class="concept-section">
+                <div class="concept-title">Why Cross-Platform Adoption Matters</div>
+                
+                <div class="concept-box">
+                    <h4>Rapid Industry Adoption</h4>
+                    <ul>
+                        <li><strong>November 2024:</strong> Anthropic releases MCP as open source</li>
+                        <li><strong>March 2025:</strong> OpenAI officially adopts MCP across ChatGPT</li>
+                        <li><strong>April 2025:</strong> Google DeepMind confirms MCP support for Gemini</li>
+                        <li><strong>Microsoft:</strong> Built MCP servers and infrastructure, created comprehensive course</li>
+                        <li><strong>February 2025:</strong> 1,000+ open-source MCP servers created</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why This Signals Importance</h4>
+                    <p>When competing AI companies (Anthropic, OpenAI, Google) all adopt the same standard:</p>
+                    <ul>
+                        <li>Genuine industry consensus (rare for competitors)</li>
+                        <li>Long-term viability (won't disappear)</li>
+                        <li>Reduced risk of standard becoming obsolete</li>
+                        <li>Growing ecosystem of tools and servers</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Practical Value</h4>
+                    <p>Build one MCP server for your internal documentation. Developers using Cursor, product managers using ChatGPT, and support team using Claude can all access it without separate integrations.</p>
+                </div>
+            </div>
+
+            <!-- Security Model -->
+            <div class="concept-section">
+                <div class="concept-title">Security Model</div>
+                
+                <div class="concept-box">
+                    <h4>Core Principle: Nothing By Default</h4>
+                    <p>MCP follows a zero-trust approach where nothing is exposed or allowed unless explicitly configured.</p>
+                    <ul>
+                        <li>No tools available unless you configure them</li>
+                        <li>No data accessible unless you grant permission</li>
+                        <li>No actions possible without approval settings</li>
+                        <li>API keys stay on your infrastructure</li>
+                    </ul>
+                    <p><strong>This is fundamentally different from "open by default" systems.</strong> MCP starts locked down and you explicitly open what's needed.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Where API Keys Stay</h4>
+                    <p><strong>Critical security feature:</strong> API keys stay on the MCP server, not exposed to AI providers.</p>
+                    <ul>
+                        <li>Users authenticate to the MCP server, not to the AI platform</li>
+                        <li>Your database credentials never get sent to Anthropic, OpenAI, or Google</li>
+                        <li>They remain in your infrastructure, controlled by your security policies</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Permission Levels</h4>
+                    <ul>
+                        <li><strong>Tool-level:</strong> Read vs. write operations clearly separated, each tool explicitly configured</li>
+                        <li><strong>Resource access:</strong> Granular control over what data AI can access, filter by sensitivity</li>
+                        <li><strong>User approval:</strong> Configurable - can require approval before execution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Decision Framework -->
+            <div class="concept-section">
+                <div class="concept-title">When to Use MCP</div>
+                
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use MCP When:</h4>
+                        <ul>
+                            <li>• Need cross-platform compatibility</li>
+                            <li>• Standard integrations already exist</li>
+                            <li>• Building internal tools for multiple teams</li>
+                            <li>• Long-term maintenance matters</li>
+                            <li>• Want vendor independence</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Consider Alternatives When:</h4>
+                        <ul>
+                            <li>• Immediate deadline with zero MCP knowledge</li>
+                            <li>• Highly specialized, proprietary integration</li>
+                            <li>• Simple, one-off task</li>
+                            <li>• Performance-critical, low-latency needs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Build vs. Buy -->
+            <div class="concept-section">
+                <div class="concept-title">Build vs. Buy MCP Servers</div>
+                
+                <div class="concept-box">
+                    <h4>The Principle</h4>
+                    <p><strong>Default to existing servers for standard integrations (80% of use cases).</strong></p>
+                    <p>Build custom only when:</p>
+                    <ul>
+                        <li>The system is proprietary to your company</li>
+                        <li>No adequate community or official server exists</li>
+                        <li>The investment is justified by usage volume or strategic importance</li>
+                        <li>You have resources to maintain it long-term</li>
+                    </ul>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use Existing Servers</h4>
+                        <ul>
+                            <li>• Slack, GitHub, Google Drive, databases</li>
+                            <li>• Well-tested, maintained by vendors</li>
+                            <li>• Security reviewed, production-ready</li>
+                            <li>• Faster time to value</li>
+                            <li>• Free and open source</li>
+                        </ul>
+                    </div>
+                    <div class="good-card">
+                        <h4>✅ Build Custom When:</h4>
+                        <ul>
+                            <li>• Internal proprietary systems</li>
+                            <li>• Legacy systems with unique patterns</li>
+                            <li>• Business logic specific to you</li>
+                            <li>• Sensitive systems needing custom security</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Hybrid Approach (Most Common)</h4>
+                    <p>Use standard servers for common tools (Slack, GitHub, databases). Build custom servers for proprietary systems (internal CRM, transaction systems). Balance velocity with control.</p>
+                </div>
+            </div>
+
+            <!-- Real-World Servers -->
+            <div class="concept-section">
+                <div class="concept-title">Real-World MCP Servers</div>
+                
+                <div class="concept-box">
+                    <h4>Enterprise Systems (Official & Production-Ready)</h4>
+                    <ul>
+                        <li><strong>Slack:</strong> Channel management, message history, workflow automation</li>
+                        <li><strong>Google Drive:</strong> File search, sharing, version control, content access</li>
+                        <li><strong>GitHub:</strong> Repository operations, pull requests, issue management</li>
+                        <li><strong>PostgreSQL:</strong> Database operations with read-only safety by default</li>
+                        <li><strong>Stripe:</strong> Payment processing, invoice generation, refund handling</li>
+                        <li><strong>Supabase:</strong> Backend platform with database operations and edge functions</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Finding MCP Servers</h4>
+                    <ul>
+                        <li>Search GitHub for "mcp-server"</li>
+                        <li>Check https://github.com/modelcontextprotocol/servers</li>
+                        <li>Review company official integrations</li>
+                        <li>Browse MCP community discussions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Platform Support -->
+            <div class="concept-section">
+                <div class="concept-title">Cross-Platform Support</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>AI Platforms</h4>
+                        <ul>
+                            <li><strong>Claude:</strong> Native MCP in Desktop and Code</li>
+                            <li><strong>ChatGPT:</strong> Developer Mode, Agents SDK</li>
+                            <li><strong>Gemini:</strong> Support confirmed (April 2025)</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Development Tools</h4>
+                        <ul>
+                            <li><strong>Cursor:</strong> AI-powered code editor</li>
+                            <li><strong>VS Code:</strong> Through extensions</li>
+                            <li><strong>Windsurf:</strong> Full client support</li>
+                            <li><strong>Zed:</strong> Native integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>MCP is a universal standard that solves the N×M integration problem by reducing custom integrations from N×M to N+M through a standardized client-server architecture. Core capabilities are Tools (actions), Resources (data), and Prompts (templates). MCP Client translates between AI and servers, while servers expose capabilities through stdio (local) or HTTP (remote) transports. Security follows "nothing by default" with explicit permissions and API keys staying on your infrastructure. Use existing servers for standard integrations (80% of cases), build custom only for proprietary systems. Rapid adoption by competing companies (Anthropic, OpenAI, Google, Microsoft) signals genuine consensus and long-term viability.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed Model Context Protocol fundamentals. Now demonstrate your understanding of standardized AI integration and earn Protocol Specialist status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module3-quiz.html" class="quiz-button">TAKE MODULE 3 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
