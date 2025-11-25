@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 2 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔌</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 2 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>API Integration Mission</h2>
+                <p class="intro">
+                    You've learned about AI APIs - how they work, when to use them, and integration patterns. This checkpoint tests your understanding of API fundamentals, authentication, cost management, and decision-making for API vs. UI approaches.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering AI API fundamentals</li>
+                        <li>Focus on <strong>concepts</strong>, integration patterns, and decision frameworks</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of API integration concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the fundamental difference between using an AI through a UI (like Claude.ai) versus using an AI API that makes APIs valuable for business applications?",
+                options: [
+                    "APIs provide access to more sophisticated reasoning capabilities and larger context windows that aren't available through standard UI interfaces",
+                    "APIs enable automation where the same task can happen 1000x without manual interaction, while UI requires human clicking for each request",
+                    "APIs are significantly less expensive than UI-based approaches for the same functionality due to reduced infrastructure and bandwidth costs",
+                    "APIs allow developers to customize the AI's behavior and responses more precisely through advanced parameter configuration unavailable in UI"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! The module emphasizes this core distinction: 'APIs enable automation. The same summarization can happen 1000 times without anyone clicking buttons.' The UI requires manual interaction for each request, while APIs allow programmatic, automated execution at scale.",
+                    incorrect: "Review Part 1. The key difference isn't about model power, cost, or speed - it's about automation. The module states: 'APIs enable automation. The same summarization can happen 1000 times without anyone clicking buttons.' UI requires human interaction for each request, while APIs allow code to make requests automatically."
+                }
+            },
+            {
+                question: "According to the module, why must API keys NEVER be committed to git repositories, shared in Slack/email, or hard-coded in applications?",
+                options: [
+                    "API keys expire quickly after initial generation, so hard-coding them creates significant maintenance problems and requires frequent code updates",
+                    "Most programming languages and frameworks don't support hard-coded API keys for security reasons and will generate compilation errors",
+                    "API keys are like passwords - they control access, track billing, enforce rate limits, and monitor for abuse",
+                    "Hard-coded API keys significantly slow down application performance due to additional security validation checks on each request"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! Part 4 explains: 'API keys are like passwords' and lists their purposes: 'Track usage and billing, Enforce rate limits, Control access, Monitor for abuse.' The module emphasizes: 'Security critical: API keys are like passwords. Never: Commit them to git repositories, Share them in Slack or email, Hard-code them.'",
+                    incorrect: "Review Part 4 on Authentication and Security. API keys aren't primarily about expiration or performance - they're like passwords. The module states they 'Track usage and billing, Enforce rate limits, Control access, Monitor for abuse.' Exposing them creates security risks and potential unauthorized use."
+                }
+            },
+            {
+                question: "What is the relationship between rate limiting and the cost optimization strategies described in the module?",
+                options: [
+                    "Rate limiting forces you to optimize costs by preventing expensive high-volume API usage and requiring more efficient request patterns",
+                    "They are independent concerns - rate limiting is about access control and abuse prevention while cost optimization is purely about efficiency",
+                    "Both serve similar goals through different mechanisms: rate limiting protects infrastructure and ensures fair access, while cost optimization reduces token usage and improves efficiency",
+                    "Rate limiting is a temporary measure during initial development that becomes unnecessary once you implement proper cost optimization strategies"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! While rate limiting (Part 4) controls request frequency and volume to 'prevent abuse, ensure fair access, control costs, protect infrastructure,' the cost optimization strategies (Part 7) reduce token usage through 'prompt efficiency, response length control, model selection, caching, batch processing.' They work together: optimization helps you stay within limits while reducing costs, and both serve infrastructure protection and efficiency goals.",
+                    incorrect: "Review Parts 4 and 7 together. Rate limiting sets boundaries (RPM, TPM, RPD) to protect systems and ensure fair access. Cost optimization strategies reduce what you consume through efficient prompts, batch processing, and caching. They serve overlapping goals (infrastructure protection, cost control) through different mechanisms - one sets limits, the other improves efficiency. Neither replaces the other."
+                }
+            },
+            {
+                question: "According to the module's explanation of token economics, why is understanding token pricing critical for building production AI features?",
+                options: [
+                    "Token pricing determines which AI models you're allowed to access and the features available in your API subscription tier",
+                    "You pay for tokens processed (both input and output), so costs scale directly with usage volume - understanding this is essential for budgeting AI features",
+                    "Token limits are the primary constraint on API performance, response quality, and the complexity of requests you can make",
+                    "Token pricing structures change frequently based on demand, so monitoring costs helps you avoid unexpected billing increases"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Part 7 emphasizes: 'Why tokens matter: You pay for tokens processed (both input and output).' The module shows how costs scale: '10,000 requests/month = $105, 100,000 requests/month = $1,050' and concludes: 'Understanding token costs is critical for budgeting AI features.' Volume directly impacts cost.",
+                    incorrect: "Review Part 7 on Token Usage and Cost Management. The key concept is: 'You pay for tokens processed (both input and output)' and costs scale with volume. The module emphasizes: 'Understanding token costs is critical for budgeting AI features' because at scale (10,000 or 100,000 requests/month), costs become significant. It's not about model access restrictions, performance constraints, or pricing volatility."
+                }
+            },
+            {
+                question: "According to the module's decision framework, which scenario is MOST appropriate for API implementation rather than UI-based interaction?",
+                options: [
+                    "Learning about AI capabilities by experimenting with different types of requests, analyzing responses, and understanding model behavior patterns",
+                    "Processing 100 customer support tickets per month that each need AI-generated draft responses, where the task repeats and volume justifies development investment",
+                    "Ad-hoc exploration of different AI prompting strategies to find the best approach and optimal phrasing for a new use case",
+                    "A one-time analysis of a complex document that requires iterative refinement and back-and-forth conversation to achieve desired results"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! This matches Part 9's guidance: 'Use the API when: Automated, recurring tasks (process 100s or 1000s of items), Integration with existing systems.' The ROI calculation shows 'Break-even: ~5 months' and concludes: 'Use APIs when: Volume and repetition justify development investment.' 100 monthly tickets with automation needs clearly justifies API investment.",
+                    incorrect: "Review Part 9 on API vs. UI decision framework. The 'Use the UI when' section covers: ad-hoc analysis, one-off tasks, iterative refinement, learning and experimenting. The 'Use the API when' section emphasizes: 'Automated, recurring tasks (process 100s or 1000s of items)' where 'Volume and repetition justify development investment.'"
+                }
+            },
+            {
+                question: "What does it mean when the module states that 'the API is stateless', and how does this architectural principle affect how you build applications that use AI APIs?",
+                options: [
+                    "Stateless means the API doesn't store any data permanently, so you must save all AI responses to your own database immediately",
+                    "Stateless means the API has no memory of previous requests, so your application code must manage and provide any context needed for continuity",
+                    "Stateless means each API request is independent and cannot reference other requests, preventing you from building conversational applications",
+                    "Stateless means the API processes requests without maintaining user sessions, so you cannot implement authentication or user-specific features"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! The module emphasizes this key insight: 'The API is stateless. Your code maintains conversation context by sending the full history each time.' This means the API doesn't remember anything between requests - your application is responsible for managing state, context, and conversation history.",
+                    incorrect: "Review the concept of stateless architecture discussed in Part 5 (Pattern 4). 'Stateless' means the API has no memory between requests - it doesn't remember who you are or what you asked before. Your application must provide all necessary context with each request. This doesn't prevent conversational apps (you can build them by sending history) or authentication (you send API keys with each request)."
+                }
+            },
+            {
+                question: "According to the cost optimization strategies, what makes a prompt 'verbose' and inefficient versus 'concise' and efficient?",
+                options: [
+                    "Verbose prompts include unnecessary politeness and repetitive instructions, while concise prompts are direct and clear",
+                    "Verbose prompts use complex vocabulary and technical jargon while concise prompts use simple everyday words for clarity",
+                    "Verbose prompts request detailed comprehensive responses while concise prompts request brief summaries to minimize output tokens",
+                    "Verbose prompts include multiple examples and edge cases while concise prompts omit them entirely to save input tokens"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! The module contrasts: Bad (200 tokens): 'I would like you to please analyze this customer feedback and provide me with a detailed summary of all the key points mentioned, including any concerns or suggestions, and please organize them by category...' vs. Good (50 tokens): 'Summarize this customer feedback by category. Include concerns and suggestions.' The difference is removing politeness and redundancy.",
+                    incorrect: "Review Part 7's Cost Optimization section on Prompt Efficiency. The example shows that verbose prompts waste tokens on: 'I would like you to please...provide me with a detailed summary of all the key points mentioned, including...' while concise prompts get straight to the point: 'Summarize this customer feedback by category.'"
+                }
+            },
+            {
+                question: "When the module describes rate limiting with 'Requests per minute (RPM), Tokens per minute (TPM), Requests per day (RPD)', what is the purpose of having multiple types of limits?",
+                options: [
+                    "The limits create a tiered pricing system where exceeding one limit automatically upgrades your account to a higher subscription level",
+                    "Different limits apply to different API endpoints based on their computational complexity, with simple endpoints having higher limits",
+                    "Multiple limits are redundant safeguards in case one limit calculation fails or produces incorrect results during high traffic",
+                    "Multiple limit types prevent abuse, ensure fair access for all users, control costs, and protect infrastructure from different types of overuse"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! Part 4 explains rate limiting exists to: 'Prevents abuse, Ensures fair access for all users, Controls costs, Protects infrastructure.' Multiple limit types (RPM for request frequency, TPM for compute usage, RPD for total volume) address different aspects of these goals - protecting against burst traffic, compute overload, and aggregate abuse.",
+                    incorrect: "Review Part 4 on Rate Limiting. The module states limits exist to: 'Prevents abuse, Ensures fair access for all users, Controls costs, Protects infrastructure.' Different limit types (requests/minute, tokens/minute, requests/day) protect against different abuse patterns - RPM prevents burst traffic, TPM limits compute, RPD caps total usage."
+                }
+            },
+            {
+                question: "According to the module's explanation of how API requests work, what are the essential components that must be included in every API request?",
+                options: [
+                    "Your API key for authentication, the specific model you want to use, your prompt or message content, and optional parameters like temperature or max tokens",
+                    "Your user credentials, the programming language you're using, the expected response format, and error handling preferences for failed requests",
+                    "Your application name, the API version number, the request timestamp, and a unique identifier for tracking and debugging purposes",
+                    "Your subscription tier, the geographic region for processing, your prompt content, and the maximum response time you're willing to wait"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Part 3 clearly outlines: 'Your code sends a request containing: Your API key (authentication), The model you want to use, Your prompt/message, Optional parameters (temperature, max tokens, etc.)' These are the fundamental components of every API request.",
+                    incorrect: "Review Part 3 on 'How API Requests Work.' The module specifies what every request must contain: 'Your API key (authentication), The model you want to use, Your prompt/message, Optional parameters (temperature, max tokens, etc.)' User credentials, programming language, application name, and subscription tier are not part of the request structure."
+                }
+            },
+            {
+                question: "What is the correct understanding of error handling strategy based on the module's comprehensive error handling pattern?",
+                options: [
+                    "Log all errors for later analysis but don't handle them in code - let the API provider's support team investigate and resolve issues",
+                    "Different errors require different responses: authentication errors indicate config issues, rate limits need retry logic, invalid requests need validation fixes, and server errors need delay-and-retry",
+                    "Always retry failed API requests exactly 3 times before giving up, regardless of the specific error type or status code returned",
+                    "Catch all errors with a single generic handler to ensure the application never crashes, displaying a standard 'Service error' message to users"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly right! The module's error handling code shows different strategies for different errors: 'AuthenticationError: log and return config error, RateLimitError: wait and retry, APIError: catch-all and return unavailable.' Part 6 details specific handling for 401 (check API key), 429 (exponential backoff), 400 (validate structure), 500 (retry after delay), and timeout (increase setting).",
+                    incorrect: "Review Part 6 on Error Handling and the comprehensive error handling pattern. Different HTTP status codes require different strategies: 401 (authentication - check API key), 429 (rate limit - implement exponential backoff retry), 400 (invalid request - fix your code), 500 (server error - retry after delay), Timeout (adjust settings). Generic handling isn't sufficient."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 API ARCHITECT STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of AI API fundamentals. You understand how APIs enable automation, the request/response pattern, authentication and security, rate limiting, token economics, integration patterns, error handling, and when to choose API vs. UI approaches. You're cleared for advanced integration missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 2 and focus on: the core difference between API and UI (automation), why API keys are security-critical, rate limiting and error handling strategies, token cost calculation, API vs. UI decision framework, integration patterns (especially stateless architecture), and cost optimization strategies. APIs are powerful automation tools - make sure you understand when and how to use them!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
