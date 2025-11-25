@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 2 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .code-example h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .code-example pre {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #4A90E2;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔌</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 2 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Understanding AI APIs</h2>
+                <p>This review guide covers the key concepts from Module 2. Use it to reinforce your understanding of AI APIs, integration patterns, and when to use programmatic access versus UI-based tools. Master these concepts to pass your checkpoint quiz and advance your integration skills.</p>
+            </div>
+
+            <!-- Core Concept -->
+            <div class="concept-section">
+                <div class="concept-title">What APIs Enable: Automation</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>UI Interaction</h4>
+                        <ul>
+                            <li>• Type your request in chat</li>
+                            <li>• Paste content manually</li>
+                            <li>• Click send button</li>
+                            <li>• Read response</li>
+                            <li>• Copy/paste result where needed</li>
+                            <li>• Repeat for each task</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>API Interaction</h4>
+                        <ul>
+                            <li>• Your code sends request</li>
+                            <li>• API processes automatically</li>
+                            <li>• Your code receives response</li>
+                            <li>• Application uses result</li>
+                            <li>• Happens 1000x without clicking</li>
+                            <li>• Fully automated execution</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Core Value Proposition</h4>
+                    <p><strong>APIs enable automation.</strong> The same task can happen 1000 times without anyone clicking buttons. This is the fundamental difference that makes APIs valuable for business applications.</p>
+                </div>
+            </div>
+
+            <!-- Request/Response Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">The Request/Response Pattern</div>
+                
+                <div class="steps-box">
+                    <h4>Every API Interaction Follows This Pattern</h4>
+                    <ol>
+                        <li><strong>Your code sends a request containing:</strong> API key (authentication), model name, prompt/message, optional parameters (temperature, max tokens)</li>
+                        <li><strong>The API processes the request:</strong> Validates API key, checks rate limits, runs the AI model, generates response</li>
+                        <li><strong>Your code receives a response containing:</strong> AI-generated text, metadata (tokens used, model version), any errors or warnings</li>
+                    </ol>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Key Components of Every Request</h4>
+                    <ul>
+                        <li><strong>API key:</strong> Authentication and access control</li>
+                        <li><strong>Model:</strong> Which AI model to use (claude-sonnet-4-20250514, gpt-4, etc.)</li>
+                        <li><strong>Prompt/message:</strong> Your instructions or question</li>
+                        <li><strong>Optional parameters:</strong> max_tokens, temperature, and other settings</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Authentication & Security -->
+            <div class="concept-section">
+                <div class="concept-title">Authentication and API Key Security</div>
+                
+                <div class="concept-box">
+                    <h4>Why API Keys Matter</h4>
+                    <ul>
+                        <li>Track usage and billing</li>
+                        <li>Enforce rate limits</li>
+                        <li>Control access</li>
+                        <li>Monitor for abuse</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ CRITICAL: API Keys Are Like Passwords</h4>
+                    <p><strong>Never:</strong> Commit them to git repositories, Share them in Slack or email, Hard-code them in your application, Expose them in client-side code</p>
+                    <p><strong>Always:</strong> Store in environment variables or secure key management systems</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="bad-card">
+                        <h4>❌ Bad: Hard-Coded API Key</h4>
+                        <ul>
+                            <li>• client = anthropic.Anthropic(</li>
+                            <li>&nbsp;&nbsp;api_key="sk-ant-1234...")</li>
+                            <li>• Exposed in code</li>
+                            <li>• Security risk</li>
+                        </ul>
+                    </div>
+                    <div class="good-card">
+                        <h4>✅ Good: Environment Variable</h4>
+                        <ul>
+                            <li>• import os</li>
+                            <li>• client = anthropic.Anthropic(</li>
+                            <li>&nbsp;&nbsp;api_key=os.environ.get("KEY"))</li>
+                            <li>• Secure and maintainable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rate Limiting -->
+            <div class="concept-section">
+                <div class="concept-title">Rate Limiting</div>
+                
+                <div class="concept-box">
+                    <h4>Why Rate Limits Exist</h4>
+                    <ul>
+                        <li>Prevents abuse</li>
+                        <li>Ensures fair access for all users</li>
+                        <li>Controls costs</li>
+                        <li>Protects infrastructure</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Types of Rate Limits</h4>
+                    <ul>
+                        <li><strong>RPM (Requests per minute):</strong> Limits request frequency</li>
+                        <li><strong>TPM (Tokens per minute):</strong> Limits compute usage</li>
+                        <li><strong>RPD (Requests per day):</strong> Caps total volume</li>
+                    </ul>
+                    <p>Multiple limit types protect against different abuse patterns: RPM prevents burst traffic, TPM limits compute load, RPD caps aggregate usage.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Handling Rate Limits</h4>
+                    <p>When you exceed rate limits, your code should handle it gracefully:</p>
+                    <ul>
+                        <li>Implement retry logic with increasing wait times between attempts</li>
+                        <li>Use request queuing to manage high volumes</li>
+                        <li>Never fail immediately - handle gracefully for users</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Token Economics -->
+            <div class="concept-section">
+                <div class="concept-title">Token Economics and Cost Management</div>
+                
+                <div class="concept-box">
+                    <h4>Understanding Tokens</h4>
+                    <ul>
+                        <li>1 token ≈ 4 characters</li>
+                        <li>1 token ≈ 0.75 words</li>
+                        <li>100 tokens ≈ 75 words</li>
+                    </ul>
+                    <p><strong>Why tokens matter:</strong> You pay for tokens processed (both input and output). Costs scale directly with usage volume.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Critical Insight: Output Costs More Than Input</h4>
+                    <p>Output tokens are typically priced 5x higher than input tokens because generating text requires more computation than reading it.</p>
+                    <p>Understanding token costs is critical for budgeting AI features, especially at scale.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Cost Optimization Strategies</h4>
+                    <ul>
+                        <li><strong>Prompt efficiency:</strong> Be direct and clear, remove politeness and redundancy</li>
+                        <li><strong>Response length control:</strong> Set max_tokens to limit output</li>
+                        <li><strong>Model selection:</strong> Use smaller models (Haiku, GPT-3.5) for simple tasks</li>
+                        <li><strong>Caching:</strong> Store responses for identical requests</li>
+                        <li><strong>Batch processing:</strong> Process multiple items in one request when possible</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>How Rate Limiting and Cost Optimization Work Together</h4>
+                    <p>These aren't separate concerns - they reinforce each other:</p>
+                    <ul>
+                        <li>Efficient prompts use fewer tokens → lower TPM consumption</li>
+                        <li>Batch processing combines items → fewer requests → lower RPM consumption</li>
+                        <li>Caching prevents re-processing → fewer requests → stays within limits naturally</li>
+                    </ul>
+                    <p>Both serve overlapping goals (infrastructure protection, cost control) through different mechanisms: rate limiting sets boundaries, cost optimization improves efficiency.</p>
+                </div>
+            </div>
+
+            <!-- Common Integration Patterns -->
+            <div class="concept-section">
+                <div class="concept-title">Common Integration Patterns</div>
+                
+                <div class="concept-box">
+                    <h4>Pattern 1: Simple Text Generation</h4>
+                    <p><strong>Use case:</strong> Generate content in your application</p>
+                    <p><strong>Flow:</strong> User provides input → App sends to API → AI generates content → App displays result</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Pattern 2: Data Extraction and Structuring</h4>
+                    <p><strong>Use case:</strong> Extract structured information from unstructured text</p>
+                    <p><strong>Flow:</strong> Unstructured text → API with extraction instructions → Structured data (JSON) → App routes/processes automatically</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Pattern 3: Document Analysis at Scale</h4>
+                    <p><strong>Use case:</strong> Analyze many documents automatically</p>
+                    <p><strong>Flow:</strong> Multiple documents → API processes each → Aggregate results → Flag issues</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Pattern 4: Conversational Interfaces</h4>
+                    <p><strong>Use case:</strong> Build chatbots or assistants</p>
+                    <p><strong>Critical concept:</strong> The API is stateless - it doesn't remember previous messages. Your code maintains conversation history and sends the full context with each request.</p>
+                </div>
+            </div>
+
+            <!-- Error Handling -->
+            <div class="concept-section">
+                <div class="concept-title">Error Handling Strategies</div>
+                
+                <div class="concept-box">
+                    <h4>The Principle: Match Response to Error Cause</h4>
+                    <p>Different errors need different strategies. Not all failures should be handled the same way:</p>
+                    <ul>
+                        <li>Configuration errors need fixing</li>
+                        <li>Temporary issues need retrying</li>
+                        <li>Bugs need code changes</li>
+                        <li>Server issues need graceful degradation</li>
+                    </ul>
+                    <p>Generic error handling that treats all errors the same provides poor user experience and makes debugging harder.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>401 - Authentication Error</h4>
+                        <ul>
+                            <li><strong>Cause:</strong> Invalid API key</li>
+                            <li><strong>Strategy:</strong> Check configuration</li>
+                            <li><strong>Don't retry</strong> - fix the key</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>429 - Rate Limit Error</h4>
+                        <ul>
+                            <li><strong>Cause:</strong> Too many requests</li>
+                            <li><strong>Strategy:</strong> Wait and retry</li>
+                            <li><strong>Use:</strong> Exponential backoff</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>400 - Invalid Request</h4>
+                        <ul>
+                            <li><strong>Cause:</strong> Malformed request</li>
+                            <li><strong>Strategy:</strong> Fix your code</li>
+                            <li><strong>Don't retry</strong> - validate structure</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>500 - Server Error</h4>
+                        <ul>
+                            <li><strong>Cause:</strong> API service issue</li>
+                            <li><strong>Strategy:</strong> Retry after delay</li>
+                            <li><strong>Log</strong> for monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stateless Architecture -->
+            <div class="concept-section">
+                <div class="concept-title">Understanding Stateless APIs</div>
+                
+                <div class="concept-box">
+                    <h4>What Stateless Means</h4>
+                    <p>The API has no memory of previous requests. It doesn't remember who you are or what you asked before.</p>
+                    <p><strong>Implication:</strong> Your application code must manage and provide any context needed for continuity.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>How This Affects Your Code</h4>
+                    <ul>
+                        <li>For conversational apps: Send full conversation history with each request</li>
+                        <li>For context-dependent tasks: Include all relevant context in every request</li>
+                        <li>For user-specific features: Send user information with each request</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>What Stateless Doesn't Mean</h4>
+                    <ul>
+                        <li>It doesn't prevent building conversational applications (you manage the state)</li>
+                        <li>It doesn't prevent authentication (you send API key with each request)</li>
+                        <li>It doesn't mean the API can't store data (it just doesn't maintain session state)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- API Comparison -->
+            <div class="concept-section">
+                <div class="concept-title">Anthropic API vs. OpenAI API</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Anthropic API (Claude)</h4>
+                        <ul>
+                            <li>• Claude models (Sonnet, Opus, Haiku)</li>
+                            <li>• Long context windows</li>
+                            <li>• Strong at code generation</li>
+                            <li>• Detailed reasoning</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>OpenAI API (ChatGPT)</h4>
+                        <ul>
+                            <li>• GPT models (GPT-4, GPT-3.5)</li>
+                            <li>• Speed and broad capabilities</li>
+                            <li>• Mature ecosystem</li>
+                            <li>• Well-established use cases</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Both Offer</h4>
+                    <ul>
+                        <li>Text generation and analysis</li>
+                        <li>Vision capabilities (image understanding)</li>
+                        <li>Function calling (connecting to external tools/data)</li>
+                        <li>Structured output (JSON mode)</li>
+                        <li>Streaming responses (real-time token generation)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Decision Framework -->
+            <div class="concept-section">
+                <div class="concept-title">API vs. UI - When to Use Each</div>
+                
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use UI When:</h4>
+                        <ul>
+                            <li>• Ad-hoc analysis or exploration</li>
+                            <li>• One-off tasks that don't repeat</li>
+                            <li>• Iterative refinement needed</li>
+                            <li>• Learning and experimenting</li>
+                            <li>• Manual review is required anyway</li>
+                        </ul>
+                    </div>
+                    <div class="good-card">
+                        <h4>✅ Use API When:</h4>
+                        <ul>
+                            <li>• Automated, recurring tasks</li>
+                            <li>• Processing 100s or 1000s of items</li>
+                            <li>• Integration with existing systems</li>
+                            <li>• Real-time requirements</li>
+                            <li>• Programmatic control needed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Decision Principle</h4>
+                    <p><strong>Use APIs when volume and repetition justify development investment.</strong></p>
+                    <p>APIs require upfront development time but save time through automation. The break-even point depends on how often the task repeats.</p>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>APIs enable automation by allowing code to send requests and receive responses programmatically. Essential concepts: request/response pattern (API key + model + prompt → response), API keys are security-critical, rate limiting protects infrastructure through multiple limit types, tokens = cost with output priced higher than input, stateless architecture means your code manages context, different errors need different handling strategies, and APIs make sense when volume and repetition justify development investment.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed AI API fundamentals. Now demonstrate your understanding of integration patterns and earn API Architect status.</p>
+                <a href="Mission_AI_Level_003_Module_2_Quiz.html" class="quiz-button">TAKE MODULE 2 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
