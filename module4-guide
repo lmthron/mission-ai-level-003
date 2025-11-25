@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 4 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .code-example h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .code-example pre {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #4A90E2;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 4 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Evaluation and Testing</h2>
+                <p>This review guide covers the key concepts from Module 4. Use it to reinforce your understanding of AI evaluation and testing - how to measure quality, create test datasets, and build evaluation frameworks. Master these concepts to pass your checkpoint quiz and advance your quality assurance skills.</p>
+            </div>
+
+            <!-- The AI Quality Problem -->
+            <div class="concept-section">
+                <div class="concept-title">Why AI Evaluation Is Different</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Traditional Software Testing</h4>
+                        <ul>
+                            <li>• Input: "2 + 2"</li>
+                            <li>• Expected output: "4"</li>
+                            <li>• Test: Does output = expected?</li>
+                            <li>• Clear pass/fail</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>AI Testing</h4>
+                        <ul>
+                            <li>• Input: "Write professional email"</li>
+                            <li>• Expected output: ???</li>
+                            <li>• Test: What makes it "professional"?</li>
+                            <li>• Subjective judgment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Fundamental Challenge</h4>
+                    <p><strong>AI output is variable.</strong> The same prompt can produce different (but equally valid) responses.</p>
+                    <ul>
+                        <li><strong>Subjective quality:</strong> What's "professional" or "comprehensive"?</li>
+                        <li><strong>No single right answer:</strong> Multiple valid responses, style is context-dependent</li>
+                        <li><strong>Emergent behaviors:</strong> AI can fail in unexpected ways</li>
+                        <li><strong>Scale challenges:</strong> Manual review doesn't scale, automated metrics miss nuance</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Despite These Challenges, You MUST Evaluate</h4>
+                    <p>Shipping AI without testing is shipping blind. The difficulty doesn't excuse skipping evaluation - it means you need thoughtful evaluation strategies.</p>
+                </div>
+            </div>
+
+            <!-- Four Key Dimensions -->
+            <div class="concept-section">
+                <div class="concept-title">The Four Key Evaluation Dimensions</div>
+                
+                <div class="concept-box">
+                    <h4>1. Accuracy</h4>
+                    <ul>
+                        <li>Does the AI produce correct information?</li>
+                        <li>How often does it hallucinate or make mistakes?</li>
+                        <li>Metric: % of responses that are factually correct</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>2. Relevance</h4>
+                    <ul>
+                        <li>Does the AI address what was actually asked?</li>
+                        <li>Is the response appropriate for the context?</li>
+                        <li>Metric: % of responses that answer the question</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>3. Quality</h4>
+                    <ul>
+                        <li>Is the output well-formatted and clear?</li>
+                        <li>Does it follow specified guidelines?</li>
+                        <li>Is the tone appropriate?</li>
+                        <li>Metric: Average quality score (1-5 scale)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>4. Performance</h4>
+                    <ul>
+                        <li>How fast does it respond?</li>
+                        <li>How much does it cost?</li>
+                        <li>Does it handle load appropriately?</li>
+                        <li>Metrics: Latency (ms), cost per request ($), throughput (requests/second)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Metric Selection Principle</h4>
+                    <p><strong>Match metrics to what matters most for your specific use case.</strong></p>
+                    <ul>
+                        <li>Customer-facing content: Prioritize accuracy and tone</li>
+                        <li>Data extraction: Prioritize accuracy and completeness</li>
+                        <li>Code generation: Prioritize functionality and security</li>
+                        <li>Summarization: Prioritize coverage and accuracy</li>
+                    </ul>
+                    <p>Different use cases have different risks - choose metrics that would catch the failures that matter for YOUR application.</p>
+                </div>
+            </div>
+
+            <!-- Test Datasets -->
+            <div class="concept-section">
+                <div class="concept-title">Creating Effective Test Datasets</div>
+                
+                <div class="concept-box">
+                    <h4>What Is a Test Dataset?</h4>
+                    <p>A collection of inputs with known correct outputs (or evaluation criteria) that you use to measure AI performance.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Four Characteristics of Good Test Data</h4>
+                    <ul>
+                        <li><strong>Representative:</strong> Covers common cases (80%) and edge cases (20%), reflects real-world distribution</li>
+                        <li><strong>Diverse:</strong> Different input lengths, various complexity levels, multiple scenarios and contexts</li>
+                        <li><strong>Labeled accurately:</strong> Ground truth is clear and verified, multiple reviewers agree on labels</li>
+                        <li><strong>Maintained over time:</strong> Updated when new patterns emerge, expanded when AI fails on new cases</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Test Dataset Creation Process</h4>
+                    <ol>
+                        <li><strong>Collect real examples:</strong> Pull 100-500 real inputs from your system, include successful and problematic cases</li>
+                        <li><strong>Label the examples:</strong> Define what "correct" looks like, have multiple people label for agreement</li>
+                        <li><strong>Split the dataset:</strong> Development set (80%) for building/refining, Test set (20%) for final evaluation</li>
+                        <li><strong>Version control:</strong> Track changes over time, document why examples were added/removed</li>
+                    </ol>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical: Never Tune Using Test Set Data</h4>
+                    <p>The test set measures performance on unseen data - true measure of quality. If you tune based on test set results, you're no longer measuring performance on "unseen" data. Keep test set completely separate until final evaluation.</p>
+                    <p><strong>Think of it like exam questions:</strong> Development set is practice problems. Test set is the final exam. Seeing exam questions while studying invalidates your score.</p>
+                </div>
+            </div>
+
+            <!-- Automated vs Manual -->
+            <div class="concept-section">
+                <div class="concept-title">Automated vs. Manual Evaluation</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Manual Evaluation</h4>
+                        <ul>
+                            <li><strong>Pros:</strong> Catches nuance, evaluates subjective quality, assesses creativity</li>
+                            <li><strong>Cons:</strong> Expensive, doesn't scale, slow feedback, reviewer bias</li>
+                            <li><strong>When:</strong> Initial testing, high-stakes outputs, subjective quality, establishing ground truth</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Automated Evaluation</h4>
+                        <ul>
+                            <li><strong>Pros:</strong> Fast, consistent, scalable, cheap once built</li>
+                            <li><strong>Cons:</strong> Misses nuance, can't evaluate subjective quality well, requires development</li>
+                            <li><strong>When:</strong> Regression testing, high-volume scenarios, continuous monitoring, quick feedback</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Hybrid Approach (Recommended)</h4>
+                    <p><strong>Why hybrid works better than either approach alone:</strong></p>
+                    <ul>
+                        <li>Manual-only doesn't scale and provides slow feedback</li>
+                        <li>Automated-only misses critical issues that metrics can't catch</li>
+                        <li>Hybrid combines human judgment (for nuance and standards) with automation (for scale and speed)</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Hybrid Workflow</h4>
+                    <ol>
+                        <li><strong>Manual review:</strong> Establish quality bar, create test dataset</li>
+                        <li><strong>Automated tests:</strong> Check that AI meets the bar at scale</li>
+                        <li><strong>Ongoing manual sampling:</strong> Periodically review real outputs</li>
+                        <li><strong>Automated monitoring:</strong> Alert when quality metrics drop</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- A/B Testing -->
+            <div class="concept-section">
+                <div class="concept-title">A/B Testing AI Systems</div>
+                
+                <div class="concept-box">
+                    <h4>What Is A/B Testing for AI?</h4>
+                    <p>Compare two approaches to see which performs better: different prompts, different models, different parameters, or different system designs.</p>
+                    <p><strong>The scientific method for AI:</strong> Change one variable, measure the impact.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>A/B Testing Best Practices</h4>
+                    <ul>
+                        <li><strong>Change one thing at a time:</strong> Isolate variables so you know what caused the difference</li>
+                        <li><strong>Ensure sufficient sample size:</strong> At least 100 examples per variant for reliable results</li>
+                        <li><strong>Define success criteria upfront:</strong> Don't change metrics after seeing results</li>
+                        <li><strong>Run long enough:</strong> Minimum 1-2 weeks to account for variation over time</li>
+                        <li><strong>Watch for confounding factors:</strong> Monitor for external influences affecting results</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Test Design</h4>
+                    <ul>
+                        <li>Split traffic randomly (50% approach A, 50% approach B)</li>
+                        <li>Measure both on same metrics</li>
+                        <li>Run for adequate duration</li>
+                        <li>Analyze results: Which approach is better? Is difference worth the cost?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Evaluation Framework -->
+            <div class="concept-section">
+                <div class="concept-title">Building Evaluation Frameworks</div>
+                
+                <div class="steps-box">
+                    <h4>Framework Components</h4>
+                    <ol>
+                        <li><strong>Success criteria:</strong> What does "good" look like? What's minimum acceptable? What's excellent?</li>
+                        <li><strong>Metrics:</strong> How will you measure success? What's tracked automatically vs. manually? How often?</li>
+                        <li><strong>Test cases:</strong> What inputs will you test? What are expected outputs? How many cases are enough?</li>
+                        <li><strong>Review process:</strong> Who reviews results? How often? What triggers deeper review?</li>
+                        <li><strong>Improvement triggers:</strong> What results mean "working well" vs. "needs improvement" vs. "shut it down"?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Practical Workflows -->
+            <div class="concept-section">
+                <div class="concept-title">Practical Evaluation Workflows</div>
+                
+                <div class="concept-box">
+                    <h4>Pre-Deployment Evaluation</h4>
+                    <p><strong>Before launching any AI feature:</strong></p>
+                    <ul>
+                        <li>Step 1: Define success (1 hour)</li>
+                        <li>Step 2: Create test set (2-4 hours)</li>
+                        <li>Step 3: Run evaluation (30 min)</li>
+                        <li>Step 4: Decide ship/iterate/scrap (30 min)</li>
+                    </ul>
+                    <p><strong>Time investment: 4-6 hours</strong></p>
+                    <p><strong>Value: Prevents shipping broken AI to users</strong></p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Continuous Monitoring (After Deployment)</h4>
+                    <p><strong>Automated checks (every hour/day):</strong></p>
+                    <ul>
+                        <li>Error rate, response time, cost per request, volume processed</li>
+                    </ul>
+                    <p><strong>Manual sampling (weekly):</strong></p>
+                    <ul>
+                        <li>Review 20 random outputs, rate quality on defined criteria, note new failure patterns</li>
+                    </ul>
+                    <p><strong>Deep analysis (monthly):</strong></p>
+                    <ul>
+                        <li>Comprehensive metrics review, compare to baseline, identify trends, plan improvements</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Iterative Improvement</h4>
+                    <p><strong>When evaluation shows issues:</strong></p>
+                    <ul>
+                        <li>Analyze failures (what went wrong? is there a pattern?)</li>
+                        <li>Hypothesize fix (improve prompt, add examples, switch models)</li>
+                        <li>Test fix (run on same test set, measure improvement)</li>
+                        <li>Deploy if better (roll out incrementally, monitor closely)</li>
+                    </ul>
+                    <p>This is the engineering feedback loop for AI systems.</p>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>AI evaluation differs from traditional testing because output is variable with no single right answer. Measure across four dimensions: accuracy (factually correct), relevance (addresses question), quality (well-formatted, appropriate tone), and performance (speed, cost, throughput). Create test datasets that are representative, diverse, accurately labeled, and maintained over time. Split datasets 80/20 (development/test) and never tune on test data to ensure unbiased evaluation. Use hybrid approach: manual review establishes standards and catches nuance, automated testing provides scale and speed. A/B testing validates improvements by isolating variables, using sufficient sample size, running long enough, and watching for confounding factors. Pre-deployment evaluation (4-6 hours) prevents shipping broken AI. Continuous monitoring catches quality drift over time.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed AI evaluation and testing fundamentals. Now demonstrate your understanding of quality assurance strategies and earn Quality Assurance Officer status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module4-quiz.html" class="quiz-button">TAKE MODULE 4 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
