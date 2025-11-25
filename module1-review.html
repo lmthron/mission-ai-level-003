@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 1 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .code-example h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .code-example pre {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #4A90E2;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🛡️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 1 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Claude Code for Development</h2>
+                <p>This review guide covers the key concepts from Module 1. Use it to reinforce your understanding of Claude Code - autonomous AI development that executes directly in your terminal. Master these concepts to pass your checkpoint quiz and advance your development skills.</p>
+            </div>
+
+            <!-- Core Concept -->
+            <div class="concept-section">
+                <div class="concept-title">What Makes Claude Code Different</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Claude Web</h4>
+                        <ul>
+                            <li>• You describe what you want</li>
+                            <li>• Claude generates code or content</li>
+                            <li>• You copy/paste into your editor</li>
+                            <li>• You execute and iterate</li>
+                            <li>• Great for planning and discussion</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Claude Code</h4>
+                        <ul>
+                            <li>• You describe what you want</li>
+                            <li>• Claude reads your entire codebase</li>
+                            <li>• Claude creates a plan for approval</li>
+                            <li>• Claude executes autonomously</li>
+                            <li>• Writes code, runs tests, commits changes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Core Distinction</h4>
+                    <p>Claude Code is an <strong>autonomous agent</strong> that operates directly in your terminal and codebase. It's designed for developers who need AI that can <strong>execute, not just generate suggestions</strong>.</p>
+                    <p>Key insight: Claude Code understands your full project context and can take action autonomously with your permission.</p>
+                </div>
+            </div>
+
+            <!-- Progressive Disclosure -->
+            <div class="concept-section">
+                <div class="concept-title">Progressive Context Loading with CLAUDE.md</div>
+                
+                <div class="concept-box">
+                    <h4>How It Works</h4>
+                    <p>Similar to Skills in Claude web, Claude Code uses a <code>CLAUDE.md</code> file to understand your project without loading everything at once.</p>
+                    <ul>
+                        <li>Claude keeps lightweight metadata (name and description)</li>
+                        <li>When your request matches, Claude loads full instructions</li>
+                        <li>This keeps Claude Code fast while providing specialized knowledge</li>
+                        <li>You don't need to repeat preferences in every request</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <h4>What Goes in CLAUDE.md</h4>
+                    <pre># Project Overview
+Payment Gateway API - Node.js/Express REST API
+
+# Build Commands
+- npm run dev (port 3000)
+- npm test (run all tests)
+- npm run lint (ESLint)
+
+# Code Style
+- Use ES modules (import/export)
+- All functions have JSDoc comments
+- Prefer async/await over callbacks
+- Named exports only
+
+# Testing
+- Jest for testing framework
+- 80% code coverage required
+- Always run tests before committing</pre>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Building CLAUDE.md Over Time</h4>
+                    <p>Use the <code>#</code> shortcut while working to add notes: <code># Remember that we prefer Zod for validation</code></p>
+                    <p>Your CLAUDE.md becomes a living document capturing team conventions and preferences.</p>
+                </div>
+            </div>
+
+            <!-- Execution Loop -->
+            <div class="concept-section">
+                <div class="concept-title">How Claude Code Executes</div>
+                
+                <div class="steps-box">
+                    <h4>The Execution Loop</h4>
+                    <ol>
+                        <li><strong>You give a natural language request</strong> - No special syntax needed</li>
+                        <li><strong>Claude analyzes the request</strong> - Determines which files to read, identifies dependencies</li>
+                        <li><strong>Claude creates a plan (in plan mode)</strong> - Shows exactly what it will do</li>
+                        <li><strong>You approve or adjust the plan</strong> - Review for correctness, request changes if needed</li>
+                        <li><strong>Claude executes step-by-step</strong> - Makes changes incrementally, asks for permissions</li>
+                        <li><strong>Claude verifies results</strong> - Runs tests automatically, checks command output</li>
+                        <li><strong>You review and iterate</strong> - Examine changes, test manually, request refinements</li>
+                    </ol>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Safety Features Built In</h4>
+                    <p><strong>Permission System:</strong> Claude asks before writing files, running commands, committing to git</p>
+                    <p><strong>Git Integration:</strong> Works in branches, creates descriptive commits, never pushes without permission</p>
+                    <p><strong>Rewind Feature:</strong> Press Escape twice to undo changes and restore previous state</p>
+                    <p><strong>Incremental Changes:</strong> Small, reviewable changes make it easy to identify issues</p>
+                </div>
+            </div>
+
+            <!-- Plan Mode -->
+            <div class="concept-section">
+                <div class="concept-title">Using Plan Mode Effectively</div>
+                
+                <div class="concept-box">
+                    <h4>What Plan Mode Does</h4>
+                    <p>Press <strong>Shift+Tab</strong> to activate plan mode. Claude researches and strategizes without modifying any files.</p>
+                    <ul>
+                        <li>Shows exactly what it will do before doing it</li>
+                        <li>Lists files it will modify</li>
+                        <li>Describes commands it will run</li>
+                        <li>You can iterate on the plan before execution</li>
+                    </ul>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ When to Use Plan Mode</h4>
+                        <ul>
+                            <li>• Architecture decisions</li>
+                            <li>• Complex refactoring</li>
+                            <li>• Multi-file changes</li>
+                            <li>• When unsure of best approach</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Not Always Necessary</h4>
+                        <ul>
+                            <li>• Simple, well-defined tasks</li>
+                            <li>• Single file modifications</li>
+                            <li>• Routine boilerplate generation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why It Matters</h4>
+                    <p>Plan mode prevents Claude from making assumptions about approach. You verify the strategy before committing to implementation.</p>
+                </div>
+            </div>
+
+            <!-- Tool Comparisons -->
+            <div class="concept-section">
+                <div class="concept-title">Claude Code vs. Other Tools</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>vs. GitHub Copilot</h4>
+                        <ul>
+                            <li><strong>Copilot:</strong> Line-by-line autocomplete, you're driving</li>
+                            <li><strong>Claude Code:</strong> Autonomous agent, completes entire features</li>
+                            <li><strong>Use together:</strong> Copilot for in-editor, Claude Code for larger features</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>vs. Cursor</h4>
+                        <ul>
+                            <li><strong>Cursor:</strong> IDE with AI built in, works as primary editor</li>
+                            <li><strong>Claude Code:</strong> Terminal tool, integrates with any editor</li>
+                            <li><strong>Use together:</strong> Cursor as IDE, Claude Code for complex tasks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Claude Code vs. Claude Web - When to Use Which</h4>
+                    <ul>
+                        <li><strong>Use Claude web for:</strong> Planning, architecture discussions, learning, code reviews, exploration</li>
+                        <li><strong>Use Claude Code for:</strong> Multi-file features, autonomous execution, refactoring, debugging, testing</li>
+                        <li><strong>Common workflow:</strong> Plan in Claude web, implement with Claude Code</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Decision Framework -->
+            <div class="concept-section">
+                <div class="concept-title">When to Use Claude Code</div>
+                
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Perfect for Claude Code</h4>
+                        <ul>
+                            <li>• Multi-file features (3+ files)</li>
+                            <li>• Test writing with comprehensive coverage</li>
+                            <li>• Boilerplate code (CRUD, API endpoints)</li>
+                            <li>• Large-scale refactoring</li>
+                            <li>• Documentation generation/updates</li>
+                            <li>• Integration work across systems</li>
+                            <li>• Bug fixes requiring file tracing</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Better with Claude Web</h4>
+                        <ul>
+                            <li>• Learning new concepts</li>
+                            <li>• Quick one-off scripts (5 min tasks)</li>
+                            <li>• Code reviews and discussions</li>
+                            <li>• Uncertain requirements</li>
+                            <li>• Exploration and experimentation</li>
+                            <li>• Pair programming conversations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>ROI and Break-Even Point</h4>
+                    <ul>
+                        <li><strong>Initial setup:</strong> 15-30 minutes</li>
+                        <li><strong>Learning curve:</strong> 2-4 hours</li>
+                        <li><strong>Integration:</strong> 1-2 weeks to daily workflow</li>
+                        <li><strong>Break-even:</strong> Most developers see net gains within first week of regular use</li>
+                        <li><strong>Productivity gains:</strong> 30-50% faster features, 60-70% faster tests, 80%+ faster boilerplate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="concept-section">
+                <div class="concept-title">Best Practices from Anthropic</div>
+                
+                <div class="concept-box">
+                    <h4>1. Use Research → Plan → Implement Workflow</h4>
+                    <p>Don't jump straight to implementation. Have Claude research best practices first, create a plan, then implement. This prevents assumptions and ensures you verify strategy before execution.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>2. Maintain a Comprehensive CLAUDE.md</h4>
+                    <p>Document everything: build commands, code style, testing requirements, repository conventions, known gotchas. Use the <code>#</code> shortcut to add learnings as you work.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>3. Always Use Version Control</h4>
+                    <p>Work in git branches. Claude Code encourages this and makes it easy. Safe to experiment, easy to review changes, clean history, simple rollback.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>4. Leverage Plan Mode for Complex Tasks</h4>
+                    <p>Use Shift+Tab for architecture decisions, complex refactoring, multi-file changes, or when unsure of approach. Iterate on plans before writing code.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>5. Be Specific About Verification</h4>
+                    <p>Instead of "Add tests," say "Add integration tests that verify actual business logic without mocking the database. Test both success and failure cases."</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>6. Build Project Knowledge with # Shortcut</h4>
+                    <p>Capture learnings as you work: <code># We use Zod for validation because it provides TypeScript types automatically</code></p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>7. Review Changes Incrementally</h4>
+                    <p>Don't let Claude Code make 50 file changes before reviewing. Ask for incremental work so you can spot issues early with smaller changesets.</p>
+                </div>
+            </div>
+
+            <!-- Context Management -->
+            <div class="concept-section">
+                <div class="concept-title">How Context Management Works</div>
+                
+                <div class="concept-box">
+                    <h4>Initial Scan</h4>
+                    <ul>
+                        <li>Reads your file structure</li>
+                        <li>Identifies key files (package.json, requirements.txt, etc.)</li>
+                        <li>Loads CLAUDE.md for project-specific knowledge</li>
+                        <li>Creates a lightweight index of your codebase</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Dynamic Loading</h4>
+                    <ul>
+                        <li>Loads relevant files into context based on your questions</li>
+                        <li>Tracks file dependencies and relationships</li>
+                        <li>Maintains conversation history for continuity</li>
+                        <li>Releases context for files no longer needed</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Context Limits</h4>
+                    <p>For very large codebases:</p>
+                    <ul>
+                        <li>Claude Code focuses on relevant files, not the entire codebase</li>
+                        <li>You can guide it to specific directories</li>
+                        <li>Plan mode helps scope work before execution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Readiness -->
+            <div class="concept-section">
+                <div class="concept-title">Team Adoption Considerations</div>
+                
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Team Is Ready When:</h4>
+                        <ul>
+                            <li>• Version control is used consistently</li>
+                            <li>• Automated testing infrastructure exists</li>
+                            <li>• Codebase has clear structure/documentation</li>
+                            <li>• Team comfortable with terminal/command line</li>
+                            <li>• CI/CD pipelines for validation</li>
+                            <li>• Code review processes established</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Wait If:</h4>
+                        <ul>
+                            <li>• Team still learning basic dev workflows</li>
+                            <li>• No testing infrastructure or low coverage</li>
+                            <li>• Codebase is chaotic without conventions</li>
+                            <li>• Terminal workflows would be a barrier</li>
+                            <li>• No automated validation/deployment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Access -->
+            <div class="concept-section">
+                <div class="concept-title">What Claude Code Can Access</div>
+                
+                <div class="concept-box">
+                    <h4>File System</h4>
+                    <ul>
+                        <li>Read files and directories</li>
+                        <li>Write new files</li>
+                        <li>Edit existing files</li>
+                        <li>Delete files (with permission)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Terminal Commands</h4>
+                    <ul>
+                        <li>Run tests (npm test, pytest, etc.)</li>
+                        <li>Install packages (npm install, pip install)</li>
+                        <li>Start servers and development environments</li>
+                        <li>Execute build commands</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Git Operations</h4>
+                    <ul>
+                        <li>Create branches</li>
+                        <li>Stage and commit changes</li>
+                        <li>Push to remote repositories</li>
+                        <li>Create pull requests (with GitHub CLI)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Web Search & MCP</h4>
+                    <ul>
+                        <li>Research libraries and best practices</li>
+                        <li>Look up error messages</li>
+                        <li>Find code examples and documentation</li>
+                        <li>Connect to databases and APIs (when configured)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway:</strong>
+                <p>Claude Code is an autonomous agent that executes directly in your terminal with your permission. It uses progressive disclosure through CLAUDE.md (like Skills), requires plan mode for complex work, integrates with git workflows, and excels at multi-file features, refactoring, and testing. Best practices include Research → Plan → Implement workflow, incremental reviews, comprehensive CLAUDE.md documentation, and always working in git branches. Most developers see productivity gains within the first week of regular use.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed Claude Code fundamentals. Now demonstrate your understanding of autonomous development and earn Development Officer status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module1-quiz.html" class="quiz-button">TAKE MODULE 1 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
