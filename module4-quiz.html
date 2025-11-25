@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 4 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🎯</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 4 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Evaluation and Testing Mission</h2>
+                <p class="intro">
+                    You've learned about AI evaluation and testing - how to measure quality, create test datasets, and build evaluation frameworks. This checkpoint tests your understanding of evaluation metrics, testing approaches, and quality assurance strategies for AI systems.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering AI evaluation fundamentals</li>
+                        <li>Focus on <strong>testing principles</strong>, metrics selection, and evaluation strategies</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of AI quality assurance concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "According to the module, what is the fundamental challenge that makes AI evaluation different from traditional software testing?",
+                options: [
+                    "AI output is variable and subjective with no single right answer, while traditional testing compares outputs to expected values with clear pass/fail",
+                    "AI systems require more computational resources for testing, making evaluation processes slower and more expensive than traditional software quality assurance",
+                    "AI testing requires specialized machine learning expertise that most quality assurance teams lack, creating a skills gap in organizations",
+                    "AI models change and update frequently, requiring constant re-evaluation, while traditional software remains stable once tested and deployed"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Part 1 contrasts traditional testing ('Input: 2 + 2, Expected output: 4, Test: Does output = expected? ✅ or ❌') with AI testing ('Input: Write a professional email, Expected output: ???, Test: ??? What makes an email professional? What's good enough?'). The challenge: 'AI output is variable. The same prompt can produce different (but equally valid) responses.'",
+                    incorrect: "Review Part 1 'Why Traditional Testing Doesn't Work.' The fundamental issue isn't resources, skills, or model updates - it's that 'AI output is variable' with 'No single right answer: Multiple valid responses to the same prompt, Style and tone are judgment calls, Better is context-dependent.' Traditional testing has clear expected outputs; AI testing has subjective quality criteria."
+                }
+            },
+            {
+                question: "What are the four key dimensions for evaluating AI systems according to the module?",
+                options: [
+                    "Speed (response time), Cost (token usage), Scalability (handling high volume), and Reliability (consistent uptime without service interruptions)",
+                    "Training quality (model selection), Prompt engineering (instruction clarity), Data preparation (input formatting), and Output validation (result verification)",
+                    "Accuracy (factually correct), Relevance (addresses what was asked), Quality (well-formatted and appropriate tone), and Performance (speed, cost, throughput)",
+                    "User satisfaction (feedback scores), Business impact (ROI metrics), Technical performance (latency measurements), and Compliance (regulatory adherence)"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! Part 2 'The Four Key Dimensions' defines: '1. Accuracy - Does the AI produce correct information? How often does it hallucinate? 2. Relevance - Does it address what was actually asked? 3. Quality - Is output well-formatted and clear? Is tone appropriate? 4. Performance - How fast does it respond? How much does it cost?'",
+                    incorrect: "Review Part 2 'The Four Key Dimensions.' The module explicitly lists: '1. Accuracy (factually correct information), 2. Relevance (addresses what was asked, appropriate for context), 3. Quality (well-formatted, follows guidelines, appropriate tone), 4. Performance (response speed, cost, throughput).' These are the standard dimensions for AI evaluation."
+                }
+            },
+            {
+                question: "According to the test dataset creation process, why must you split your dataset into development set (80%) and test set (20%), and never tune your system using test set data?",
+                options: [
+                    "The 80/20 split ensures statistical significance in your measurements, as datasets smaller than 100 examples lack sufficient sample size for reliable conclusions",
+                    "Development set trains the AI model while test set validates it - mixing them causes overfitting where the model memorizes rather than generalizes",
+                    "Development set is for building and refining your system, while test set provides unbiased final evaluation - tuning on test data invalidates that evaluation",
+                    "The split separates easy cases (development) from hard edge cases (test) to ensure your system handles both common and unusual scenarios"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! Part 3 explains: 'Step 3: Split the dataset - Development set (80%): Use while building/refining, Test set (20%): Hold back for final evaluation, Never tune your system using test set data.' The test set must remain untouched to provide unbiased evaluation - if you tune on it, you're no longer measuring true performance.",
+                    incorrect: "Review Part 3's 'Test Dataset Creation Process' Step 3. The split isn't about statistical significance, model training (this is prompt/system evaluation, not model training), or difficulty levels. It's about unbiased evaluation: 'Development set (80%): Use while building/refining, Test set (20%): Hold back for final evaluation, Never tune your system using test set data.' Tuning on test data invalidates the evaluation."
+                }
+            },
+            {
+                question: "What is the recommended hybrid approach for AI evaluation, and why does it work better than using only automated or only manual evaluation?",
+                options: [
+                    "Hybrid means testing in both development and production environments to catch issues that only appear under real-world load and user behavior",
+                    "Hybrid combines multiple AI models in evaluation where one AI system evaluates another's output, with humans only reviewing flagged issues",
+                    "Alternate between automated and manual evaluation weekly to balance cost efficiency with quality oversight and maintain fresh human perspectives",
+                    "Use manual review to establish quality standards and create test datasets, then automated testing for scale, with ongoing manual sampling and automated monitoring"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! Part 4's 'Hybrid Approach (Recommended)' explains: 'Use both: 1. Manual review: Establish quality bar, create test dataset, 2. Automated tests: Check that AI meets the bar at scale, 3. Ongoing manual sampling: Periodically review real outputs, 4. Automated monitoring: Alert when quality metrics drop.' This combines the strengths of both approaches.",
+                    incorrect: "Review Part 4 'The Hybrid Approach (Recommended).' The strategy is: 'Manual review: Establish quality bar, create test dataset. Automated tests: Check AI meets the bar at scale. Ongoing manual sampling: Periodically review real outputs. Automated monitoring: Alert when metrics drop.' Manual sets standards, automation scales, ongoing sampling catches drift. Not about environments, AI-evaluating-AI, or weekly alternation."
+                }
+            },
+            {
+                question: "In A/B testing for AI systems, what does the principle 'change one thing at a time' mean, and why is it critical for getting useful results?",
+                options: [
+                    "Isolating a single variable allows you to identify cause and effect - changing multiple variables simultaneously prevents you from knowing which one drove any performance difference",
+                    "You should only test one feature at a time rather than multiple AI capabilities simultaneously, to avoid overwhelming users with too many changes",
+                    "A/B tests should run for one week only to maintain controlled conditions, as longer tests introduce too many variables from external factors",
+                    "Each A/B test should compare exactly one AI output against one human-written output to establish clear baseline performance comparisons"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! Part 5's 'A/B Testing Best Practices' states: '1. Change one thing at a time - If you change prompt AND model AND temperature, you won't know which mattered. Isolate variables for clear results.' This is the scientific method: control variables to identify cause and effect.",
+                    incorrect: "Review Part 5 'A/B Testing Best Practices.' The principle is about isolating variables: 'If you change prompt AND model AND temperature, you won't know which mattered. Isolate variables for clear results.' It's not about limiting features, test duration, or comparing AI to human - it's about changing ONE variable (prompt OR model OR temperature) so you know what caused any difference."
+                }
+            },
+            {
+                question: "According to the module, what are the four characteristics that make a test dataset 'good' for evaluating AI systems?",
+                options: [
+                    "Large enough (minimum 1000 examples), diverse in format, created by domain experts, and validated by statistical sampling methods",
+                    "Representative (covers common and edge cases in real-world distribution), diverse (multiple scenarios and lengths), labeled accurately (verified ground truth), and maintained over time (updated as patterns emerge)",
+                    "Automated (generated by scripts), comprehensive (100% coverage), version-controlled (tracked in git), and peer-reviewed (validated by multiple team members)",
+                    "Balanced (equal distribution across categories), challenging (tests edge cases), documented (clear labeling guidelines), and scalable (can grow as system evolves)"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! Part 3 'Characteristics of good test data' lists: '1. Representative - Covers common cases (80%), includes edge cases (20%), reflects real-world distribution. 2. Diverse - Different input lengths, various complexity, multiple scenarios. 3. Labeled accurately - Ground truth clear and verified, multiple reviewers agree. 4. Maintained over time - Updated when new patterns emerge, expanded when AI fails.'",
+                    incorrect: "Review Part 3 'Building a Good Test Dataset.' The four characteristics are: '1. Representative (common and edge cases, real-world distribution), 2. Diverse (different lengths, complexity, scenarios), 3. Labeled accurately (ground truth verified, reviewers agree), 4. Maintained over time (updated, expanded, pruned).' Not about size minimums, automation, balance, or peer review processes."
+                }
+            },
+            {
+                question: "When selecting evaluation metrics for a specific AI use case, what principle should guide your decision about which metrics are primary versus secondary?",
+                options: [
+                    "Primary metrics should always be objective and automated, while secondary metrics can include subjective measures that require human judgment and review",
+                    "Choose metrics based on what matters most for the specific use case - customer-facing content prioritizes accuracy and tone, while data extraction prioritizes accuracy and completeness",
+                    "Primary metrics must align with business KPIs and revenue impact, while secondary metrics track technical performance like latency and cost",
+                    "Select primary metrics that can be measured in real-time during production, reserving secondary metrics for periodic offline analysis and reporting"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Part 2 'Choosing Metrics for Your Use Case' shows different priorities by use case: 'Customer-facing content: Primary - Accuracy, tone appropriateness; Secondary - Response time, cost. Data extraction: Primary - Accuracy, completeness; Secondary - Consistency, processing time.' The principle is matching metrics to what matters most for that specific use case.",
+                    incorrect: "Review Part 2 'Choosing Metrics for Your Use Case.' The guidance isn't about objective vs. subjective, business vs. technical, or real-time vs. offline. It's use-case driven: 'Customer-facing content' prioritizes 'accuracy, tone' while 'Data extraction' prioritizes 'accuracy, completeness.' Different use cases have different primary concerns - choose metrics that measure what matters most for YOUR specific application."
+                }
+            },
+            {
+                question: "What value does the pre-deployment evaluation workflow provide that justifies the 4-6 hour time investment before launching AI features?",
+                options: [
+                    "The workflow ensures compliance with regulatory requirements and generates necessary documentation for audit trails before launching AI features to customers",
+                    "The time investment builds team consensus and stakeholder buy-in through collaborative review, reducing organizational resistance to AI adoption",
+                    "The evaluation workflow validates that AI quality meets your standards before users see it, preventing the risk of shipping broken features to customers",
+                    "Pre-deployment evaluation establishes baseline performance metrics that enable accurate measurement of ROI and business impact after launch"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Part 9 'Workflow 1: Pre-Deployment Evaluation' details the steps: 'Step 1: Define success (1 hour), Step 2: Create test set (2-4 hours), Step 3: Run evaluation (30 min), Step 4: Decide (30 min)' and concludes: 'Time investment: 4-6 hours Value: Prevents shipping broken AI to users.' The workflow validates quality before users see it.",
+                    incorrect: "Review Part 9 'Workflow 1: Pre-Deployment Evaluation.' The value statement is explicit: 'Time investment: 4-6 hours Value: Prevents shipping broken AI to users.' The four steps (define success, create test set, run evaluation, decide ship/iterate/scrap) ensure you validate quality before deployment. It's not primarily about compliance docs, team consensus, or ROI baselines."
+                }
+            },
+            {
+                question: "According to the module's guidance on automated versus manual evaluation, when should you use automated evaluation rather than manual review?",
+                options: [
+                    "Automated evaluation should be used for all objective metrics like accuracy and latency, while manual evaluation handles subjective quality like tone",
+                    "Use automated testing when evaluation criteria can be reduced to simple rules and thresholds, reserving manual review for complex decision-making",
+                    "Automated evaluation is appropriate once your AI system has been in production for 3-6 months and established stable performance patterns",
+                    "Use automated evaluation for regression testing to ensure quality doesn't degrade, high-volume scenarios processing thousands of inputs, continuous production monitoring, and quick development feedback"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! Part 4 'When to use' automated evaluation lists: 'Regression testing (ensure quality doesn't degrade), High-volume scenarios (process 1000s of inputs), Continuous monitoring in production, Quick feedback during development.' Automated testing excels at scale, speed, and consistency.",
+                    incorrect: "Review Part 4 'Automated Evaluation - When to use.' The guidance lists specific scenarios: 'Regression testing (ensure quality doesn't degrade), High-volume scenarios (process 1000s of inputs), Continuous monitoring in production, Quick feedback during development.' It's not about objective vs. subjective, time in production, or simple vs. complex - it's about scale, speed, and continuous checking."
+                }
+            },
+            {
+                question: "What are the essential best practices for A/B testing AI systems that ensure you're measuring real improvements rather than statistical noise?",
+                options: [
+                    "Always use a control group that receives no AI assistance to establish baseline human performance before comparing different AI approaches",
+                    "Conduct A/B tests only during normal business hours on weekdays to eliminate variation from time-of-day and weekend usage patterns",
+                    "Require statistical significance testing with p-values below 0.05 and confidence intervals above 95% before declaring any approach superior",
+                    "Ensure sufficient sample size (at least 100 per variant), run for adequate duration (1-2 weeks minimum), define success criteria before starting, and monitor for confounding factors"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! Part 5 combines multiple best practices: '2. Ensure sufficient sample size - At least 100 examples per variant, 3. Define success criteria upfront - What metrics matter most? Don't change criteria after seeing results, 4. Run long enough - Minimum 1-2 weeks for most scenarios, 5. Watch for confounding factors - Did something else change? Are external factors affecting results?'",
+                    incorrect: "Review Part 5 'A/B Testing Best Practices.' The essential practices are: 'Ensure sufficient sample size (at least 100 examples per variant), Define success criteria upfront (don't change after seeing results), Run long enough (minimum 1-2 weeks), Watch for confounding factors (external influences).' Not about control groups with no AI, restricting to business hours, or specific statistical thresholds."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 QUALITY ASSURANCE OFFICER STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of AI evaluation and testing fundamentals. You understand why AI testing differs from traditional software testing, the four key evaluation dimensions, how to create effective test datasets, when to use automated versus manual evaluation, A/B testing principles, evaluation frameworks, and use-case-specific strategies. You're cleared for advanced quality assurance missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 4 and focus on: why AI evaluation is fundamentally different from traditional testing (no single right answer), the four key dimensions (accuracy, relevance, quality, performance), test dataset characteristics (representative, diverse, labeled accurately, maintained), automated vs. manual evaluation tradeoffs, A/B testing best practices (isolate variables, sufficient sample size, run long enough), hybrid evaluation approach, and metric selection by use case. AI quality assurance is critical for production systems!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
