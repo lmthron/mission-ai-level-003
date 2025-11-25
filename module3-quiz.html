@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 3 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔗</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 3 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>MCP Integration Mission</h2>
+                <p class="intro">
+                    You've learned about Model Context Protocol (MCP) - the universal standard for AI tool integration. This checkpoint tests your understanding of the N×M problem, MCP architecture, core capabilities, and decision-making for when to use MCP.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering MCP fundamentals</li>
+                        <li>Focus on <strong>architecture</strong>, standardization benefits, and decision frameworks</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of integration protocol concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "How does MCP solve the N×M integration problem described in the module?",
+                options: [
+                    "MCP eliminates the need for integration by allowing AI platforms to access data sources directly without any intermediary code or servers",
+                    "MCP automatically generates custom integration code for each AI platform and data source combination, reducing manual development effort significantly",
+                    "MCP creates a central hub where all AI platforms and data sources connect, requiring only one integration point regardless of system count",
+                    "MCP reduces integrations from N×M custom implementations to N+M standardized implementations by providing a universal interface both sides can implement"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Part 1 explains: 'Traditional: 3 AI platforms × 10 data sources = 30 custom integrations. MCP Approach: 3 AI platforms implement MCP client (once) + 10 data sources implement MCP server (once) = Total integrations needed: 13 (3 + 10).' The universal standard means each side implements MCP once, not for every combination.",
+                    incorrect: "Review Part 1 on 'The N×M Problem.' MCP doesn't eliminate integration code or create a central hub. Instead, it provides a standard interface: '3 AI platforms implement MCP client (once), 10 data sources implement MCP server (once), Total integrations needed: 13 (3 + 10)' instead of 30 custom integrations. Each side implements the standard once."
+                }
+            },
+            {
+                question: "In the MCP client-server architecture, what is the role of the MCP Client, and where does it actually run?",
+                options: [
+                    "The MCP Client is a cloud service hosted by Anthropic that all AI platforms connect to for standardized communication with data sources",
+                    "The MCP Client is a translator built into or added to the host application that converts AI requests into MCP protocol messages and handles server communication",
+                    "The MCP Client is installed on the data source servers to enable them to communicate with multiple different AI platforms simultaneously",
+                    "The MCP Client is a standalone application users install separately that manages connections between their AI tools and various data sources"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Part 3 explains: 'Think of the MCP Client as a translator that sits between the AI application and the external tools.' It 'converts AI requests into MCP protocol messages, sends those messages to the appropriate MCP server, receives responses, translates responses back.' And 'The MCP Client is built into or added to the host application.'",
+                    incorrect: "Review Part 3 on MCP Client. The client isn't a cloud service, isn't on the data source side, and isn't a standalone app. It's 'built into or added to the host application' (Claude Desktop, ChatGPT, etc.) and acts as a 'translator that sits between the AI application and the external tools,' converting requests to MCP protocol."
+                }
+            },
+            {
+                question: "What is the key difference between MCP Tools and Claude Skills as explained in the module?",
+                options: [
+                    "MCP Tools are instructions that guide AI behavior, while Claude Skills are actual functions that perform actions on external systems",
+                    "MCP Tools work only with Claude while Claude Skills work across multiple AI platforms through standardized interfaces",
+                    "Claude Skills are instructions for the AI that live entirely within Claude, while MCP Tools are actual functions that perform actions in the real world on external systems",
+                    "MCP Tools require programming knowledge to create while Claude Skills can be created through natural language descriptions in the UI"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! Part 4 clearly distinguishes: 'Claude Skills: Instructions that guide how Claude behaves, Live entirely within Claude, Example: When analyzing data, always check for outliers first. MCP Tools: Actual functions that perform actions on external systems, Connect Claude (or any AI) to real tools and data, Example: A function that actually creates a ticket.' The key difference: Skills = Instructions for the AI, MCP Tools = Actions the AI can take in the real world.",
+                    incorrect: "Review Part 4's comparison in 'Tools (Actions AI Can Perform).' The distinction is explicit: 'Claude Skills: Instructions that guide how Claude behaves, Live entirely within Claude. MCP Tools: Actual functions that perform actions on external systems.' Skills tell Claude HOW to work, Tools let Claude DO things in external systems. Option A has them backwards."
+                }
+            },
+            {
+                question: "According to the module, why does rapid adoption of MCP by competing companies (Anthropic, OpenAI, Google, Microsoft) signal its strategic importance?",
+                options: [
+                    "Rapid adoption by competitors signals genuine industry consensus, long-term viability, reduced risk of the standard disappearing, and growing ecosystem",
+                    "Competing companies typically don't adopt the same standards, so universal adoption indicates regulatory requirements forcing standardization",
+                    "When multiple companies adopt standards simultaneously, it usually means one company will acquire the others to consolidate the technology",
+                    "Universal adoption indicates the technology is simple enough that implementation requires minimal investment, making it low-risk for all parties"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly right! Part 2 states: 'When competing AI companies (Anthropic, OpenAI, Google) all adopt the same standard, it signals: Genuine industry consensus, Long-term viability, Reduced risk of the standard disappearing, Growing ecosystem of tools and servers.' Competitors agreeing on standards is rare and significant.",
+                    incorrect: "Review Part 2's 'Why this matters' section on rapid adoption. The module explains that when 'competing AI companies (Anthropic, OpenAI, Google) all adopt the same standard,' it signals 'Genuine industry consensus, Long-term viability, Reduced risk of the standard disappearing, Growing ecosystem.' It's not about regulation, acquisition, or simplicity."
+                }
+            },
+            {
+                question: "What are the three core capabilities that MCP servers can expose to AI systems, and what does each enable?",
+                options: [
+                    "Authentication (verify user identity), Authorization (control access permissions), and Auditing (track all AI actions for compliance purposes)",
+                    "Tools (actions AI can perform on external systems), Resources (data AI can read and access), and Prompts (workflow templates that guide AI)",
+                    "Clients (connect to AI platforms), Servers (expose data sources), and Protocols (standardize communication between different system types)",
+                    "Input (receive requests from AI), Processing (execute business logic and queries), and Output (return structured responses to AI platforms)"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! Part 4 is titled 'The Three Core Capabilities' and defines: '1. Tools (Actions AI Can Perform) - Functions the AI model can call to perform actions. 2. Resources (Data AI Can Access) - Information the server manages that AI can read. 3. Prompts (Templates for Common Tasks) - Pre-defined prompt templates that guide AI for common workflows.'",
+                    incorrect: "Review Part 4 'The Three Core Capabilities.' MCP servers expose: '1. Tools (Actions AI Can Perform), 2. Resources (Data AI Can Access), 3. Prompts (Templates for Common Tasks).' These aren't about authentication/security (those are security features), client-server components (those are architecture layers), or request/response processing (that's the flow)."
+                }
+            },
+            {
+                question: "According to the module's guidance on transport mechanisms, what is the key principle for deciding between stdio and HTTP-based transports?",
+                options: [
+                    "stdio is always preferred because it's faster and more secure, use HTTP only when stdio is technically impossible for your platform",
+                    "stdio is for development and testing environments, while HTTP-based transports are required for all production deployments regardless of architecture",
+                    "Local servers use stdio for lightweight communication on the user's machine, while remote servers use HTTP for shared resources and enterprise deployment",
+                    "The choice depends on programming language compatibility, with Python and JavaScript requiring HTTP while other languages can use stdio"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! The principle is: 'Local servers use stdio, remote servers use HTTP. The protocol works the same either way - only the delivery method changes.' stdio is for 'local servers running on your machine' (development tools, personal productivity), while HTTP/SSE is for 'remote servers over the network' (shared resources, enterprise systems).",
+                    incorrect: "Review the transport mechanisms section in Part 3 and the decision guidance. The key principle is location-based: stdio for local servers on user's machine (lightweight, secure through isolation), HTTP for remote servers (shared resources, multiple users, centralized management). Both work in production - choice depends on deployment architecture, not development stage or language."
+                }
+            },
+            {
+                question: "What is MCP's core security principle, and how does it differ from systems that are 'open by default'?",
+                options: [
+                    "MCP uses encryption by default for all communications, while open systems rely on network security and optional encryption",
+                    "MCP follows a zero-trust approach where nothing is exposed or allowed unless explicitly configured, starting locked down rather than requiring you to restrict access",
+                    "MCP requires multi-factor authentication for all server connections, while open systems allow simple username and password access",
+                    "MCP automatically audits all AI actions for compliance, while open systems require manual logging configuration to track security events"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! The core principle is: 'Nothing is exposed by default in MCP. Every action requires explicit configuration.' The module emphasizes this is 'fundamentally different from systems that are open by default and require you to restrict access. MCP starts locked down and you explicitly open what's needed.'",
+                    incorrect: "Review Part 8's security model. The core principle is explicit permissions: 'Nothing is exposed by default in MCP. Every action requires explicit configuration.' This zero-trust approach means 'MCP starts locked down and you explicitly open what's needed' - opposite of 'open by default' systems that require restricting access. It's not primarily about encryption, MFA, or automatic auditing."
+                }
+            },
+            {
+                question: "According to the build vs. buy decision framework, when should you build custom MCP servers versus using existing ones?",
+                options: [
+                    "Always build custom servers for better performance, security control, and the ability to optimize specifically for your use cases and requirements",
+                    "Build custom servers for any production system to ensure long-term support and avoid dependency on community-maintained open source projects",
+                    "Use existing servers during development and testing, then build custom replacements for production deployment to ensure stability and enterprise support",
+                    "Default to existing servers for standard integrations, build custom only for proprietary systems where no adequate server exists and the investment is justified"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! The principle states: 'Default to existing servers for standard integrations (80% of use cases). Build custom only when: The system is proprietary, no adequate server exists, investment is justified by usage, you have resources to maintain it.' The recommendation: 'Most enterprises use hybrid: standard servers for common tools, custom servers for proprietary systems.'",
+                    incorrect: "Review Part 7's 'Build vs. Buy MCP Servers' section. The guidance is clear: 'Use existing servers (Recommended for most cases)' for standard integrations - they're 'well-tested, maintained by vendors or community, security reviewed, production-ready, faster time to value, free and open source.' Build custom 'only for proprietary systems that justify the investment.'"
+                }
+            },
+            {
+                question: "Why does the module emphasize that API keys stay on the MCP server and never get exposed to AI providers like Anthropic, OpenAI, or Google?",
+                options: [
+                    "Because AI providers charge additional fees for handling external API keys and authentication, increasing costs for users unnecessarily",
+                    "Because your database credentials and API keys remain in your infrastructure controlled by your security policies, rather than being shared with third parties",
+                    "Because the MCP protocol specification requires all authentication to happen server-side for consistency across different AI platforms",
+                    "Because AI providers cannot guarantee the security of third-party credentials and explicitly refuse to handle them in their systems"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Part 8 emphasizes: 'Critical security feature: API keys stay on the MCP server, not exposed to AI providers. Users authenticate to the MCP server, not to the AI platform. Why this matters: Your database credentials never get sent to Anthropic, OpenAI, or Google. They remain in your infrastructure, controlled by your security policies.'",
+                    incorrect: "Review Part 8 on 'Authentication and API keys.' The key point is control and security: 'API keys stay on the MCP server, not exposed to AI providers' and 'Your database credentials never get sent to Anthropic, OpenAI, or Google. They remain in your infrastructure, controlled by your security policies.' It's about keeping sensitive credentials in your control, not about fees or protocol requirements."
+                }
+            },
+            {
+                question: "According to the decision framework in Part 7, which scenario is MOST appropriate for using MCP rather than direct API integration or custom connectors?",
+                options: [
+                    "Building internal tools where different teams use different AI platforms and you need standardized access to company data with consistent audit trails",
+                    "A simple one-off script that runs once to migrate data, where reusability across platforms provides no value for the specific use case",
+                    "Performance-critical applications with extremely low-latency requirements where every millisecond of protocol overhead significantly impacts user experience",
+                    "An immediate deadline project with zero MCP knowledge where the learning curve would delay delivery and custom solution ships faster short-term"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Perfect! This matches the 'Use MCP when' guidance: 'You're building internal tools for multiple teams: Different teams using different AI tools, Want standardized access to company data, Need consistent audit trails and controlled access, Multiple AI platforms in use across organization.' This scenario demonstrates MCP's core value: cross-platform standardization.",
+                    incorrect: "Review Part 7's decision framework. The 'Use MCP when' section emphasizes: 'building internal tools for multiple teams, different teams using different AI tools, standardized access to company data, consistent audit trails, multiple AI platforms in use.' The 'Consider alternatives when' section explicitly lists: immediate deadlines, simple one-off tasks, performance-critical/low-latency needs."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 PROTOCOL SPECIALIST STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of Model Context Protocol fundamentals. You understand how MCP solves the N×M problem, the client-server architecture, the three core capabilities (Tools, Resources, Prompts), when to use MCP versus alternatives, security considerations, and cross-platform adoption significance. You're cleared for advanced integration architecture missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 3 and focus on: the N×M problem and how MCP reduces integration complexity (3+10 instead of 3×10), client-server architecture with three layers, the three core capabilities (Tools, Resources, Prompts), how MCP Client acts as a translator, when to use MCP versus direct API integration, security model with explicit permissions, and why cross-platform adoption signals importance. MCP is a foundational integration standard - make sure you understand its architecture and value proposition!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
