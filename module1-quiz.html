@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 1 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🛡️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 1 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Advanced Development Mission</h2>
+                <p class="intro">
+                    You've learned about Claude Code - autonomous AI development in the terminal. This checkpoint tests your understanding of when to use Claude Code, how it differs from other tools, and the architectural principles that make it work.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering Claude Code fundamentals</li>
+                        <li>Focus on <strong>decision-making</strong>, architecture, and best practices</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of autonomous development concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the fundamental difference between Claude Code and Claude web that makes Claude Code suitable for development workflows?",
+                options: [
+                    "Claude Code has access to more advanced AI models specifically trained for coding tasks",
+                    "Claude Code provides better code completion because it's integrated directly into your IDE",
+                    "Claude Code runs in the terminal and can execute commands, write files, and manage git workflows autonomously with your permission",
+                    "Claude Code can access the internet to search for coding solutions while Claude web cannot"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! The module emphasizes this core distinction: 'Claude Code is an autonomous agent that operates directly in your terminal and codebase... designed for developers who need AI that can execute, not just generate suggestions.' The key is autonomous execution with permission, not just generation.",
+                    incorrect: "Review Part 1. The fundamental difference is about execution vs. generation. Claude web generates code that you copy/paste and execute. Claude Code 'reads your entire codebase for context, creates a plan, you approve, then Claude writes code, runs tests, commits changes, creates PRs' - it handles entire execution autonomously with your permission."
+                }
+            },
+            {
+                question: "Why does Claude Code use a CLAUDE.md file instead of requiring you to repeat project preferences in every request?",
+                options: [
+                    "CLAUDE.md is required by the npm package and won't work without it",
+                    "Similar to Skills in Claude web, it uses progressive disclosure to load project-specific knowledge when needed while keeping Claude Code fast",
+                    "CLAUDE.md files are automatically generated by analyzing your codebase and cannot be manually edited",
+                    "The file allows Claude Code to run without internet connectivity by storing all necessary context locally"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly right! The module explains: 'Similar to how Skills work in Claude web, Claude Code uses a CLAUDE.md file... This lightweight metadata loads when needed, keeping Claude Code fast while giving it specialized project knowledge.' It's about progressive context loading, not requirements.",
+                    incorrect: "Review Part 5 on CLAUDE.md. The concept is parallel to Skills: 'Similar to how Skills work in Claude web, Claude Code uses a CLAUDE.md file... This lightweight metadata loads when needed, keeping Claude Code fast while giving it specialized project knowledge.' You CAN manually edit it (there's even a # shortcut to add notes). It's about efficient context loading."
+                }
+            },
+            {
+                question: "According to Anthropic's best practices, what is the primary purpose of using Plan mode (Shift+Tab) before execution?",
+                options: [
+                    "Plan mode creates faster execution by pre-compiling the strategy",
+                    "Plan mode is required for multi-file changes and will fail without it",
+                    "It generates comprehensive documentation that you can share with your team",
+                    "It allows Claude to research and strategize without modifying files, so you can iterate on the approach before any code is written"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Perfect! Best Practice #4 explains: 'Press Shift+Tab to activate plan mode... Plan mode creates strategy without modifying files. You can iterate on the plan before any code is written.' The module also notes: 'Prevents Claude from making assumptions about approach. You verify the strategy before committing to implementation.'",
+                    incorrect: "Review Part 7, Best Practice #4 on Plan Mode. The purpose is verification before execution: 'Plan mode creates strategy without modifying files. You can iterate on the plan before any code is written.' Use it for 'Architecture decisions, Complex refactoring, Multi-file changes, When you're not sure of the best approach.'"
+                }
+            },
+            {
+                question: "When comparing Claude Code to GitHub Copilot, what is the most accurate characterization of their different approaches?",
+                options: [
+                    "Copilot works best for enterprise teams while Claude Code is designed for individual developers",
+                    "Copilot autocompletes code as you type with you driving, while Claude Code is an autonomous agent that completes entire features after you approve a plan",
+                    "Copilot focuses on Python and JavaScript while Claude Code supports all programming languages equally",
+                    "Copilot requires an IDE integration while Claude Code works from the terminal, making Copilot more user-friendly"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Part 2 contrasts them clearly: 'GitHub Copilot: Autocompletes code as you type, Line-by-line and function-level suggestions, You're still driving, Copilot is suggesting. Claude Code: Autonomous agent that completes entire features, Can handle debugging sessions, refactoring tasks, multi-file changes, You approve the plan, Claude executes autonomously.'",
+                    incorrect: "Review the comparison in Part 2. The key distinction is scope and autonomy: Copilot provides line-by-line suggestions while you drive. Claude Code 'is an autonomous agent that completes entire features, handles debugging sessions, refactoring tasks, multi-file changes' after you approve its plan. Many developers use both together."
+                }
+            },
+            {
+                question: "Based on the decision framework, which scenario would be MOST appropriate for using Claude Code rather than Claude web?",
+                options: [
+                    "You want to learn a new design pattern by discussing it with Claude and seeing examples",
+                    "You need to refactor a callback-based authentication module to async/await across 8 files while ensuring all tests still pass",
+                    "You're exploring different architectural approaches for a feature and want to think through the tradeoffs",
+                    "You want to review existing code quality and get recommendations for improvements"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect application! This matches Part 8's criteria for 'When to Use Claude Code': 'Multi-file features - When changes span 3+ files and require coordination' and 'Refactoring - Large-scale code improvements where you need safety nets.' It also matches the refactoring example: 'Analyzes current callback patterns, Creates a refactoring plan, Converts functions one at a time, Runs existing test suite to verify functionality.'",
+                    incorrect: "Review Part 8's decision framework. Options A, C, and D all fall under 'When NOT to Use Claude Code': 'Learning - When you're trying to understand a new concept (use Claude web)', 'Code review - Discussions about existing code quality (use Claude web)', 'Uncertain requirements - When you're still figuring out what to build.' The refactoring scenario involves multi-file coordination, testing requirements, and autonomous execution - perfect for Claude Code."
+                }
+            },
+            {
+                question: "What does the module identify as the break-even point for Claude Code's time investment versus productivity gains?",
+                options: [
+                    "Most developers see net productivity gains within the first week of regular use",
+                    "Most developers see net productivity gains within the first day of use",
+                    "It takes 2-3 months of consistent use before productivity gains exceed the learning investment",
+                    "The break-even point varies too much by developer skill level to provide a meaningful estimate"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Part 8 states clearly: 'Break-even point: Most developers see net productivity gains within the first week of regular use.' The setup costs include '15-30 minutes initial setup, 2-4 hours learning curve, 1-2 weeks integration into daily workflow,' but gains show up quickly.",
+                    incorrect: "Review the 'Setup Cost Analysis' in Part 8. While initial setup is 15-30 minutes and learning curve is 2-4 hours, 'Most developers see net productivity gains within the first week of regular use.' The productivity gains (30-50% faster for features, 60-70% for tests) offset the learning investment rapidly."
+                }
+            },
+            {
+                question: "According to the module's technical architecture section, how does Claude Code handle context management for very large codebases?",
+                options: [
+                    "It creates a complete index of your entire codebase in memory at startup",
+                    "It focuses on relevant files based on your questions, tracks dependencies, and releases context for files no longer needed",
+                    "It requires you to manually specify which directories to include before each session",
+                    "It uses machine learning to predict which files you'll need and pre-loads them"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Part 4 explains: 'Dynamic loading: As you work, Claude Code: Loads relevant files into context based on your questions, Tracks file dependencies and relationships, Maintains conversation history for continuity, Releases context for files no longer needed.' The module notes: 'For very large codebases: It focuses on relevant files, not the entire codebase, You can guide it to specific directories.'",
+                    incorrect: "Review 'Context Management' in Part 4. Claude Code doesn't load everything: 'Like Claude web, Claude Code has context window limits. For very large codebases: It focuses on relevant files, not the entire codebase.' The dynamic loading approach 'Loads relevant files into context based on your questions, Tracks file dependencies, Releases context for files no longer needed.'"
+                }
+            },
+            {
+                question: "What does Anthropic's Best Practice #7 recommend about reviewing changes, and why?",
+                options: [
+                    "Review all changes at once at the end using git diff for efficiency",
+                    "Set up automated code review tools to validate Claude Code's output instead of manual review",
+                    "Don't let Claude Code make 50 file changes before reviewing - ask for incremental work so you can spot issues early with smaller changesets",
+                    "Review is unnecessary if you use plan mode since Claude Code follows the approved plan exactly"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! Best Practice #7 states: 'Don't let Claude Code make 50 file changes before reviewing. Ask for incremental work' with the guidance: 'First implement the core authentication logic. I'll review that before we add error handling and tests.' The reason: 'Easier to spot issues early. Smaller changesets are easier to understand and review.'",
+                    incorrect: "Review Best Practice #7 in Part 7. The recommendation is clear: 'Don't let Claude Code make 50 file changes before reviewing. Ask for incremental work.' Even with plan mode, you should review incrementally because 'Easier to spot issues early. Smaller changesets are easier to understand and review.'"
+                }
+            },
+            {
+                question: "Based on the team adoption considerations, your team is ready for Claude Code when certain conditions are met. Which condition is NOT listed as a readiness indicator?",
+                options: [
+                    "You use version control consistently with established git workflows",
+                    "You have automated testing infrastructure in place",
+                    "All team members have at least 5 years of professional development experience",
+                    "You have CI/CD pipelines for validation"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Experience level is not mentioned as a criterion. Part 8 lists: 'version control consistently, automated testing infrastructure, clear codebase structure and documentation, team comfortable with terminal/command line, CI/CD pipelines, established code review processes.' The focus is on infrastructure and practices, not years of experience.",
+                    incorrect: "Review 'Team Adoption Considerations' in Part 8. The readiness checklist includes: 'use version control consistently, have automated testing infrastructure, codebase has clear structure and documentation, team members comfortable with terminal, have CI/CD pipelines, code review processes established.' Years of experience is never mentioned - it's about infrastructure, processes, and comfort with required tools."
+                }
+            },
+            {
+                question: "Why does the module recommend using the Research → Plan → Implement workflow rather than jumping directly to implementation?",
+                options: [
+                    "Claude Code requires research mode to access current best practices from the internet",
+                    "It prevents Claude from making assumptions about approach - you verify the strategy before committing to implementation",
+                    "The three-step process is required for git integration to work properly",
+                    "Research mode automatically generates better CLAUDE.md files for future use"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! Best Practice #1 explains with an example: 'Don't jump straight to implementation' because 'Prevents Claude from making assumptions about approach. You verify the strategy before committing to implementation.' The good example shows: 'First: Research... [Review research results] Then: Create a plan... [Review and approve plan] Finally: Implement the plan.'",
+                    incorrect: "Review Best Practice #1 in Part 7. The workflow is about validation before execution: 'Prevents Claude from making assumptions about approach. You verify the strategy before committing to implementation.' The example shows research first to understand the problem space, then plan, then implement - each with review gates. This isn't about git integration or CLAUDE.md generation."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏅 DEVELOPMENT OFFICER STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of Claude Code fundamentals. You understand autonomous execution, when to use Claude Code versus other tools, how progressive disclosure works, the importance of plan mode, and best practices from Anthropic's engineering team. You're cleared for advanced development missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 1 and focus on: the fundamental difference between Claude Code and Claude web (autonomous execution vs. generation), how CLAUDE.md works like Skills with progressive disclosure, when to use plan mode, decision framework for Claude Code vs. other tools, context management for large codebases, and Anthropic's best practices. Claude Code is a powerful development tool - make sure you understand its architecture and when to apply it!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
