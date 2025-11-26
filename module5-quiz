@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 5 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔬</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 5 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>RAG Architecture Mission</h2>
+                <p class="intro">
+                    You've learned about Retrieval Augmented Generation (RAG) - the architecture that gives AI systems access to external knowledge. This checkpoint tests your understanding of RAG components, chunking strategies, embeddings, search methods, and when to use RAG versus alternatives.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering RAG fundamentals</li>
+                        <li>Focus on <strong>architecture</strong>, chunking, embeddings, and decision frameworks</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of knowledge-augmented AI systems</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Return to Start</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the primary problem that RAG solves for AI models?",
+                options: [
+                    "RAG makes models respond faster by caching common queries and reducing generation time",
+                    "RAG gives models access to external, current, and private knowledge without retraining",
+                    "RAG improves the writing style and tone consistency of model responses",
+                    "RAG reduces the computational cost of running large language models in production"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! RAG addresses the fundamental limitation of LLMs: their knowledge is frozen at training time. By retrieving relevant information from external sources before generating responses, RAG gives models access to current information, private/proprietary data, and domain-specific knowledge without expensive retraining.",
+                    incorrect: "Review the core purpose of RAG. The key problem is that LLMs have frozen knowledge from training. RAG solves this by retrieving relevant external information before generation, giving models access to current, private, and domain-specific knowledge without retraining. It's not primarily about speed, style, or computational cost."
+                }
+            },
+            {
+                question: "In RAG architecture, why is chunking considered 'arguably the most important factor for RAG performance'?",
+                options: [
+                    "Chunking determines retrieval speed, and faster retrieval means better user experience",
+                    "Chunking affects storage costs more than any other component in the system",
+                    "How you split documents determines what information can be retrieved and matched to queries",
+                    "Chunking complexity determines how difficult the system will be to maintain over time"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! Chunking directly impacts retrieval quality. If chunks are too large, you retrieve irrelevant information. If too small, you lose context. How you split documents determines what semantic units exist for matching against queries - if a concept is split across chunks, it may never be retrieved together.",
+                    incorrect: "Review the chunking section. The key insight is that chunking determines WHAT can be retrieved. If important information is split poorly across chunks, it won't match queries well. The strategy affects retrieval quality more than speed, cost, or maintenance complexity."
+                }
+            },
+            {
+                question: "What do embeddings enable in RAG systems that traditional keyword search cannot do?",
+                options: [
+                    "Embeddings enable semantic search that finds similar meanings even with different words",
+                    "Embeddings allow the system to search through millions of documents in milliseconds",
+                    "Embeddings reduce the storage space required for large document collections",
+                    "Embeddings eliminate the need for a separate vector database in production systems"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Perfect! Embeddings capture semantic meaning as numerical vectors, enabling similarity search based on meaning rather than exact word matches. A query about 'car problems' can find documents about 'automobile issues' or 'vehicle troubles' because they're semantically similar, even without shared keywords.",
+                    incorrect: "Review the embeddings section. The key capability is semantic search - finding similar meanings even when different words are used. 'Car problems' matches 'automobile issues' through semantic similarity. Speed, storage, and database requirements are secondary considerations."
+                }
+            },
+            {
+                question: "What is the key difference between RAG's indexing phase and retrieval phase?",
+                options: [
+                    "Indexing requires vector databases while retrieval uses traditional SQL databases",
+                    "Indexing happens once during setup while retrieval happens every query",
+                    "Indexing is cheaper to run while retrieval requires expensive API calls",
+                    "Indexing uses keyword search while retrieval uses semantic similarity"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Indexing is a batch process that prepares your knowledge base - chunking documents, generating embeddings, and storing them. This happens once (or periodically for updates). Retrieval happens in real-time for every user query, searching the indexed content to find relevant chunks.",
+                    incorrect: "Review the RAG pipeline phases. Indexing is the preparation phase - done once to process documents, create embeddings, and build the searchable index. Retrieval happens every query in real-time. Both phases can use vector databases, and the cost structure varies by implementation."
+                }
+            },
+            {
+                question: "Why would you choose hybrid search (vector + keyword) over pure vector search?",
+                options: [
+                    "Hybrid search is faster because it can skip the embedding step entirely",
+                    "Hybrid search reduces costs by using cheaper keyword search algorithms",
+                    "Hybrid search combines semantic similarity with exact matching for technical terms",
+                    "Hybrid search eliminates the need for a reranking step in the pipeline"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! Hybrid search gets the best of both worlds. Vector search finds semantically similar content, while keyword search ensures exact matches for specific terms like product codes, error messages, or technical terminology that must match precisely. This is especially valuable in technical or specialized domains.",
+                    incorrect: "Review the search strategies section. Hybrid search combines semantic understanding (vector) with exact matching (keyword). This matters for technical terms, product codes, or specific phrases where exact matches are critical but you still want semantic understanding for natural language queries."
+                }
+            },
+            {
+                question: "What is the main purpose of reranking in a RAG system?",
+                options: [
+                    "Reranking speeds up retrieval by eliminating slow vector similarity calculations",
+                    "Reranking provides a second, more accurate pass to improve chunk relevance",
+                    "Reranking converts keyword search results into vector embeddings for consistency",
+                    "Reranking reduces the total number of documents stored in the vector database"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Perfect! Reranking uses a more sophisticated model to re-score the initial retrieval results. The first retrieval pass is optimized for speed (searching many documents quickly), while reranking focuses on precision (carefully evaluating relevance of the top candidates). This two-stage approach balances speed and accuracy.",
+                    incorrect: "Review the reranking section. Reranking is a second pass that improves relevance scoring. Initial retrieval is fast but approximate; reranking uses more sophisticated models to carefully evaluate the top candidates and ensure the most relevant chunks make it to the final context."
+                }
+            },
+            {
+                question: "When should you choose RAG over fine-tuning for a knowledge management project?",
+                options: [
+                    "When you need consistent writing style and domain-specific reasoning patterns",
+                    "When your information updates frequently and you need to cite verifiable sources",
+                    "When you have stable knowledge that rarely changes and strong ML expertise",
+                    "When response latency is critical and you cannot afford retrieval time"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! RAG excels when knowledge changes frequently (easy to update the index), when you need citations and verifiability (chunks can be traced to sources), and when you don't have ML expertise for fine-tuning. Fine-tuning is better for changing model behavior, style, or reasoning patterns.",
+                    incorrect: "Review the RAG vs fine-tuning decision framework. RAG is ideal for dynamic knowledge that updates frequently, when you need source citations, and when you lack fine-tuning expertise. Fine-tuning is better for stable knowledge, behavior/style changes, and when latency is critical."
+                }
+            },
+            {
+                question: "What is the 'lost in the middle' problem associated with long context windows?",
+                options: [
+                    "The model processes the middle sections of documents slower than the beginning or end",
+                    "The model may ignore or pay less attention to information in the middle of long prompts",
+                    "Storage costs for middle sections are higher than for beginning and end sections",
+                    "Embedding models cannot accurately represent the middle portions of long documents"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Research shows that LLMs tend to pay more attention to information at the beginning and end of long contexts, potentially missing or underweighting information in the middle. This is why RAG's selective retrieval can outperform simply stuffing everything into a large context window.",
+                    incorrect: "Review the context window limitations section. The 'lost in the middle' problem refers to attention patterns - models pay more attention to the start and end of long contexts, potentially missing important information in the middle. This isn't about processing speed, storage costs, or embedding quality."
+                }
+            },
+            {
+                question: "Why is it critical to use the same embedding model for both indexing and queries?",
+                options: [
+                    "Different models have different licensing costs that affect production budgets",
+                    "Different models process text at different speeds affecting system performance",
+                    "Mixing models breaks the system because questions and documents won't use the same semantic space",
+                    "Using different models requires separate vector databases which doubles storage costs"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Perfect! Each embedding model creates its own 'semantic space' - the way it represents meaning numerically. If you embed documents with one model and queries with another, they won't share the same space, so similarity calculations become meaningless. It's like trying to compare measurements in different unit systems.",
+                    incorrect: "Review the embedding consistency section. The critical issue is semantic space alignment. Each model creates vectors in its own coordinate system. Documents and queries must be embedded by the same model to exist in the same space where similarity calculations are meaningful."
+                }
+            },
+            {
+                question: "What is the primary advantage of semantic chunking over fixed-size chunking?",
+                options: [
+                    "Semantic chunking processes documents faster because it requires fewer AI calls",
+                    "Semantic chunking produces uniform chunk sizes that simplify database indexing",
+                    "Semantic chunking maintains natural thought boundaries by splitting where topics change",
+                    "Semantic chunking reduces storage requirements by creating fewer total chunks"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Semantic chunking identifies natural boundaries in content - where topics shift, ideas complete, or context changes. This keeps related information together in coherent chunks, improving retrieval quality. Fixed-size chunking might split a concept mid-sentence, losing context.",
+                    incorrect: "Review the chunking strategies section. Semantic chunking's advantage is preserving natural thought boundaries and keeping related concepts together. It actually requires more processing (not faster) and produces variable sizes (not uniform). The goal is retrieval quality through coherent chunks."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🔬 INFORMATION RETRIEVAL SPECIALIST STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of RAG architecture fundamentals. You understand how RAG extends AI capabilities with external knowledge, chunking strategies and their impact on retrieval quality, embeddings and semantic search, hybrid search approaches, reranking for precision, and when to choose RAG versus alternatives. You're cleared for advanced knowledge system missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 5 and focus on: why RAG solves the frozen knowledge problem, how chunking strategy affects retrieval quality, what embeddings enable that keywords cannot, the indexing vs retrieval phases, hybrid search benefits, reranking purpose, RAG vs fine-tuning decision criteria, the "lost in the middle" problem, embedding model consistency, and semantic vs fixed-size chunking. RAG is foundational for knowledge-augmented AI - master these concepts!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
