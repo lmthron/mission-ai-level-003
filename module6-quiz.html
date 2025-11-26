@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 6 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 50px;
+            font-size: 18px;
+            margin-top: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        #results.show {
+            display: block;
+        }
+
+        #results h2 {
+            color: #1B365D;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🏗️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 6 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>AI System Design Patterns Mission</h2>
+                <p class="intro">
+                    You've learned about AI System Design Patterns - the architectural blueprints for building intelligent systems. This checkpoint tests your understanding of the four foundational patterns, state management, context windows, and pattern selection frameworks.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering design pattern fundamentals</li>
+                        <li>Focus on <strong>architecture</strong>, memory strategies, and decision frameworks</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of AI system architecture concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Retry Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What fundamental characteristic of AI systems makes design patterns especially important compared to traditional software?",
+                options: [
+                    "AI systems require more storage space than traditional applications",
+                    "AI systems are probabilistic, meaning the same input might produce different outputs",
+                    "AI systems always require internet connectivity to function properly",
+                    "AI systems only work with unstructured data like text and images"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Traditional software is deterministic (same input = same output), but AI systems are probabilistic. This unpredictability, combined with statelessness, context limits, and cost per call, creates challenges that design patterns help solve through proven architectural solutions.",
+                    incorrect: "Review Part 1 on why patterns matter. The key distinction is that traditional software is deterministic while AI is probabilistic - the same prompt might produce different outputs. This unpredictability, plus statelessness and context limits, makes patterns essential."
+                }
+            },
+            {
+                question: "When should you choose the Pipeline pattern over other design patterns?",
+                options: [
+                    "When the task naturally breaks into sequential steps where each stage's output feeds the next",
+                    "When you need to handle many different types of requests with specialized processing",
+                    "When output quality must be verified before delivering results to users",
+                    "When the first attempt at a task is rarely good enough and needs refinement"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Pipeline is ideal when tasks naturally break into sequential steps with clear input/output at each stage, where order matters. Think assembly line - each station does one job and passes results forward. Examples include: Research → Outline → Draft → Edit → Format.",
+                    incorrect: "Review Part 2 on the Pipeline pattern. Pipeline is for sequential, multi-stage processing where output feeds input. The other scenarios describe Router (handling different request types), Evaluator (quality verification), or Feedback Loop (iterative refinement)."
+                }
+            },
+            {
+                question: "What is a key limitation of the Router pattern that architects must plan for?",
+                options: [
+                    "Router patterns cannot handle more than three different request categories",
+                    "Routers require all specialized handlers to use the same AI model",
+                    "If the router misclassifies a request, the wrong handler produces a bad result",
+                    "Router patterns always cost more than processing all requests the same way"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Router accuracy is critical because wrong classification sends requests to the wrong specialized handler, producing poor results. The router is also a single point of failure. Architects must plan for ambiguous cases and ensure the classifier is reliable.",
+                    incorrect: "Review Part 3 on Router limitations. The critical risk is classification accuracy - wrong classification means wrong handler means bad results. Routers can have many categories, handlers can use different models, and routers often save costs through specialization."
+                }
+            },
+            {
+                question: "What distinguishes the Evaluator pattern from the Feedback Loop pattern?",
+                options: [
+                    "Evaluator uses AI to check output and passes or fails it; Feedback Loop iteratively self-critiques and regenerates",
+                    "Evaluator is cheaper because it only requires one AI call per request",
+                    "Evaluator works with any type of content while Feedback Loop only works with code",
+                    "Evaluator always requires human review while Feedback Loop is fully automated"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! Evaluator is like quality control - generate output, evaluate against criteria, pass or fail. Feedback Loop is like self-editing - generate, self-critique, identify issues, regenerate with improvements, repeat until good enough. Both add cost but serve different purposes.",
+                    incorrect: "Review Parts 4 and 5. Evaluator uses a separate evaluation step to check output quality against criteria (pass/fail). Feedback Loop has the AI review its own output, identify problems, and regenerate iteratively. Both work with any content type and can be automated."
+                }
+            },
+            {
+                question: "Why is it critical to understand that AI models are stateless when designing systems?",
+                options: [
+                    "Stateless models cost more per API call than stateful alternatives",
+                    "Stateless models cannot process documents longer than their context window",
+                    "Stateless models require different prompting techniques than stateful systems",
+                    "Each AI call is independent with no memory, so you must engineer state management yourself"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! AI models don't remember previous interactions - each call starts fresh. Users expect memory ('As I mentioned earlier...'), but the AI won't provide it automatically. You must engineer memory into your system through conversation history, summarization, RAG, or structured slots.",
+                    incorrect: "Review Part 7 on statelessness. The critical insight is that each AI call is independent with no memory of past conversation. The AI won't remember what users said - you must explicitly send history or implement memory strategies to create the illusion of continuity."
+                }
+            },
+            {
+                question: "For an application that spans multiple sessions over weeks, which memory strategy is most appropriate?",
+                options: [
+                    "Full conversation history sent with every request for complete accuracy",
+                    "Sliding window keeping only the most recent ten messages",
+                    "Summarization that condenses all past interactions into one paragraph",
+                    "RAG with a vector database or structured memory slots for persistent storage"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Long-running, multi-session applications need persistent memory that works across sessions. RAG stores important facts in a vector database and retrieves relevant ones when needed. Structured slots maintain specific information types. Both persist beyond single sessions.",
+                    incorrect: "Review the Memory Strategy Selection guidance. Full history becomes impossibly large over weeks. Sliding window loses old context. Single-paragraph summarization loses too much detail. RAG and structured slots provide persistent, selective memory that works across sessions."
+                }
+            },
+            {
+                question: "What problem does the 'lost in the middle' phenomenon describe in context window management?",
+                options: [
+                    "AI models charge more for tokens in the middle of the context window",
+                    "Models pay more attention to the beginning and end, potentially missing middle content",
+                    "Documents placed in the middle of context are deleted to save processing time",
+                    "Context windows have a physical gap in the middle that cannot store information"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Exactly! Research shows that even within their stated limits, AI models tend to focus on information at the beginning and end of long contexts, potentially missing or underweighting what's in the middle. This is why strategic context management matters - more isn't always better.",
+                    incorrect: "Review Part 8 on the context window challenge. 'Lost in the middle' describes an attention pattern - models pay more attention to the start and end of long contexts, potentially ignoring important information in the middle. It's about attention, not cost or deletion."
+                }
+            },
+            {
+                question: "According to the pattern composition guidelines, what approach should you take when starting a new AI system?",
+                options: [
+                    "Implement all four foundational patterns from the start to ensure flexibility",
+                    "Begin with a single pattern and add complexity only when specific problems require it",
+                    "Choose the most sophisticated pattern combination used by industry leaders",
+                    "Start with the Feedback Loop pattern since it produces the highest quality outputs"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! The guidance is 'start simple' - begin with a single pattern, add complexity only when needed, and prove value before adding features. Each pattern adds latency, cost, and maintenance burden. The simplest solution that works is best.",
+                    incorrect: "Review Part 6 on pattern composition. The guidelines emphasize starting simple with a single pattern, then adding patterns only to solve specific problems. Don't over-engineer - complexity has costs in development, maintenance, and debugging."
+                }
+            },
+            {
+                question: "When using the decision tree for pattern selection, what should you consider if your task requires verifying output quality before delivery?",
+                options: [
+                    "Use the Pipeline pattern with extra validation stages built in",
+                    "Use the Router pattern to separate high-quality from low-quality outputs",
+                    "Use the Feedback Loop pattern for autonomous self-correction",
+                    "Use the Evaluator pattern when errors are costly and quality criteria can be defined"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! The decision tree asks 'Is output quality verification critical?' - if yes, consider the Evaluator pattern. It's appropriate when errors are costly, you can define clear pass/fail criteria, and the extra cost of verification is worth the quality assurance.",
+                    incorrect: "Review Part 9 on decision trees. Question 3 specifically asks about quality verification - when errors are costly and you can define quality criteria, the Evaluator pattern provides automated verification. Pipeline is for sequential steps, Router for categorization, Feedback Loop for iteration."
+                }
+            },
+            {
+                question: "Why are diagrams particularly important for documenting AI systems compared to traditional software?",
+                options: [
+                    "AI systems are too complex for written documentation to adequately explain",
+                    "Regulatory requirements mandate diagrams for all AI system documentation",
+                    "AI systems have probabilistic outputs, multiple coordinated calls, and state management needs that diagrams clarify",
+                    "AI models can only understand system architecture through visual representations"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! AI systems differ from traditional software - they have probabilistic outputs, require coordinating multiple AI calls, need explicit state management, and face context window constraints. Diagrams help teams understand call sequences, prompt flows, state storage points, and failure cases.",
+                    incorrect: "Review Part 10 on diagramming. AI systems are different from traditional deterministic software - they have probabilistic outputs, coordinate multiple calls, require state management, and face context limits. Diagrams help communicate these unique characteristics clearly to teams."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🏗️ SYSTEMS ARCHITECT STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of AI system design patterns. You understand the four foundational patterns (Pipeline, Router, Evaluator, Feedback Loop) and when to use each. You grasp why AI's stateless nature requires engineered memory solutions, how context windows impact system design, and the importance of starting simple and adding complexity only when needed. You're cleared for production architecture missions!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 6 and focus on: why AI systems need patterns (probabilistic vs deterministic), when to use each of the four foundational patterns, how Evaluator differs from Feedback Loop, why AI statelessness matters, memory strategies for different conversation lengths, the "lost in the middle" problem, pattern composition guidelines (start simple), decision tree pattern selection, and why diagrams matter for AI systems. Architecture decisions shape everything - master these concepts!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
