@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 8 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .four-col-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .four-col-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .four-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .four-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .four-col-card li {
+            padding: 3px 0;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .three-col-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .three-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .three-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .three-col-card li {
+            padding: 4px 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .reference-table thead {
+            background: #1B365D;
+            color: white;
+        }
+
+        .reference-table th {
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .reference-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #555;
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        .reference-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .reference-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .reference-table tbody tr:hover {
+            background: #e3f2fd;
+        }
+
+        .table-section-title {
+            color: #1B365D;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 25px 0 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .four-col-grid, .three-col-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reference-table {
+                font-size: 12px;
+            }
+
+            .reference-table th, .reference-table td {
+                padding: 8px 6px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">⚙️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 8 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Monitoring and Observability: Keeping AI Systems Healthy</h2>
+                <p>This guide covers the essential concepts from Module 8 to help you prepare for the checkpoint quiz. Focus on understanding why AI monitoring differs from traditional software, the four pillars of observability, drift detection, distributed tracing, cost tracking, and user feedback loops.</p>
+            </div>
+
+            <!-- Why AI Monitoring Is Different -->
+            <div class="concept-section">
+                <div class="concept-title">Why AI Monitoring Is Different</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Traditional Software</h4>
+                        <ul>
+                            <li>• Fails binary (works or doesn't)</li>
+                            <li>• Deterministic behavior</li>
+                            <li>• Same input = same output</li>
+                            <li>• Errors are immediately obvious</li>
+                            <li>• Follow stack trace to fix</li>
+                            <li>• Restart service often works</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>AI Systems</h4>
+                        <ul>
+                            <li>• Fails gradually and subtly</li>
+                            <li>• Non-deterministic behavior</li>
+                            <li>• Same input may vary output</li>
+                            <li>• Quality degrades silently</li>
+                            <li>• No single line of code to fix</li>
+                            <li>• Requires retraining or updating</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ The Silent Failure Problem</h4>
+                    <p><strong>Traditional metrics say "system is up"</strong> while AI quality quietly degrades. A chatbot becomes less helpful, recommendations become less relevant, or fraud detection misses patterns. The system is "up" with "no errors" but still failing users.</p>
+                </div>
+            </div>
+
+            <!-- Four Pillars of AI Observability -->
+            <div class="concept-section">
+                <div class="concept-title">The Four Pillars of AI Observability</div>
+                
+                <div class="four-col-grid">
+                    <div class="four-col-card">
+                        <h4>1. Data Quality</h4>
+                        <ul>
+                            <li>• Input distribution shifts</li>
+                            <li>• Missing/malformed inputs</li>
+                            <li>• Data freshness (RAG)</li>
+                            <li>• Volume anomalies</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>2. Model Performance</h4>
+                        <ul>
+                            <li>• Accuracy metrics</li>
+                            <li>• Response relevance</li>
+                            <li>• Consistency</li>
+                            <li>• Latency</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>3. Infrastructure</h4>
+                        <ul>
+                            <li>• GPU/CPU usage</li>
+                            <li>• API quotas</li>
+                            <li>• Token usage</li>
+                            <li>• Memory consumption</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>4. Behavior</h4>
+                        <ul>
+                            <li>• Bias indicators</li>
+                            <li>• Data leakage</li>
+                            <li>• Jailbreak attempts</li>
+                            <li>• Harmful content</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why All Four Pillars Matter</h4>
+                    <p><strong>Missing any pillar creates blind spots.</strong> You might have perfect infrastructure metrics while model quality degrades. Or high accuracy while bias issues go undetected. Comprehensive monitoring requires all four.</p>
+                </div>
+            </div>
+
+            <!-- Distributed Tracing -->
+            <div class="concept-section">
+                <div class="concept-title">Distributed Tracing for AI Systems</div>
+                
+                <div class="concept-box">
+                    <h4>Trace vs. Span: Key Relationship</h4>
+                    <p><strong>A trace</strong> represents one complete end-to-end request (from user prompt to delivered response).</p>
+                    <p><strong>A span</strong> is one operation within that trace (RAG retrieval, LLM inference, API call).</p>
+                    <ul>
+                        <li><strong>Spans have parent-child relationships</strong> creating a hierarchical tree</li>
+                        <li><strong>Each span records:</strong> start time, end time, duration, parent span ID</li>
+                        <li><strong>Tree structure shows</strong> exactly where time was spent in multi-step workflows</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Example: RAG System Trace</h4>
+                    <ol>
+                        <li><strong>Root Span:</strong> User query received (total: 2.5s)</li>
+                        <li><strong>Child Span 1:</strong> Query embedding generation (0.1s)</li>
+                        <li><strong>Child Span 2:</strong> Vector database search (0.3s)</li>
+                        <li><strong>Child Span 3:</strong> Context assembly (0.1s)</li>
+                        <li><strong>Child Span 4:</strong> LLM inference (1.8s)</li>
+                        <li><strong>Child Span 5:</strong> Response formatting (0.2s)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Logging Stages -->
+            <div class="concept-section">
+                <div class="concept-title">What to Log at Each Stage</div>
+                
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>What to Log</th>
+                            <th>Why It Matters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Request Receipt</strong></td>
+                            <td>Timestamp, request ID, user/session ID, endpoint, user prompt, metadata (location, version, etc)</td>
+                            <td>Debugging starts here; captures exactly what the user asked and their context</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Context Preparation (RAG)</strong></td>
+                            <td>Retrieval query, results count, top documents (IDs, scores, sources), retrieval latency</td>
+                            <td>Determines if wrong answer was due to incorrect or missing retrieved context</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Model Inference</strong></td>
+                            <td>Model name/version, system prompt, context length, parameters (temperature, tokens), timing</td>
+                            <td>Essential for reproducing issues; shows which model and settings produced the output</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Response Generation</strong></td>
+                            <td>Full output/completion, tokens used (input/output/total), finish reason, cost</td>
+                            <td>Captures exactly what the user saw; needed for quality assessment and cost tracking</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Post-Processing</strong></td>
+                            <td>Content filters triggered, formatting applied, links added, final output length</td>
+                            <td>Issues may arise here, not in the model itself; tracks modifications after model output</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cost Tracking -->
+            <div class="concept-section">
+                <div class="concept-title">Cost Tracking and Optimization</div>
+                
+                <div class="warning-box">
+                    <h4>💰 Critical Cost Fact</h4>
+                    <p><strong>Output tokens cost 3-5x more than input tokens</strong> because generation is computationally more intensive than processing input. Asking for verbose explanations when you only need a simple answer wastes significant money.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Cost Optimization Strategies</h4>
+                    <ul>
+                        <li><strong>Control response length:</strong> Set appropriate max_tokens limits</li>
+                        <li><strong>Request concise responses:</strong> Add "be concise" to prompts</li>
+                        <li><strong>Implement caching:</strong> Avoid redundant API calls</li>
+                        <li><strong>Use model cascading:</strong> Start cheap, escalate when needed</li>
+                        <li><strong>Monitor token usage:</strong> Track costs per feature/user</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Exact Match Caching</h4>
+                        <ul>
+                            <li>• Only matches identical queries</li>
+                            <li>• 10-20% cache hit rate</li>
+                            <li>• Simple to implement</li>
+                            <li>• Limited effectiveness</li>
+                            <li>• Users phrase questions differently</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Semantic Caching</h4>
+                        <ul>
+                            <li>• Matches based on meaning</li>
+                            <li>• 40-60% cache hit rate</li>
+                            <li>• Uses embeddings</li>
+                            <li>• Higher effectiveness</li>
+                            <li>• "Refund policy?" = "How do refunds work?"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="table-section-title">Cost Drivers</p>
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Description</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Model Selection</strong></td>
+                            <td>Different models have different costs (GPT-4 Turbo vs. Claude Haiku 4.5)</td>
+                            <td>Up to 200x cost difference</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Token Count</strong></td>
+                            <td>Every token (input/output) costs money; verbose vs. concise prompts</td>
+                            <td>Direct linear cost impact</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Output Length</strong></td>
+                            <td>Output tokens cost more than input tokens (3-5x more expensive)</td>
+                            <td>Verbose explanations vs. short answers dramatically affects cost</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="table-section-title">Optimization Strategies</p>
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>Description</th>
+                            <th>Potential Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Router Pattern</strong></td>
+                            <td>Use cheaper models for simple tasks (GPT-4o mini for classification, Sonnet 4 for analysis)</td>
+                            <td>50%+ savings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prompt Optimization</strong></td>
+                            <td>Rewrite prompts for conciseness; reduce input tokens by 80%</td>
+                            <td>30-50% savings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Response Caching</strong></td>
+                            <td>Cache identical/similar responses (FAQ answers, product descriptions)</td>
+                            <td>Near-zero cost for cached</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Batch Processing</strong></td>
+                            <td>Group non-real-time tasks for bulk processing</td>
+                            <td>Volume discounts apply</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Model Drift -->
+            <div class="concept-section">
+                <div class="concept-title">Model Drift: The Silent Killer</div>
+                
+                <div class="concept-box">
+                    <h4>What Is Model Drift?</h4>
+                    <p><strong>Your AI model gets worse over time not because it broke, but because the world changed.</strong> A model trained on last year's data learned last year's patterns, but user behavior evolves, new trends emerge, and the context changes. Traditional monitoring says "system is up" while accuracy quietly degrades.</p>
+                </div>
+
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>Data Drift</h4>
+                        <ul>
+                            <li>• Input distribution changed</li>
+                            <li>• Types of requests look different</li>
+                            <li>• Example: Trained on product questions, now getting policy questions</li>
+                            <li>• Detection: Statistical comparison to baseline</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Concept Drift</h4>
+                        <ul>
+                            <li>• Input-output relationships changed</li>
+                            <li>• What used to be "correct" changed</li>
+                            <li>• Example: Same input now needs different output</li>
+                            <li>• Detection: Performance metric tracking</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Prediction Drift</h4>
+                        <ul>
+                            <li>• Output distribution changed</li>
+                            <li>• Model producing different patterns</li>
+                            <li>• Example: Responses skewing longer or more negative</li>
+                            <li>• Detection: Output distribution monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Drift Detection Methods</h4>
+                    <ul>
+                        <li><strong>Statistical tests:</strong> PSI, KL divergence, Chi-square tests comparing distributions</li>
+                        <li><strong>Embedding-based:</strong> Detect semantic drift using sentence transformers</li>
+                        <li><strong>Performance monitoring:</strong> Track accuracy, relevance, user satisfaction over time</li>
+                        <li><strong>Confidence scores:</strong> Increasing low-confidence responses = potential drift</li>
+                        <li><strong>Human-in-the-loop:</strong> Sample outputs for manual review</li>
+                    </ul>
+                </div>
+
+                <p class="table-section-title">Detection Methods for Drift &amp; Degradation</p>
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Detection Method</th>
+                            <th>What It Detects</th>
+                            <th>How It Works</th>
+                            <th>Thresholds / Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Statistical Tests</strong></td>
+                            <td>Data drift, prediction drift</td>
+                            <td>K-S Test, PSI, KL Divergence</td>
+                            <td>PSI &gt;0.1 (moderate), &gt;0.25 (significant)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Embedding-Based Drift</strong></td>
+                            <td>Semantic drift in text inputs</td>
+                            <td>Compare embedding distributions</td>
+                            <td>Detects meaning shift, not just tokens</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance Monitoring</strong></td>
+                            <td>Actual output quality degradation</td>
+                            <td>Track accuracy, F1, BLEU/ROUGE, human eval</td>
+                            <td>Declining metrics = drift</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Confidence Scores</strong></td>
+                            <td>Model uncertainty, potential drift</td>
+                            <td>Monitor % of low-confidence predictions</td>
+                            <td>Spike in low-confidence = investigate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Human-in-the-Loop</strong></td>
+                            <td>Real-world quality, subtle failures</td>
+                            <td>Sampled human review, user feedback</td>
+                            <td>Declining scores/trends = drift</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Quality Metrics -->
+            <div class="concept-section">
+                <div class="concept-title">Quality Metrics Beyond Accuracy</div>
+                
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>Groundedness</h4>
+                        <ul>
+                            <li>• Is response based on sources?</li>
+                            <li>• Can each claim be traced?</li>
+                            <li>• Are citations accurate?</li>
+                            <li>• Critical for RAG systems</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Relevance</h4>
+                        <ul>
+                            <li>• Does it answer the question?</li>
+                            <li>• Semantic similarity check</li>
+                            <li>• Human evaluation</li>
+                            <li>• LLM-as-judge approach</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Consistency</h4>
+                        <ul>
+                            <li>• Similar questions = similar answers?</li>
+                            <li>• Ask same question multiple ways</li>
+                            <li>• Track response variance</li>
+                            <li>• Identify instability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Additional Quality Metrics</h4>
+                    <ul>
+                        <li><strong>Coherence:</strong> Is the response internally consistent and logical?</li>
+                        <li><strong>Safety:</strong> Does response avoid harmful content (toxicity, bias, misinformation)?</li>
+                        <li><strong>Hallucination rate:</strong> How often does the model "make things up"?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- User Feedback -->
+            <div class="concept-section">
+                <div class="concept-title">User Feedback Loops</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Explicit Feedback</h4>
+                        <ul>
+                            <li>• Direct user input</li>
+                            <li>• Thumbs up/down buttons</li>
+                            <li>• Rating scales (1-5 stars)</li>
+                            <li>• Free-text comments</li>
+                            <li>• "Was this helpful?" prompts</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Implicit Feedback</h4>
+                        <ul>
+                            <li>• Behavioral signals</li>
+                            <li>• Task completion rates</li>
+                            <li>• Escalation to human agent</li>
+                            <li>• Extensive editing of AI output</li>
+                            <li>• Session abandonment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Why Both Types Matter</h4>
+                    <p><strong>Explicit feedback</strong> tells you what users think. <strong>Implicit feedback</strong> shows what users actually do. A user might not click "thumbs down" but still abandons the task. Combined signals give the full picture of user satisfaction.</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Panels -->
+            <div class="concept-section">
+                <div class="concept-title">Essential AI Dashboard Panels</div>
+                
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Panel Name</th>
+                            <th>Metrics</th>
+                            <th>Why It Matters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Request Volume &amp; Success Rate</strong></td>
+                            <td>Requests/min, success rate %, error rate by type</td>
+                            <td>Baseline health, integration status</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latency Distribution</strong></td>
+                            <td>P50/P95/P99 latency, histogram, slowest requests</td>
+                            <td>User experience, detect slowdowns</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost Tracking</strong></td>
+                            <td>Cost/hour, cost by model, most expensive requests, cost trend</td>
+                            <td>Budget control, catch cost spikes immediately</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Token Usage</strong></td>
+                            <td>Input/output tokens, avg tokens/request, usage by endpoint, cache hit rate</td>
+                            <td>Optimization, detect inefficiency</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quality Signals</strong></td>
+                            <td>Confidence scores, low-confidence count, user feedback, manual review rate</td>
+                            <td>Output quality, proactive monitoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Model Drift Indicators</strong></td>
+                            <td>Input/output distribution shift, test set performance, drift alert status</td>
+                            <td>Early warning of degradation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Alerting Strategy -->
+            <div class="concept-section">
+                <div class="concept-title">Alerting Strategy</div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Alert Fatigue Is Real</h4>
+                    <p><strong>Bad alerting = ignored alerts = missed issues.</strong> If every metric deviation triggers an alert, teams stop paying attention. When a real problem occurs, it gets lost in the noise.</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✓ Good Alert Design</h4>
+                        <ul>
+                            <li>• Clear problem statement</li>
+                            <li>• Suggested investigation steps</li>
+                            <li>• Link to relevant dashboard</li>
+                            <li>• Severity level indicated</li>
+                            <li>• Actionable by recipient</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>✗ Bad Alert Design</h4>
+                        <ul>
+                            <li>• Vague or cryptic message</li>
+                            <li>• No context or next steps</li>
+                            <li>• Too many non-actionable alerts</li>
+                            <li>• Sent to wrong team</li>
+                            <li>• Every small deviation triggers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Alerting Best Practices</h4>
+                    <ul>
+                        <li><strong>Alert on impact:</strong> Not on every metric deviation</li>
+                        <li><strong>Route appropriately:</strong> Right alerts to right people</li>
+                        <li><strong>Set meaningful thresholds:</strong> Based on business impact, not arbitrary numbers</li>
+                        <li><strong>Include runbooks:</strong> What to do when alert fires</li>
+                    </ul>
+                </div>
+
+                <p class="table-section-title">Alerting Principles</p>
+                <table class="reference-table">
+                    <thead>
+                        <tr>
+                            <th>Principle</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Actionable Alerts</strong></td>
+                            <td>Every alert should suggest an action</td>
+                            <td>"Token usage up 50%. Top user: user_xyz. Investigate."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Impact-Based Thresholds</strong></td>
+                            <td>Alert on user-facing errors, cost/quality anomalies</td>
+                            <td>"Cost per request &gt;$1"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alert Routing</strong></td>
+                            <td>Route alerts to the right people</td>
+                            <td>On-call: system down; Team lead: cost spike</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway</strong>
+                <p>AI monitoring is fundamentally different from traditional software monitoring because AI systems fail gradually and subtly, not binary. Monitor all four pillars: Data Quality, Model Performance, Infrastructure, and Behavior. Understand distributed tracing (traces contain spans). Control costs by limiting output tokens (3-5x more expensive) and using semantic caching (40-60% hit rate vs. 10-20% for exact match). Watch for drift (the world changes, not the model). Collect both explicit feedback (ratings) and implicit feedback (behavior). Design actionable alerts with clear problem statements and investigation steps to prevent alert fatigue.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed AI monitoring and observability fundamentals. Now demonstrate your understanding of the four pillars, drift detection, cost optimization, and feedback loops.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module8-quiz.html" class="quiz-button">TAKE MODULE 8 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
