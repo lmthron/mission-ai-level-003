@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Chunking Strategies Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            min-height: 100vh;
+            padding: 30px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            color: #4A90E2;
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.6;
+        }
+
+        .intro strong {
+            color: #1B365D;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .comparison-table th {
+            background: #1B365D;
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .comparison-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .strategy-name {
+            font-weight: 600;
+            color: #1B365D;
+            font-size: 15px;
+        }
+
+        .strategy-desc {
+            color: #666;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .pros {
+            color: #2e7d32;
+        }
+
+        .cons {
+            color: #c62828;
+        }
+
+        .best-for {
+            color: #1565c0;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 2px;
+        }
+
+        .pill-simple {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .pill-moderate {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .pill-complex {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .pill-fast {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .pill-slow {
+            background: #fce4ec;
+            color: #ad1457;
+        }
+
+        .decision-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .decision-section h2 {
+            color: #1B365D;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .decision-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        .decision-card:hover {
+            border-color: #4A90E2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .decision-card h3 {
+            color: #1B365D;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .decision-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .decision-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .decision-card li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #4A90E2;
+        }
+
+        .key-insight {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .key-insight h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .key-insight p {
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 900px) {
+            .comparison-table {
+                font-size: 12px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px 8px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 RAG Chunking Strategies Comparison</h1>
+            <p>Mission AI: Level 003 - Module 5 Reference</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <strong>Why Chunking Matters:</strong> Chunking is arguably the most important factor for RAG performance. How you split documents determines what your system can retrieve. Chunks that are too large mix multiple topics and become generic; chunks that are too small lose important context.
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 18%;">Strategy</th>
+                        <th style="width: 22%;">How It Works</th>
+                        <th style="width: 20%;">Pros</th>
+                        <th style="width: 20%;">Cons</th>
+                        <th style="width: 20%;">Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="strategy-name">Fixed-Size Chunking</div>
+                            <div class="strategy-desc">Split into equal-sized pieces</div>
+                            <div style="margin-top: 8px;">
+                                <span class="pill pill-simple">Simple</span>
+                                <span class="pill pill-fast">Fast</span>
+                            </div>
+                        </td>
+                        <td>
+                            Split text into equal pieces (e.g., 500 characters, 200 tokens). Often includes 10-20% overlap between chunks to prevent information loss at boundaries.
+                        </td>
+                        <td class="pros">
+                            ✓ Simple to implement<br>
+                            ✓ Predictable chunk sizes<br>
+                            ✓ Consistent embedding dimensions<br>
+                            ✓ Fast processing
+                        </td>
+                        <td class="cons">
+                            ✗ Ignores natural boundaries<br>
+                            ✗ Can split thoughts mid-sentence<br>
+                            ✗ May lose context at boundaries
+                        </td>
+                        <td class="best-for">
+                            • Quick prototypes<br>
+                            • Uniform document types<br>
+                            • When simplicity matters more than perfection
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="strategy-name">Semantic Chunking</div>
+                            <div class="strategy-desc">Split based on meaning changes</div>
+                            <div style="margin-top: 8px;">
+                                <span class="pill pill-moderate">Moderate</span>
+                                <span class="pill pill-slow">Slower</span>
+                            </div>
+                        </td>
+                        <td>
+                            Uses AI to detect topic shifts and creates chunk boundaries where subject changes. Preserves complete thoughts and maintains natural boundaries.
+                        </td>
+                        <td class="pros">
+                            ✓ Maintains semantic coherence<br>
+                            ✓ Natural thought boundaries<br>
+                            ✓ Better retrieval relevance<br>
+                            ✓ Up to 9% accuracy improvement*
+                        </td>
+                        <td class="cons">
+                            ✗ More expensive (requires AI)<br>
+                            ✗ Variable chunk sizes<br>
+                            ✗ Slower processing<br>
+                            ✗ More complex to implement
+                        </td>
+                        <td class="best-for">
+                            • High-stakes applications (legal, medical, financial)<br>
+                            • Complex documents with multiple topics<br>
+                            • When accuracy matters more than speed
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="strategy-name">Document Structure</div>
+                            <div class="strategy-desc">Use existing headings/sections</div>
+                            <div style="margin-top: 8px;">
+                                <span class="pill pill-simple">Simple</span>
+                                <span class="pill pill-fast">Fast</span>
+                            </div>
+                        </td>
+                        <td>
+                            Use existing document structure (H1, H2, H3 headers, sections, paragraphs). Keeps sections together and preserves hierarchy information.
+                        </td>
+                        <td class="pros">
+                            ✓ Respects author's organization<br>
+                            ✓ Maintains logical groupings<br>
+                            ✓ Works well for structured docs<br>
+                            ✓ Natural chunk boundaries
+                        </td>
+                        <td class="cons">
+                            ✗ Highly variable chunk sizes<br>
+                            ✗ Doesn't work for unstructured text<br>
+                            ✗ Some sections may be too large or small
+                        </td>
+                        <td class="best-for">
+                            • Technical documentation<br>
+                            • Policy manuals<br>
+                            • Structured reports<br>
+                            • Well-formatted content
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="strategy-name">Recursive/Hierarchical</div>
+                            <div class="strategy-desc">Multiple levels of chunks</div>
+                            <div style="margin-top: 8px;">
+                                <span class="pill pill-complex">Complex</span>
+                                <span class="pill pill-slow">Slower</span>
+                            </div>
+                        </td>
+                        <td>
+                            Create multiple levels: document summary → section chunks → paragraph chunks. Retrieve at appropriate granularity based on the query.
+                        </td>
+                        <td class="pros">
+                            ✓ Handles varying detail levels<br>
+                            ✓ Preserves context hierarchy<br>
+                            ✓ Can zoom in or out as needed
+                        </td>
+                        <td class="cons">
+                            ✗ Most complex to implement<br>
+                            ✗ Higher storage requirements<br>
+                            ✗ Sophisticated retrieval logic needed
+                        </td>
+                        <td class="best-for">
+                            • Large document collections<br>
+                            • Questions requiring varying detail<br>
+                            • Complex knowledge bases
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="decision-section">
+                <h2>🎯 Decision Factors</h2>
+                <div class="decision-grid">
+                    <div class="decision-card">
+                        <h3>📄 Your Documents</h3>
+                        <ul>
+                            <li>Structured (code, JSON) vs. unstructured (prose)</li>
+                            <li>Long (books) vs. short (emails)</li>
+                            <li>Technical vs. conversational</li>
+                        </ul>
+                    </div>
+                    <div class="decision-card">
+                        <h3>❓ Your Queries</h3>
+                        <ul>
+                            <li>Specific facts vs. broad concepts</li>
+                            <li>Single-answer vs. multi-step reasoning</li>
+                            <li>Known terminology vs. natural language</li>
+                        </ul>
+                    </div>
+                    <div class="decision-card">
+                        <h3>🧠 Your Embedding Model</h3>
+                        <ul>
+                            <li>Context window size (how much it can process)</li>
+                            <li>Works better with sentences vs. paragraphs</li>
+                        </ul>
+                    </div>
+                    <div class="decision-card">
+                        <h3>⚡ Your Requirements</h3>
+                        <ul>
+                            <li>Speed vs. accuracy tradeoff</li>
+                            <li>Budget for indexing</li>
+                            <li>Acceptable retrieval latency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-insight">
+                <h3>💡 Key Insight: Overlap Strategy</h3>
+                <p>Most chunking implementations include 10-20% overlap between chunks to prevent information loss at boundaries. This ensures concepts spanning chunk boundaries aren't lost. For example, with 300-word chunks and 50-word overlap, the last 50 words of Chunk 1 appear as the first 50 words of Chunk 2.</p>
+            </div>
+
+            <p style="margin-top: 20px; font-size: 13px; color: #666;">
+                *NVIDIA research showed semantic chunking can improve retrieval accuracy by up to 9% over fixed-size chunking.
+            </p>
+        </div>
+
+        <div class="footer">
+            Mission AI: Level 003 - Module 5 | RAG: Building Knowledge-Aware AI Systems
+        </div>
+    </div>
+</body>
+</html>
