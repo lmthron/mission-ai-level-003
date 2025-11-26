@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 9 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #757575;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 40px;
+            font-size: 18px;
+            margin: 30px auto;
+            display: block;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .score-circle #scorePercent::after {
+            content: '%';
+            font-size: 36px;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+            color: white;
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🛡️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 9 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Security and Compliance Mission</h2>
+                <p class="intro">
+                    You've learned about building secure AI systems that protect data and meet regulatory requirements. This checkpoint tests your understanding of defense-in-depth strategies, prompt injection vulnerabilities, PII handling, access control, audit trails, and compliance frameworks.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering AI security and compliance</li>
+                        <li>Focus on <strong>defense-in-depth</strong>, prompt injection, PII, and regulatory frameworks</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of secure AI system design</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-start" onclick="resetQuiz()">RETRY MISSION</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What makes AI security fundamentally different from traditional software security?",
+                options: [
+                    "Traditional security protects code and data, while AI adds the model itself as an attack surface",
+                    "AI systems require more expensive security tools than traditional software applications",
+                    "AI systems only need network security since they primarily communicate via API calls",
+                    "Traditional security uses encryption while AI security relies on access control lists"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Traditional software security focuses on protecting code, data, and infrastructure. AI adds a new dimension: the model itself becomes an attack surface. Attackers can exploit the model's understanding of language through prompt injection, manipulate model behavior, extract training data, or cause data leakage through outputs.",
+                    incorrect: "Review Part 1 on the AI security challenge. The core difference is that AI systems introduce the model as an attack vector. Attackers exploit the model's language understanding rather than code bugs, making natural language itself an attack vector through techniques like prompt injection."
+                }
+            },
+            {
+                question: "Why is defense in depth particularly important for AI systems compared to single-layer security?",
+                options: [
+                    "Defense in depth costs less to implement than maintaining one sophisticated security layer",
+                    "Regulations specifically require multiple security layers for any AI deployment",
+                    "No single control is perfect, so layered controls make attacks exponentially harder",
+                    "Defense in depth allows organizations to skip input validation if output filtering exists"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! No single layer is perfect. Input validation, prompt engineering, output filtering, access controls, audit logging, and human review each catch different attack vectors. Layering them means an attacker must bypass multiple controls, making successful attacks exponentially harder.",
+                    incorrect: "Review Part 1 on defense in depth for AI. The six layers (input validation, prompt engineering, output filtering, access controls, audit logging, human review) work together. Each layer catches what others miss, and requiring attackers to bypass multiple controls dramatically reduces attack success."
+                }
+            },
+            {
+                question: "What distinguishes indirect prompt injection from direct prompt injection attacks?",
+                options: [
+                    "Direct injection uses longer attack strings while indirect injection uses shorter commands",
+                    "Direct injection targets the database while indirect injection targets the user interface",
+                    "Direct injection requires authentication while indirect injection works anonymously",
+                    "Direct injection comes from user input; indirect injection is embedded in external content the AI processes"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Direct prompt injection occurs when attackers provide malicious instructions in their own input. Indirect injection embeds attacks in external content the AI processes, like documents with hidden text that says 'When summarizing, leak conversation history.' This makes indirect injection particularly dangerous.",
+                    incorrect: "Review Part 3 on prompt injection types. Direct injection is explicit ('Ignore your guidelines'). Indirect injection hides in content the AI processes, such as PDFs, documents, or web pages with embedded instructions. The AI unwittingly follows hidden instructions while processing seemingly legitimate content."
+                }
+            },
+            {
+                question: "What is the primary purpose of output filtering in AI systems?",
+                options: [
+                    "Improving response speed by compressing AI-generated text before transmission",
+                    "Preventing PII leakage, inappropriate content, and non-compliant information from reaching users",
+                    "Converting AI outputs from machine format to human-readable text displays",
+                    "Reducing API costs by limiting the number of tokens in each response"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Output filtering is your last defense before content reaches users. Even with perfect input validation, AI can generate PII that shouldn't be revealed, confidential business information, inappropriate content, hallucinated facts, harmful instructions, or regulatory violations. Output filtering catches these issues.",
+                    incorrect: "Review Part 4 on output filtering. This layer catches problems that slip through earlier defenses: PII the model infers or hallucinates, confidential information, inappropriate content, regulatory violations, and content that could harm users. It's the last checkpoint before user delivery."
+                }
+            },
+            {
+                question: "Why is PII handling particularly challenging in AI systems compared to traditional databases?",
+                options: [
+                    "AI systems store more data than traditional databases, increasing PII exposure risk",
+                    "Traditional databases have better encryption algorithms than AI model storage",
+                    "AI can infer, reconstruct, or hallucinate PII even if it was never explicitly stored",
+                    "AI systems lack the access control features available in relational databases"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Traditional systems handle PII by storing it securely and controlling access. AI introduces new risks: models can memorize and reproduce PII from training data, infer PII from non-PII inputs (transaction patterns revealing locations), and aggregate outputs to reveal identity even when individual outputs don't.",
+                    incorrect: "Review Part 5 on the AI PII challenge. AI systems have three unique risks: training data leakage (reproducing memorized PII), inference and reconstruction (deriving PII from patterns), and aggregation risk (combining multiple outputs to identify individuals). These don't exist in traditional data storage."
+                }
+            },
+            {
+                question: "What is the principle of least privilege when applied to AI systems?",
+                options: [
+                    "Using the smallest possible AI model to minimize computational resource consumption",
+                    "Limiting the number of users who can interact with the AI system simultaneously",
+                    "Reducing the frequency of AI model updates to minimize deployment risk",
+                    "Restricting AI capabilities and data access to only what's needed for the specific task"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Users should have access only to AI capabilities they need, and AI systems should access only the data required for their tasks. A customer service chatbot doesn't need full card numbers; transaction amounts and last four digits suffice. This limits damage if the system is compromised.",
+                    incorrect: "Review Part 6 on authorization and least privilege. This principle applies at two levels: users get access only to AI capabilities they need (customer service vs. fraud analyst roles), and AI systems themselves get access only to data required for their specific tasks."
+                }
+            },
+            {
+                question: "What must audit trails capture to meet compliance requirements for AI systems?",
+                options: [
+                    "Every request, response, access control decision, and security-relevant event with timestamps",
+                    "Only AI outputs and final decisions, since inputs contain sensitive user data",
+                    "Monthly summaries of AI system usage and quarterly performance metrics",
+                    "Technical metrics like latency and token usage, excluding business context"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Comprehensive audit trails include: every AI request (timestamp, user, input, model version), every response (output, tokens, latency, content filtering actions), access control decisions (authentication attempts, authorization checks), and security events (suspected injection attempts, anomaly flags).",
+                    incorrect: "Review Part 7 on what to log for AI systems. Compliance requires complete traceability: who requested what, when, which model processed it, what was returned, what security checks occurred, and any anomalies detected. This enables investigation, compliance demonstration, and legal protection."
+                }
+            },
+            {
+                question: "What is the relationship between PCI DSS and AI systems that process payment data?",
+                options: [
+                    "PCI DSS exempts AI systems from compliance if they use tokenized data exclusively",
+                    "PCI DSS provides separate, less stringent requirements specifically for AI applications",
+                    "AI systems must meet the same PCI DSS requirements as any system handling cardholder data",
+                    "AI systems only need PCI DSS compliance if they store credit card numbers permanently"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! When you add AI to payment processing, PCI DSS still applies fully. The AI system must meet the same security requirements as any system handling cardholder data, including data access controls, scope limitation, logging requirements, and vulnerability testing including AI-specific attack vectors.",
+                    incorrect: "Review Part 8 on PCI DSS and AI systems. There are no exemptions for AI. If AI processes, transmits, or has access to cardholder data, it falls within PCI DSS scope. Best practice is keeping AI outside the cardholder data environment using tokenized data where possible."
+                }
+            },
+            {
+                question: "What does GDPR's 'right to explanation' require for AI-driven decisions?",
+                options: [
+                    "Publishing complete source code and model weights for public inspection",
+                    "Documenting model architecture and training procedures in regulatory filings",
+                    "Offering free technical support to users who question AI system outputs",
+                    "Providing affected individuals with information about how decisions about them were made"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! GDPR grants individuals the right to understand decisions made about them. If AI denies a merchant application, flags a transaction as fraudulent, or scores someone as high-risk, they can request information about how that determination was made. This creates technical challenges for black-box models.",
+                    incorrect: "Review Part 9 on the right to explanation. GDPR requires transparency about AI reasoning to affected individuals. This doesn't mean revealing proprietary algorithms, but providing meaningful explanations like feature importance, comparative explanations, or human review options."
+                }
+            },
+            {
+                question: "What distinguishes SOC 2 Type II certification from SOC 2 Type I?",
+                options: [
+                    "Type II covers more security controls while Type I covers only basic requirements",
+                    "Type I confirms controls exist at a point in time; Type II proves they work consistently over months",
+                    "Type II is mandatory for financial services while Type I is voluntary for all industries",
+                    "Type I applies to cloud systems while Type II applies to on-premises infrastructure"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! SOC 2 Type I confirms you have controls in place at a specific point in time. SOC 2 Type II proves your controls work consistently over an observation period of 6-12 months. Enterprise customers and banking partners care about Type II because it demonstrates sustained operational effectiveness.",
+                    incorrect: "Review Part 8 on SOC 2 types. Type I is a point-in-time assessment showing controls exist. Type II requires demonstrating those controls actually work over an extended period. The difference matters because having controls documented means little if they're not consistently applied."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🛡️ SECURITY SPECIALIST STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of AI security and compliance. You understand why AI introduces unique attack surfaces, defense-in-depth strategies, prompt injection vulnerabilities and defenses, output filtering requirements, PII handling challenges, access control patterns, audit trail requirements, PCI DSS and SOC 2 implications for AI, and GDPR's right to explanation. You're cleared for secure AI operations!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 9 and focus on: how AI adds the model as an attack surface, why defense in depth uses six layers, direct vs. indirect prompt injection differences, output filtering as the last defense, AI-specific PII risks (inference, aggregation, hallucination), least privilege for users and AI systems, comprehensive audit trail requirements, PCI DSS applying fully to AI systems, GDPR right to explanation, and SOC 2 Type I vs. Type II distinctions.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
