@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 7 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .three-col-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .three-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .three-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .three-col-card li {
+            padding: 4px 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .three-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🚀</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 7 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>Production Deployment: From Prototype to Production</h2>
+                <p>This guide covers the essential concepts from Module 7 to help you prepare for the checkpoint quiz. Focus on understanding the prototype-production gap, security requirements, performance optimization, cost management, deployment architectures, and operational excellence.</p>
+            </div>
+
+            <!-- Prototype vs Production -->
+            <div class="concept-section">
+                <div class="concept-title">The Prototype vs. Production Gap</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Prototype (Proving Concepts)</h4>
+                        <ul>
+                            <li>• Hardcoded API keys acceptable</li>
+                            <li>• Minimal error handling</li>
+                            <li>• Performance "good enough"</li>
+                            <li>• Single user (you)</li>
+                            <li>• Sample data</li>
+                            <li>• Manual testing sufficient</li>
+                            <li>• No monitoring needed</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Production (Reliable at Scale)</h4>
+                        <ul>
+                            <li>• Secrets in secure vault</li>
+                            <li>• Comprehensive error handling</li>
+                            <li>• Consistent, fast performance</li>
+                            <li>• Thousands of concurrent users</li>
+                            <li>• Real customer data + compliance</li>
+                            <li>• Automated testing required</li>
+                            <li>• Continuous monitoring essential</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Why This Matters</h4>
+                    <p><strong>Over 70% of AI projects fail to reach production</strong> because teams underestimate this gap. What works on your laptop doesn't automatically work for thousands of concurrent users handling sensitive data with compliance requirements.</p>
+                </div>
+            </div>
+
+            <!-- Security Considerations -->
+            <div class="concept-section">
+                <div class="concept-title">Security Considerations</div>
+                
+                <div class="concept-box">
+                    <h4>API Key and Credential Management</h4>
+                    <ul>
+                        <li><strong>Never hardcode keys:</strong> Use environment variables or secret management systems</li>
+                        <li><strong>Secret managers:</strong> AWS Secrets Manager, Azure Key Vault, HashiCorp Vault</li>
+                        <li><strong>Rotate regularly:</strong> Every 90 days minimum</li>
+                        <li><strong>Separate environments:</strong> Different keys for dev/staging/production</li>
+                        <li><strong>Revoke immediately:</strong> If any key is compromised</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Access Control (RBAC)</h4>
+                    <p><strong>Role-Based Access Control</strong> defines who can do what:</p>
+                    <ul>
+                        <li><strong>Authentication:</strong> Who are you?</li>
+                        <li><strong>Authorization:</strong> What can you do?</li>
+                        <li><strong>Least privilege:</strong> Only grant access that's needed</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Prompt Injection Protection</h4>
+                    <p><strong>The risk:</strong> Malicious users try to override your instructions.</p>
+                    <ul>
+                        <li><strong>Input validation:</strong> Filter suspicious patterns, block system instruction keywords</li>
+                        <li><strong>Output filtering:</strong> Check for sensitive data exposure, prevent unauthorized actions</li>
+                        <li><strong>Guardrails:</strong> Define what AI can/cannot do, escalate risky requests to humans</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Performance Optimization -->
+            <div class="concept-section">
+                <div class="concept-title">Performance Optimization</div>
+                
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>Exact Match Cache</h4>
+                        <ul>
+                            <li>• Identical queries only</li>
+                            <li>• Simple to implement</li>
+                            <li>• 10-20% hit rate typical</li>
+                            <li>• Limited utility</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Semantic Cache</h4>
+                        <ul>
+                            <li>• Similar meanings match</li>
+                            <li>• "Refund policy?" = "How do refunds work?"</li>
+                            <li>• 40-60% hit rate</li>
+                            <li>• Much more effective</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Prompt Cache</h4>
+                        <ul>
+                            <li>• Provider caches prompts</li>
+                            <li>• System instructions cached</li>
+                            <li>• 90% input cost reduction</li>
+                            <li>• Claude/OpenAI support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Other Optimization Techniques</h4>
+                    <ul>
+                        <li><strong>Model routing:</strong> Match model to task complexity - simple tasks use cheaper models</li>
+                        <li><strong>Batching:</strong> Process multiple requests together for batch jobs (5-10x throughput)</li>
+                        <li><strong>Streaming:</strong> Send tokens as generated - feels faster even if total time is same</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cost Management -->
+            <div class="concept-section">
+                <div class="concept-title">Cost Management at Scale</div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Critical: Output Tokens Cost More</h4>
+                    <p><strong>Output tokens cost 3-5x more than input tokens.</strong> Don't default to max_tokens=4096 for everything. Set appropriate limits: FAQ answers might need 100 tokens, detailed explanations 500, full analyses 2000.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Prompt Optimization</h4>
+                    <p><strong>Biggest immediate impact on costs:</strong></p>
+                    <ul>
+                        <li><strong>Eliminate verbosity:</strong> "Analyze feedback for: sentiment, concerns, features" vs. lengthy instructions</li>
+                        <li><strong>Place static content early:</strong> Enables prompt caching</li>
+                        <li><strong>Put user question last:</strong> Improves performance by up to 30% for long contexts</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Model Cascading</h4>
+                    <p><strong>Use cheaper models first, escalate only when needed:</strong></p>
+                    <ul>
+                        <li>Step 1: Try cheap/fast model first</li>
+                        <li>Step 2: If confidence low, escalate to mid-tier model</li>
+                        <li>Step 3: If still uncertain, use most capable model</li>
+                    </ul>
+                    <p><strong>Research shows 80% of queries can be handled by cheaper models.</strong> This can reduce costs by 70% without quality loss.</p>
+                </div>
+            </div>
+
+            <!-- Deployment Architectures -->
+            <div class="concept-section">
+                <div class="concept-title">Deployment Architecture Patterns</div>
+                
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>API-Based (Recommended)</h4>
+                        <ul>
+                            <li>• Use provider APIs</li>
+                            <li>• No infrastructure mgmt</li>
+                            <li>• Automatic scaling</li>
+                            <li>• Latest models always</li>
+                            <li>• Best for most orgs</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Self-Hosted</h4>
+                        <ul>
+                            <li>• Run on your servers</li>
+                            <li>• No per-token costs</li>
+                            <li>• Complete control</li>
+                            <li>• Data stays internal</li>
+                            <li>• Requires ML ops team</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Hybrid</h4>
+                        <ul>
+                            <li>• Combine both</li>
+                            <li>• Simple → self-hosted</li>
+                            <li>• Complex → API</li>
+                            <li>• Cost optimization</li>
+                            <li>• Balance control/ease</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>When to Consider Self-Hosting</h4>
+                    <p><strong>Only consider self-hosting if:</strong></p>
+                    <ul>
+                        <li>Processing over 10 million requests per month</li>
+                        <li>Data residency absolutely requires it</li>
+                        <li>You have a dedicated ML ops team</li>
+                    </ul>
+                    <p>Otherwise, start with API-based deployment.</p>
+                </div>
+            </div>
+
+            <!-- Failure Handling -->
+            <div class="concept-section">
+                <div class="concept-title">Rollback and Failure Handling</div>
+                
+                <div class="concept-box">
+                    <h4>Graceful Degradation</h4>
+                    <p><strong>When AI fails, system still works:</strong></p>
+                    <ul>
+                        <li><strong>Primary:</strong> AI-generated response</li>
+                        <li><strong>If AI fails →</strong> Fallback: Template/cached response</li>
+                        <li><strong>If template fails →</strong> Fallback: Error message with human escalation</li>
+                    </ul>
+                    <p>Users get help even when primary systems are down.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Retry Logic</h4>
+                        <ul>
+                            <li>• First attempt fails → Wait 1s, retry</li>
+                            <li>• Second fails → Wait 2s, retry</li>
+                            <li>• Third fails → Wait 4s, retry</li>
+                            <li>• Fourth fails → Use fallback</li>
+                            <li>• Exponential backoff prevents hammering</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Circuit Breaker</h4>
+                        <ul>
+                            <li>• Service returns many errors</li>
+                            <li>• Circuit "opens" (stops calling)</li>
+                            <li>• Waits for cooldown period</li>
+                            <li>• Tries again after cooldown</li>
+                            <li>• Prevents cascade failures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version Control for Prompts -->
+            <div class="concept-section">
+                <div class="concept-title">Version Control for Prompts</div>
+                
+                <div class="concept-box">
+                    <h4>Why Prompts Need Version Control</h4>
+                    <p><strong>Prompts are code that controls AI behavior.</strong> They need the same rigor as application code:</p>
+                    <ul>
+                        <li><strong>History:</strong> See what changed, identify what broke, roll back</li>
+                        <li><strong>Collaboration:</strong> Multiple editors without overwriting each other</li>
+                        <li><strong>Testing:</strong> Test before production, not after users discover problems</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Semantic Versioning for Prompts</h4>
+                    <p><strong>Use MAJOR.MINOR.PATCH format:</strong></p>
+                    <ul>
+                        <li><strong>MAJOR (v1 → v2):</strong> Complete restructure, breaking changes, different output format</li>
+                        <li><strong>MINOR (v1.0 → v1.1):</strong> Add examples, refine instructions, improve quality</li>
+                        <li><strong>PATCH (v1.0.0 → v1.0.1):</strong> Fix typos, clarify wording, small adjustments</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Best Practices</h4>
+                    <ol>
+                        <li><strong>Store prompts outside code:</strong> In database or config file, update without deployment</li>
+                        <li><strong>Document changes:</strong> What changed, why, impact, who, when</li>
+                        <li><strong>Test before production:</strong> Evaluate on test dataset, A/B test with small user percentage</li>
+                        <li><strong>Separate environments:</strong> Development (experimental), Staging (testing), Production (stable)</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Testing AI Systems -->
+            <div class="concept-section">
+                <div class="concept-title">Testing and Quality Assurance</div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ Testing AI Is Different</h4>
+                    <p><strong>Traditional software is deterministic</strong> (same input = same output). <strong>AI systems are probabilistic</strong> (same input might produce different outputs). This requires new testing approaches.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Test Levels</h4>
+                        <ul>
+                            <li>• <strong>Unit:</strong> Test individual pieces (embeddings, retrieval)</li>
+                            <li>• <strong>Integration:</strong> Test complete workflows end-to-end</li>
+                            <li>• <strong>Regression:</strong> Ensure changes don't break existing functionality</li>
+                            <li>• <strong>A/B Testing:</strong> Compare versions with real users</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Quality Metrics</h4>
+                        <ul>
+                            <li>• <strong>Accuracy:</strong> Are responses factually correct?</li>
+                            <li>• <strong>Relevance:</strong> Do responses address the question?</li>
+                            <li>• <strong>Consistency:</strong> Similar questions get similar answers?</li>
+                            <li>• <strong>Safety:</strong> No harmful content or PII leakage?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Regression Testing for AI</h4>
+                    <ul>
+                        <li><strong>Build test dataset:</strong> 50-100 representative queries with known good responses</li>
+                        <li><strong>Run after every change:</strong> Deploy new version, run full suite, compare scores</li>
+                        <li><strong>Flag degradations:</strong> Catch problems before users do</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway</strong>
+                <p>Production deployment requires closing the gap between prototype and production - what works on your laptop won't automatically scale. Security is non-negotiable: manage secrets properly, implement access control, and protect against prompt injection. Optimize performance through caching (semantic caching has 40-60% hit rates vs. 10-20% for exact match) and model routing. Control costs by optimizing prompts, limiting response length (output tokens cost 3-5x more), and using model cascading (80% of queries can use cheaper models). Start with API-based deployment unless you have 10M+ monthly requests and a dedicated ML ops team. Build reliability through graceful degradation, retry logic, and circuit breakers. Treat prompts like code with semantic versioning. Remember that AI testing is different - probabilistic outputs require regression testing, A/B testing, and quality sampling.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed production deployment fundamentals. Now demonstrate your understanding of security, performance, cost optimization, and operational excellence.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module7-quiz.html" class="quiz-button">TAKE MODULE 7 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
