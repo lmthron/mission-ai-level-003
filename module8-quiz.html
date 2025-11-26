@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 8 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 50px;
+            font-size: 18px;
+            margin-top: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        #results.show {
+            display: block;
+        }
+
+        #results h2 {
+            color: #1B365D;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">⚙️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 8 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Monitoring and Observability Mission</h2>
+                <p class="intro">
+                    You've learned about Monitoring and Observability - keeping AI systems healthy in production. This checkpoint tests your understanding of why AI monitoring differs from traditional software, the four pillars of observability, drift detection, distributed tracing, cost tracking, and user feedback loops.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering AI monitoring and observability fundamentals</li>
+                        <li>Focus on <strong>drift detection</strong>, tracing, cost optimization, and quality metrics</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of production AI monitoring concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Retry Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the fundamental difference between traditional software monitoring and AI system monitoring?",
+                options: [
+                    "AI systems require more expensive monitoring tools than traditional software applications",
+                    "Traditional software fails binary (works or doesn't), while AI fails gradually and subtly",
+                    "AI systems only need latency monitoring since they process data faster than other systems",
+                    "Traditional software lacks logging capabilities that AI systems provide automatically"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Traditional software fails in binary ways (works or doesn't work), making issues obvious. AI systems fail gradually and subtly: a chatbot slowly becomes less helpful, recommendations become less relevant, or fraud detection misses patterns. The system is 'up' with 'no errors' but still failing users.",
+                    incorrect: "Review Part 1 on why AI monitoring is different. Traditional software has deterministic failures that are immediately obvious. AI systems introduce non-deterministic behavior where quality degrades gradually. A system can be technically functioning but producing increasingly poor results."
+                }
+            },
+            {
+                question: "What are the four pillars of AI observability according to industry best practices?",
+                options: [
+                    "Speed, Accuracy, Cost, and Scalability for comprehensive system evaluation",
+                    "Logging, Tracing, Metrics, and Alerting following traditional DevOps patterns",
+                    "Data Quality, Model Performance, Infrastructure, and Behavior monitoring",
+                    "Input Validation, Output Filtering, Error Handling, and User Feedback"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! The four pillars are Data Quality (input distribution and freshness), Model Performance (accuracy, relevance, consistency, latency), Infrastructure (GPU/CPU usage, API quotas, token usage), and Behavior (bias indicators, data leakage, jailbreak attempts, harmful content).",
+                    incorrect: "Review Part 2 on the four pillars of AI observability. Comprehensive monitoring requires: Data Quality (input monitoring), Model Performance (output quality), Infrastructure (system health), and Behavior (ethical and safety concerns). Missing any pillar creates blind spots."
+                }
+            },
+            {
+                question: "What is model drift, and why is it described as a 'silent killer' for AI systems?",
+                options: [
+                    "Hardware degradation that causes models to run slower over time on aging servers",
+                    "Gradual memory leaks in AI applications that cause eventual system crashes",
+                    "User expectations increasing faster than the AI system can be improved",
+                    "The model gets worse because the world changed, not because the model broke"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Drift means your AI model gets worse over time not because it broke, but because the world changed. A fraud model trained in 2024 learned 2024 patterns, but by 2025 new payment methods exist and fraudsters have new tactics. Traditional monitoring says 'system is up' while accuracy quietly degrades.",
+                    incorrect: "Review Part 7 on model drift. It's 'silent' because traditional monitoring shows everything is fine (system up, no errors, fast response) while the model quietly gets worse at its actual job. The world changed, making the model's training data outdated."
+                }
+            },
+            {
+                question: "What is the difference between data drift and concept drift in AI systems?",
+                options: [
+                    "Data drift affects inputs while concept drift affects the system's memory allocation",
+                    "Data drift is temporary and self-correcting while concept drift requires retraining",
+                    "Data drift means input distribution changed; concept drift means input-output relationships changed",
+                    "Data drift occurs during training while concept drift only occurs during production"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Data drift (covariate drift) means the types of inputs you're getting now look different from training data. Concept drift means what used to be 'correct' has changed - the same input now requires a different output. A transaction pattern that was 'safe' before might now indicate fraud.",
+                    incorrect: "Review Part 7 on drift types. Data drift: input distribution changes (you're seeing different types of requests). Concept drift: the relationship between inputs and outputs changes (what constitutes 'fraud' evolved, so the same transaction pattern now needs different classification)."
+                }
+            },
+            {
+                question: "In distributed tracing for AI systems, what is the relationship between a trace and a span?",
+                options: [
+                    "A trace is one complete end-to-end request; a span is one operation within that trace",
+                    "A trace logs errors only while a span logs all events including successful operations",
+                    "A trace covers multiple user sessions while a span covers a single user session",
+                    "A trace is created by the AI model while a span is created by the application code"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! A trace represents one complete end-to-end request (from user prompt to delivered response). A span is one operation within that trace (RAG retrieval, LLM inference, API call). Spans have parent-child relationships creating a hierarchical tree that shows exactly where time was spent.",
+                    incorrect: "Review Part 4 on distributed tracing fundamentals. A trace captures an entire request journey, while spans are the individual operations within it. Each span records start time, end time, duration, and contains its parent span ID, creating a tree structure for analysis."
+                }
+            },
+            {
+                question: "Why do output tokens typically cost 3-5x more than input tokens for AI API calls?",
+                options: [
+                    "Output tokens require additional validation and safety checks before delivery",
+                    "API providers charge more for outputs to discourage verbose system responses",
+                    "Output tokens consume more network bandwidth when transmitted to applications",
+                    "Output generation is computationally more intensive than processing input context"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! Output generation is computationally more intensive than processing input. This pricing reality means asking for verbose explanations when you only need a simple answer wastes money. Setting appropriate max_tokens limits and requesting concise responses provides significant cost savings.",
+                    incorrect: "Review Part 5 on cost drivers. Output tokens cost 3-5x more because generating text is computationally harder than processing input. This is why controlling response length matters - using max_tokens=4096 for a simple classification that only needs 10 tokens wastes significant money."
+                }
+            },
+            {
+                question: "What is semantic caching, and why does it achieve higher hit rates than exact match caching?",
+                options: [
+                    "Semantic caching stores responses longer, increasing the chance of future cache hits",
+                    "Semantic caching compresses data more efficiently, allowing more entries in cache",
+                    "Semantic caching matches based on meaning, recognizing similar questions as equivalent",
+                    "Semantic caching uses faster storage systems that can process more queries per second"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Semantic caching recognizes that 'What's your refund policy?' and 'How do refunds work?' mean the same thing and returns the cached response. Exact match only works for identical queries. Semantic caching achieves 40-60% hit rates compared to 10-20% for exact match because queries rarely match exactly.",
+                    incorrect: "Review Part 5 on caching strategies. Exact match caching has limited utility because users phrase questions differently. Semantic caching uses embeddings to recognize similar meanings, dramatically increasing cache effectiveness since many users ask the same questions in different words."
+                }
+            },
+            {
+                question: "What is the primary difference between explicit and implicit user feedback in AI systems?",
+                options: [
+                    "Explicit feedback is direct user input like ratings; implicit is behavioral signals like task completion",
+                    "Explicit feedback requires user accounts while implicit feedback works anonymously",
+                    "Explicit feedback is collected in real-time while implicit feedback is analyzed after sessions end",
+                    "Explicit feedback affects the model immediately while implicit feedback is stored for later analysis"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Explicit feedback is direct user input: thumbs up/down, rating scales, free-text comments. Implicit feedback is behavioral signals: did the user complete their task, did they escalate to a human, did they extensively edit AI-generated content, or did they abandon the interaction?",
+                    incorrect: "Review Part 8 on user feedback types. Explicit feedback requires user action (clicking thumbs down, leaving a rating). Implicit feedback is inferred from behavior (engagement metrics, task completion, escalation to humans, correction signals when users edit AI outputs)."
+                }
+            },
+            {
+                question: "Beyond accuracy, what quality metric measures whether AI responses are based on provided source documents?",
+                options: [
+                    "Groundedness - whether each claim can be traced back to the source material",
+                    "Relevance - whether the response actually answers the question that was asked",
+                    "Consistency - whether the model gives similar answers to similar questions",
+                    "Coherence - whether the response is internally consistent and logical"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! Groundedness measures whether responses are based on retrieved documents in RAG systems. Can each claim be traced to a source? Are citations accurate? This is distinct from relevance (answering the question), consistency (same answer to similar questions), and coherence (internal logic).",
+                    incorrect: "Review Part 7 on quality metrics beyond accuracy. Groundedness specifically measures fact attribution - can each claim be traced to source material? For RAG systems, this is critical because it detects when the model makes claims not supported by the retrieved documents."
+                }
+            },
+            {
+                question: "When designing alerting strategies for AI systems, what principle helps prevent alert fatigue?",
+                options: [
+                    "Setting alert thresholds as sensitive as possible to catch every potential issue",
+                    "Alerts must be actionable with clear problem statements and suggested investigation steps",
+                    "Sending all alerts to the entire team so everyone stays informed of system status",
+                    "Limiting alerts to only critical system failures while ignoring quality degradation signals"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Every alert should have a clear problem statement, suggested investigation steps, link to relevant dashboard, and severity level. Bad alerting (noise, non-actionable, too many) leads to ignored alerts, which means missed issues. Alert on impact, not on every metric deviation.",
+                    incorrect: "Review Part 6 on alerting strategy. Alert fatigue from non-actionable alerts leads to ignored alerts and missed issues. Good alerts include: clear problem statement, suggested investigation steps, relevant dashboard link, and severity level. Alert routing ensures the right people get the right alerts."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>⚙️ OPERATIONS ENGINEER STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of AI monitoring and observability. You understand why AI monitoring differs from traditional software (gradual vs. binary failures), the four pillars of observability, drift types and detection methods, distributed tracing for complex workflows, cost drivers and optimization strategies, user feedback loop design, and quality metrics beyond accuracy. You're cleared for production operations!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 8 and focus on: why AI fails gradually not binary, the four pillars (Data Quality, Model Performance, Infrastructure, Behavior), data drift vs. concept drift differences, trace vs. span relationships, why output tokens cost 3-5x more, semantic caching vs. exact match, explicit vs. implicit feedback types, groundedness as a quality metric, and actionable alerting principles. Production monitoring requires deep understanding!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
