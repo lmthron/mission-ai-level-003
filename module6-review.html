@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 6 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .four-col-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .four-col-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .four-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .four-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .four-col-card li {
+            padding: 3px 0;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .three-col-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .three-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .three-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .three-col-card li {
+            padding: 4px 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 900px) {
+            .four-col-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid, .good-bad-grid, .two-col-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .three-col-grid, .four-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🏗️</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 6 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>AI System Design Patterns: Architecting Intelligent Systems</h2>
+                <p>This guide covers the essential concepts from Module 6 to help you prepare for the checkpoint quiz. Focus on understanding the four foundational patterns, state management strategies, context window challenges, and pattern selection frameworks.</p>
+            </div>
+
+            <!-- Why Design Patterns Matter -->
+            <div class="concept-section">
+                <div class="concept-title">Why Design Patterns Matter for AI</div>
+                
+                <div class="concept-box">
+                    <h4>What Are Design Patterns?</h4>
+                    <p><strong>Design patterns are reusable solutions to common problems.</strong> For AI systems, patterns solve challenges like:</p>
+                    <ul>
+                        <li>How to chain multiple AI calls together</li>
+                        <li>When to use different models for different tasks</li>
+                        <li>How to verify and improve AI outputs</li>
+                        <li>How to manage conversation state</li>
+                        <li>How to handle context window limits</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Traditional Software</h4>
+                        <ul>
+                            <li>• <strong>Deterministic:</strong> Same input always produces same output</li>
+                            <li>• Predictable behavior</li>
+                            <li>• Clear if/else paths</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>AI Systems</h4>
+                        <ul>
+                            <li>• <strong>Probabilistic:</strong> Same input might produce different outputs</li>
+                            <li>• Unpredictable behavior</li>
+                            <li>• Need verification and validation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Key Insight</h4>
+                    <p><strong>AI systems are probabilistic, not deterministic.</strong> This fundamental difference, combined with statelessness, context limits, and cost per call, creates challenges that design patterns help solve through proven architectural solutions.</p>
+                </div>
+            </div>
+
+            <!-- The Four Foundational Patterns -->
+            <div class="concept-section">
+                <div class="concept-title">The Four Foundational Patterns</div>
+                
+                <div class="four-col-grid">
+                    <div class="four-col-card">
+                        <h4>1. Pipeline</h4>
+                        <ul>
+                            <li>• Sequential processing</li>
+                            <li>• Output feeds next input</li>
+                            <li>• Like assembly line</li>
+                            <li>• Order matters</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>2. Router</h4>
+                        <ul>
+                            <li>• Classifies input first</li>
+                            <li>• Routes to specialists</li>
+                            <li>• Like switchboard</li>
+                            <li>• Different handlers</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>3. Evaluator</h4>
+                        <ul>
+                            <li>• Verifies AI output</li>
+                            <li>• Pass/fail decision</li>
+                            <li>• Like quality control</li>
+                            <li>• Defined criteria</li>
+                        </ul>
+                    </div>
+                    <div class="four-col-card">
+                        <h4>4. Feedback Loop</h4>
+                        <ul>
+                            <li>• Self-critique output</li>
+                            <li>• Iterate until good</li>
+                            <li>• Like self-editing</li>
+                            <li>• Multiple attempts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pipeline Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">Pipeline Pattern</div>
+                
+                <div class="concept-box">
+                    <h4>What Is Pipeline?</h4>
+                    <p><strong>Pipeline means the output of one AI call feeds into the input of the next AI call sequentially.</strong> Think assembly line: each station does one specific job and passes the result to the next station.</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use Pipeline When:</h4>
+                        <ul>
+                            <li>• Task breaks into sequential steps</li>
+                            <li>• Each step has clear input/output</li>
+                            <li>• Order matters (can't skip steps)</li>
+                            <li>• Different prompts per stage</li>
+                            <li>• Deterministic flow needed</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Pipeline Limitations:</h4>
+                        <ul>
+                            <li>• No flexibility (all steps every time)</li>
+                            <li>• Can't skip or reorder dynamically</li>
+                            <li>• If one step fails, entire pipeline fails</li>
+                            <li>• Every request pays full pipeline cost</li>
+                            <li>• Not for dynamic decision-making</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Pipeline Examples</h4>
+                    <ul>
+                        <li><strong>Content generation:</strong> Research → Outline → Draft → Edit → Format</li>
+                        <li><strong>Data processing:</strong> Extract → Transform → Validate → Summarize</li>
+                        <li><strong>Document analysis:</strong> Parse → Extract → Categorize → Report</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Router Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">Router Pattern</div>
+                
+                <div class="concept-box">
+                    <h4>What Is Router?</h4>
+                    <p><strong>Router means an initial AI call classifies the input and directs it to the most appropriate specialized handler.</strong> Think switchboard operator: determines which department should handle the call, then routes accordingly.</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use Router When:</h4>
+                        <ul>
+                            <li>• Clear request categories exist</li>
+                            <li>• Different handling per category</li>
+                            <li>• Specialized expertise needed</li>
+                            <li>• Cost optimization (simple → cheap model)</li>
+                            <li>• Scalable category additions</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Router Limitations:</h4>
+                        <ul>
+                            <li>• Wrong classification = wrong handler = bad result</li>
+                            <li>• Router is single point of failure</li>
+                            <li>• Must handle ambiguous cases</li>
+                            <li>• Maintenance of multiple handlers</li>
+                            <li>• Not for queries spanning categories</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical: Router Accuracy</h4>
+                    <p><strong>Router accuracy is critical because wrong classification sends requests to the wrong specialized handler, producing poor results.</strong> The router itself is a single point of failure. Architects must plan for ambiguous cases and ensure the classifier is reliable.</p>
+                </div>
+            </div>
+
+            <!-- Evaluator Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">Evaluator Pattern</div>
+                
+                <div class="concept-box">
+                    <h4>What Is Evaluator?</h4>
+                    <p><strong>Evaluator means using AI to verify, score, or critique other AI outputs before finalizing.</strong> Think quality control: AI generates output, another AI (or same AI with different prompt) evaluates it against defined criteria.</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use Evaluator When:</h4>
+                        <ul>
+                            <li>• Quality matters more than speed</li>
+                            <li>• High-stakes outputs (customer comms)</li>
+                            <li>• Objective criteria can be defined</li>
+                            <li>• Cost of errors is high</li>
+                            <li>• Consistency requirements exist</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Evaluator Limitations:</h4>
+                        <ul>
+                            <li>• Extra AI calls (2-3x base cost)</li>
+                            <li>• Adds latency to response</li>
+                            <li>• Evaluator itself can be wrong</li>
+                            <li>• Criteria must be well-defined</li>
+                            <li>• Not for real-time needs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Loop Pattern -->
+            <div class="concept-section">
+                <div class="concept-title">Feedback Loop Pattern</div>
+                
+                <div class="concept-box">
+                    <h4>What Is Feedback Loop?</h4>
+                    <p><strong>Feedback Loop means AI reviews its own output, identifies issues, and generates improved versions iteratively.</strong> Think self-editing: writer creates draft, reviews it, identifies problems, rewrites. Repeat until satisfied.</p>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use Feedback Loop When:</h4>
+                        <ul>
+                            <li>• First attempt rarely good enough</li>
+                            <li>• Quality improves with iterations</li>
+                            <li>• AI can evaluate its own output</li>
+                            <li>• Time/budget allows 2-5 attempts</li>
+                            <li>• Self-contained task</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Feedback Loop Limitations:</h4>
+                        <ul>
+                            <li>• Cost multiplier (3-5x base cost)</li>
+                            <li>• Convergence not guaranteed</li>
+                            <li>• Can get stuck in loops</li>
+                            <li>• Diminishing returns after first iteration</li>
+                            <li>• Not for budget-constrained tasks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evaluator vs Feedback Loop -->
+            <div class="concept-section">
+                <div class="concept-title">Evaluator vs. Feedback Loop</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Evaluator Pattern</h4>
+                        <ul>
+                            <li>• Like <strong>quality control</strong></li>
+                            <li>• Generate → Evaluate → Pass/Fail</li>
+                            <li>• Binary decision (meets criteria or not)</li>
+                            <li>• May regenerate if fails</li>
+                            <li>• External criteria check</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Feedback Loop Pattern</h4>
+                        <ul>
+                            <li>• Like <strong>self-editing</strong></li>
+                            <li>• Generate → Self-Critique → Improve → Repeat</li>
+                            <li>• Iterative refinement</li>
+                            <li>• Always tries to improve</li>
+                            <li>• Internal reflection</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Key Distinction</h4>
+                    <p><strong>Evaluator uses AI to check output and passes or fails it against external criteria. Feedback Loop has the AI iteratively self-critique and regenerate improvements.</strong> Both add cost but serve different purposes — Evaluator for verification, Feedback Loop for refinement.</p>
+                </div>
+            </div>
+
+            <!-- Combining Patterns -->
+            <div class="concept-section">
+                <div class="concept-title">Combining Patterns for Complex Systems</div>
+                
+                <div class="concept-box">
+                    <h4>Patterns Work Together</h4>
+                    <p><strong>Real systems rarely use just one pattern.</strong> Sophisticated applications combine patterns to handle complexity. For example, an enterprise support system might use:</p>
+                    <ul>
+                        <li><strong>Router:</strong> Classify question type (technical, billing, account)</li>
+                        <li><strong>Pipeline:</strong> Each route has stages (retrieve docs → generate → format)</li>
+                        <li><strong>Evaluator:</strong> Check response quality before sending</li>
+                        <li><strong>Feedback Loop:</strong> If evaluation fails, regenerate with improvements</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>Pattern Composition Guidelines</h4>
+                    <ol>
+                        <li><strong>Start simple:</strong> Begin with a single pattern</li>
+                        <li><strong>Add complexity only when needed:</strong> Solve specific problems as they arise</li>
+                        <li><strong>Prove value before adding features:</strong> Each pattern adds cost and complexity</li>
+                        <li><strong>Don't over-engineer:</strong> Simplest solution that works is best</li>
+                    </ol>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Key Principle</h4>
+                    <p><strong>Begin with a single pattern and add complexity only when specific problems require it.</strong> Each pattern adds latency, cost, and maintenance burden. Complexity has real costs in development, maintenance, and debugging.</p>
+                </div>
+            </div>
+
+            <!-- State Management -->
+            <div class="concept-section">
+                <div class="concept-title">State Management and Memory</div>
+                
+                <div class="concept-box">
+                    <h4>The Stateless Problem</h4>
+                    <p><strong>Critical concept: AI models are stateless.</strong> They don't remember previous interactions. Each AI call is independent with no memory of past conversation, no awareness of previous requests — each interaction starts fresh.</p>
+                    <ul>
+                        <li>Users expect memory: "As I mentioned earlier..."</li>
+                        <li>But AI won't provide it automatically</li>
+                        <li><strong>You must engineer memory into your system</strong></li>
+                    </ul>
+                </div>
+
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>Conversation History</h4>
+                        <ul>
+                            <li>• Send full history each request</li>
+                            <li>• Simple to implement</li>
+                            <li>• Perfect recall of recent chat</li>
+                            <li>• Grows with every message</li>
+                            <li>• Expensive over time</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Sliding Window</h4>
+                        <ul>
+                            <li>• Keep only last N messages</li>
+                            <li>• Prevents overflow</li>
+                            <li>• Controls costs</li>
+                            <li>• Loses older context</li>
+                            <li>• Arbitrary cutoff</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Summarization</h4>
+                        <ul>
+                            <li>• Summarize older messages</li>
+                            <li>• Keep recent ones full</li>
+                            <li>• Retains important context</li>
+                            <li>• Summaries lose details</li>
+                            <li>• Extra AI calls needed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="two-col-grid">
+                    <div class="three-col-card">
+                        <h4>RAG for Long-term Memory</h4>
+                        <ul>
+                            <li>• Store facts in vector database</li>
+                            <li>• Retrieve when relevant</li>
+                            <li>• Works across sessions</li>
+                            <li>• Unlimited long-term memory</li>
+                            <li>• Requires infrastructure</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Structured Memory Slots</h4>
+                        <ul>
+                            <li>• Specific slots for info types</li>
+                            <li>• user_goal, constraints, decisions</li>
+                            <li>• Structured and efficient</li>
+                            <li>• Only relevant info included</li>
+                            <li>• Must design schema upfront</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Memory Strategy Selection</h4>
+                    <ul>
+                        <li><strong>Short conversations (&lt;10 exchanges):</strong> Use conversation history — simple and effective</li>
+                        <li><strong>Medium conversations (10-50 exchanges):</strong> Use sliding window or summarization — manage context size</li>
+                        <li><strong>Long-running applications (days/weeks):</strong> Use RAG or structured slots — persistent memory</li>
+                        <li><strong>Multi-session applications:</strong> Combine approaches — slots for key facts, RAG for details</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Context Window Management -->
+            <div class="concept-section">
+                <div class="concept-title">Context Window Management</div>
+                
+                <div class="concept-box">
+                    <h4>What Is a Context Window?</h4>
+                    <p><strong>Every AI model has a context window — the maximum amount of text it can process at once.</strong> Everything counts toward the limit: instructions, conversation history, retrieved documents, user message, and AI response.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>The Context Window Challenge</h4>
+                    <p>As context grows, problems emerge:</p>
+                    <ul>
+                        <li><strong>Performance degradation:</strong> Models perform worse with very long context</li>
+                        <li><strong>"Lost in the middle" problem:</strong> Models ignore middle sections of long contexts</li>
+                        <li><strong>Cost increases:</strong> You pay per token — longer context = higher cost</li>
+                        <li><strong>Latency increases:</strong> More tokens = slower processing</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ "Lost in the Middle" Problem</h4>
+                    <p><strong>Models pay more attention to the beginning and end of long contexts, potentially missing middle content.</strong> Research shows that even within stated limits, AI models tend to focus on information at the start and end, potentially missing or underweighting what's in the middle. This is why strategic context management matters — more isn't always better.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Context Management Strategies</h4>
+                    <ul>
+                        <li><strong>Prioritize essential information:</strong> Must-haves first, nice-to-haves if space allows</li>
+                        <li><strong>Context compression:</strong> Summarize older portions, extract key facts</li>
+                        <li><strong>Dynamic context loading:</strong> Only include what's needed for current request</li>
+                        <li><strong>Context window routing:</strong> Route to model based on context needs (small → cheaper model)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Decision Trees for Pattern Selection -->
+            <div class="concept-section">
+                <div class="concept-title">Decision Trees for Pattern Selection</div>
+                
+                <div class="steps-box">
+                    <h4>Pattern Selection Questions</h4>
+                    <ol>
+                        <li><strong>Is the task naturally sequential?</strong> Yes → Consider Pipeline Pattern</li>
+                        <li><strong>Do you have distinct categories of requests?</strong> Yes → Consider Router Pattern</li>
+                        <li><strong>Is output quality verification critical?</strong> Yes → Consider Evaluator Pattern</li>
+                        <li><strong>Does quality improve through iteration?</strong> Yes → Consider Feedback Loop Pattern</li>
+                    </ol>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Multi-Pattern Decision Framework</h4>
+                    <p>For each use case, ask:</p>
+                    <ul>
+                        <li>Need sequential processing? → Add Pipeline</li>
+                        <li>Have multiple request types? → Add Router</li>
+                        <li>Quality assurance critical? → Add Evaluator</li>
+                        <li>Iterative improvement helpful? → Add Feedback Loop</li>
+                        <li>Need conversation memory? → Add State Management</li>
+                        <li>Long context? → Add Window Management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Diagramming and Documentation -->
+            <div class="concept-section">
+                <div class="concept-title">Diagramming and Documentation</div>
+                
+                <div class="concept-box">
+                    <h4>Why Diagrams Matter for AI Systems</h4>
+                    <p><strong>AI systems are different from traditional software:</strong> They have probabilistic outputs, require coordinating multiple AI calls, need explicit state management, and face context window constraints. Diagrams help teams:</p>
+                    <ul>
+                        <li>Understand AI call sequences and dependencies</li>
+                        <li>See where prompts are used in the flow</li>
+                        <li>Identify state management needs and storage points</li>
+                        <li>Plan for failure cases and error recovery</li>
+                        <li>Communicate architecture decisions to stakeholders</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Essential Diagram Types</h4>
+                    <ul>
+                        <li><strong>Component Diagram:</strong> Major system components and relationships (AI models, databases, APIs)</li>
+                        <li><strong>Sequence Diagram:</strong> Step-by-step flow of requests (AI calls in order, decision points)</li>
+                        <li><strong>State Diagram:</strong> How conversation state changes over time (transitions and triggers)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway</strong>
+                <p>AI system design patterns provide proven solutions to the unique challenges of building with AI: probabilistic outputs, statelessness, context limits, and cost management. The four foundational patterns — Pipeline (sequential processing), Router (classification and routing), Evaluator (quality verification), and Feedback Loop (iterative refinement) — can be used alone or combined for sophisticated systems. AI models are stateless, so you must engineer memory through conversation history, sliding windows, summarization, RAG, or structured slots. Context windows have limits and suffer from the "lost in the middle" problem. Start simple with a single pattern and add complexity only when specific problems require it — the simplest solution that works is best.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed AI system design pattern fundamentals. Now demonstrate your understanding of architectural patterns and earn Systems Architect status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module6-quiz.html" class="quiz-button">TAKE MODULE 6 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
