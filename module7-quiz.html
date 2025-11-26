@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 - Module 7 Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            color: #4A90E2;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B365D;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #4A90E2;
+            background: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #4A90E2;
+            background: #e3f2fd;
+        }
+
+        .option.correct {
+            border-color: #7CB342;
+            background: #f1f8e9;
+        }
+
+        .option.incorrect {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-letter {
+            background: #7CB342;
+        }
+
+        .option.incorrect .option-letter {
+            background: #e53935;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .feedback.correct {
+            background: #f1f8e9;
+            border-left: 4px solid #7CB342;
+            color: #33691e;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-left: 4px solid #e53935;
+            color: #b71c1c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d0d0;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-start {
+            background: #4A90E2;
+            color: white;
+            padding: 16px 50px;
+            font-size: 18px;
+            margin-top: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-start:hover {
+            background: #357abd;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A90E2, #7CB342);
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        #results.show {
+            display: block;
+        }
+
+        #results h2 {
+            color: #1B365D;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-circle.pass {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+        }
+
+        .score-circle.fail {
+            background: linear-gradient(135deg, #e53935, #ef5350);
+        }
+
+        .results-detail {
+            margin: 20px 0;
+        }
+
+        .badge-earned {
+            background: linear-gradient(135deg, #7CB342, #8bc34a);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .badge-earned h3 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .mission-brief {
+            background: #f8f9fa;
+            border-left: 4px solid #4A90E2;
+            padding: 20px;
+            padding-left: 30px;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .mission-brief strong {
+            color: #1B365D;
+        }
+
+        .mission-brief ul {
+            padding-left: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🚀</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 7 Checkpoint Quiz</p>
+        </div>
+
+        <div class="content">
+            <div id="startScreen" class="start-screen">
+                <h2>Production Deployment Mission</h2>
+                <p class="intro">
+                    You've learned about Production Deployment Considerations - the critical gap between prototype and production AI systems. This checkpoint tests your understanding of security, performance optimization, cost management, deployment architectures, and operational excellence.
+                </p>
+                
+                <div class="mission-brief">
+                    <h3>Mission Briefing:</h3>
+                    <ul>
+                        <li><strong>10 questions</strong> covering production deployment fundamentals</li>
+                        <li>Focus on <strong>security</strong>, performance, cost optimization, and reliability</li>
+                        <li>You must score <strong>90% or higher</strong> to pass</li>
+                        <li>You can retake the quiz if needed</li>
+                        <li>Demonstrate mastery of production AI deployment concepts</li>
+                    </ul>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">BEGIN MISSION</button>
+            </div>
+
+            <div id="quizArea" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+
+                <div id="questionsContainer"></div>
+
+                <div class="nav-buttons">
+                    <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question →</button>
+                </div>
+            </div>
+
+            <div id="results">
+                <h2 id="resultMessage"></h2>
+                <div class="score-circle" id="scoreCircle">
+                    <span id="scorePercent"></span>
+                </div>
+                <div class="results-detail">
+                    <p style="font-size: 18px; color: #666;">
+                        You answered <strong id="correctCount"></strong> out of <strong id="totalCount"></strong> questions correctly.
+                    </p>
+                </div>
+                <div id="badgeSection"></div>
+                <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">Retry Mission</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the fundamental difference between prototype and production AI systems that teams most commonly underestimate?",
+                options: [
+                    "Prototypes use simpler AI models while production requires more advanced ones",
+                    "Prototypes lack external API access that production systems require",
+                    "Production requires different programming languages optimized for scale",
+                    "Production must handle thousands of users with real data and compliance needs"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! The reality gap centers on scale and responsibility - prototypes serve just you with sample data, while production serves thousands of users handling sensitive data with compliance requirements. What works on your laptop doesn't automatically work at production scale.",
+                    incorrect: "Review Part 1 on the prototype vs. production gap. The core difference is scale and accountability - production systems must handle multiple concurrent users, real customer data, compliance requirements, and consistent performance. Teams underestimate this gap, which is why over 70% of AI projects fail to reach production."
+                }
+            },
+            {
+                question: "Why do prompts need version control with the same rigor as application code?",
+                options: [
+                    "Prompts are automatically stored in version control and require no special handling",
+                    "Regulatory requirements mandate prompt versioning for all AI system deployments",
+                    "Version control tracks changes, enables rollback, and prevents editors from overwriting each other",
+                    "Version control is only required for prompts that exceed 500 tokens in length"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Exactly! Prompts control AI behavior - they're code. Without versioning, you can't see what changed, identify what broke the system, or roll back. Multiple people editing the same prompt overwrite each other. Changes go straight to production without testing. Users discover problems before you do.",
+                    incorrect: "Review Part 8 on version control for prompts. Prompts are code that controls AI behavior and need the same rigor: history tracking to see changes, rollback capability when things break, collaboration without overwriting, and testing before production deployment."
+                }
+            },
+            {
+                question: "What is the purpose of the graceful degradation pattern in production AI systems?",
+                options: [
+                    "It gradually reduces AI model quality to save costs during high-traffic periods",
+                    "When the primary AI fails, the system falls back to simpler alternatives that still work",
+                    "It slowly transitions users from the old system version to the new deployment",
+                    "It automatically downgrades response length when context windows become full"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Graceful degradation ensures the system still works when AI fails. If AI-generated response fails, fall back to a template response. If that fails, show an error message with human escalation. Users get help even when primary systems are down.",
+                    incorrect: "Review Part 7 on graceful degradation. The pattern ensures the system continues functioning when AI fails: try AI generation first, if that fails use a template/cached response, if that fails provide an error message with alternative help options. The goal is continuous service, not performance reduction."
+                }
+            },
+            {
+                question: "How does semantic caching differ from exact match caching for AI applications?",
+                options: [
+                    "Semantic caching returns responses for similar questions based on meaning, not identical text",
+                    "Semantic caching is faster but produces less accurate results than exact match caching",
+                    "Exact match caching uses vector databases while semantic caching uses traditional databases",
+                    "Semantic caching only works with certain AI providers while exact match works universally"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Exactly! Semantic caching recognizes that 'What's your refund policy?' and 'How do refunds work?' mean the same thing and returns the cached response. Exact match only works for identical queries. Semantic caching has 40-60% hit rates compared to 10-20% for exact match.",
+                    incorrect: "Review Part 3 on caching types. Exact match only returns cached responses for identical queries (limited utility since queries rarely match exactly). Semantic caching recognizes similar meanings, returning cached responses for questions that mean the same thing even with different wording."
+                }
+            },
+            {
+                question: "Why is controlling response length a significant cost optimization strategy?",
+                options: [
+                    "Longer responses require more time to render properly in the user interface",
+                    "Output tokens cost 3-5x more than input tokens, so verbose responses waste money",
+                    "Response length directly determines how much memory the AI model consumes",
+                    "Shorter responses are consistently more accurate than longer detailed responses"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! Output tokens cost 3-5x more than input tokens. Defaulting to max_tokens=4096 for every request wastes money on unnecessary verbosity. Set appropriate limits: FAQ answers might only need 100 tokens, while full analyses need more. Match limits to task requirements.",
+                    incorrect: "Review Part 4 on response length control. The key insight is that output tokens cost 3-5x more than input tokens. Setting max_tokens too high generates unnecessary verbose responses that cost more. Match token limits to what each task actually needs."
+                }
+            },
+            {
+                question: "What is model cascading and why is it effective for cost optimization?",
+                options: [
+                    "Running multiple models simultaneously and combining their outputs for better quality",
+                    "Training smaller models to mimic larger models through knowledge distillation techniques",
+                    "Switching between different AI providers based on their current pricing tier structures",
+                    "Using cheaper models first and escalating only when needed, since most queries are simple"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Exactly! Model cascading tries cheaper, faster models first and escalates only when needed. Research shows 80% of queries can be handled by cheaper models. Simple questions get cheap models; complex ones escalate. This can reduce costs by 70% without quality loss.",
+                    incorrect: "Review Part 4 on model cascading. The strategy uses cheaper models first, escalating only when needed. Since 80% of queries can be handled by less expensive models, you save significantly by not using the most capable (and expensive) model for simple tasks."
+                }
+            },
+            {
+                question: "What makes testing AI systems fundamentally different from testing traditional software?",
+                options: [
+                    "AI systems require specialized testing hardware that traditional software does not",
+                    "Traditional tests run automatically while AI tests always require manual execution",
+                    "AI is probabilistic - the same input might produce different outputs each time",
+                    "AI systems have fewer edge cases than traditional software so testing is simpler"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "Correct! Traditional software is deterministic (same input = same output), making pass/fail tests straightforward. AI systems are probabilistic - the same prompt might produce different responses. This requires regression testing, A/B testing with real users, and quality sampling rather than simple pass/fail assertions.",
+                    incorrect: "Review Part 9 on testing AI systems. The fundamental difference is deterministic vs. probabilistic behavior. Traditional software always produces the same output for the same input. AI might not, requiring new approaches like regression testing, A/B testing, and quality sampling."
+                }
+            },
+            {
+                question: "What is the purpose of the circuit breaker pattern in production AI systems?",
+                options: [
+                    "When a service fails repeatedly, it stops calling temporarily to prevent cascade failures",
+                    "It limits the total number of AI calls a system can make per day to control costs",
+                    "It prevents electrical damage to servers that are running intensive AI workloads",
+                    "It breaks large prompts into smaller circuits that can be processed in parallel"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "Correct! A circuit breaker stops calling a failed service temporarily. If the AI provider returns many errors, the circuit opens (stops calling), waits for a cooldown period, then tries again. This prevents hammering a failed service and causing cascade failures across your system.",
+                    incorrect: "Review Part 7 on the circuit breaker pattern. When external services fail repeatedly (like an AI provider returning errors), the circuit breaker stops calling that service temporarily to prevent cascade failures. After a cooldown, it tries again to see if the service recovered."
+                }
+            },
+            {
+                question: "For most organizations, which deployment architecture is recommended when starting with production AI?",
+                options: [
+                    "Self-hosted deployment to maintain complete control over all models and data",
+                    "API-based deployment, only considering self-hosting above 10 million monthly requests",
+                    "Hybrid deployment combining self-hosted simple tasks with API-based complex ones",
+                    "Multi-cloud deployment distributing workloads across several AI providers at once"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "Correct! API-based deployment is recommended for most cases - no infrastructure management, automatic scaling, minimal ops burden. Only consider self-hosting if: processing over 10 million requests/month, data residency absolutely requires it, or you have a dedicated ML ops team.",
+                    incorrect: "Review Part 5 on deployment patterns. API-based deployment is recommended for most organizations because it requires no infrastructure management, scales automatically, and provides access to latest models. Self-hosting only makes sense at very high volume or with strict data residency requirements."
+                }
+            },
+            {
+                question: "According to semantic versioning for prompts, when should you increment the MAJOR version number?",
+                options: [
+                    "When you fix typos or clarify wording without changing the prompt's behavior",
+                    "When you add new examples or refine instructions while keeping the output format",
+                    "When you update the prompt to work with a newer version of the AI model",
+                    "When you completely restructure the prompt with breaking changes or new format"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "Correct! MAJOR version changes (v1 → v2) indicate complete prompt restructures, breaking changes, or different output formats. MINOR changes add examples or refine instructions. PATCH changes fix typos or make small adjustments. This follows the same principle as software semantic versioning.",
+                    incorrect: "Review Part 8 on semantic versioning. MAJOR increments (v1 → v2) are for complete restructures, breaking changes, or different output formats. MINOR increments (v1.0 → v1.1) are for adding examples or refining instructions. PATCH increments (v1.0.0 → v1.0.1) are for typo fixes and small adjustments."
+                }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizArea').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                const optionsHTML = q.options.map((option, optIndex) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                        <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${option}</span>
+                    </div>
+                `).join('');
+
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${quizData.length}</div>
+                    <div class="question">${q.question}</div>
+                    <div class="options" id="options-${index}">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateButtons();
+            updateProgress();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            if (userAnswers[questionIndex] !== undefined) return;
+
+            userAnswers[questionIndex] = answerIndex;
+            
+            const optionsContainer = document.getElementById(`options-${questionIndex}`);
+            const options = optionsContainer.querySelectorAll('.option');
+            const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+            
+            const isCorrect = answerIndex === quizData[questionIndex].correct;
+            
+            options.forEach((option, idx) => {
+                if (idx === quizData[questionIndex].correct) {
+                    option.classList.add('correct');
+                } else if (idx === answerIndex) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackDiv.innerHTML = isCorrect ? 
+                `✓ ${quizData[questionIndex].feedback.correct}` : 
+                `✗ ${quizData[questionIndex].feedback.incorrect}`;
+
+            if (isCorrect) score++;
+            
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === quizData.length - 1) {
+                if (userAnswers[currentQuestion] !== undefined) {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = false;
+                } else {
+                    nextBtn.textContent = 'View Results';
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const passed = percentage >= 90;
+            
+            document.getElementById('scorePercent').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = quizData.length;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.className = `score-circle ${passed ? 'pass' : 'fail'}`;
+            
+            const resultMessage = document.getElementById('resultMessage');
+            const badgeSection = document.getElementById('badgeSection');
+            
+            if (passed) {
+                resultMessage.textContent = '🎉 Mission Complete!';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned">
+                        <h3>🚀 DEPLOYMENT STRATEGIST STATUS EARNED</h3>
+                        <p>Outstanding work, Agent! You've demonstrated mastery of production deployment considerations. You understand the critical gap between prototype and production, security requirements including prompt injection protection, performance optimization through caching and model routing, cost management strategies, deployment architecture patterns, and operational excellence requirements including monitoring, rollback, and testing. You're cleared for production deployment planning!</p>
+                    </div>
+                `;
+            } else {
+                resultMessage.textContent = 'Mission Incomplete';
+                badgeSection.innerHTML = `
+                    <div class="badge-earned" style="background: linear-gradient(135deg, #e53935, #ef5350);">
+                        <h3>📚 Additional Training Required</h3>
+                        <p>You need 90% or higher to pass. Review Module 7 and focus on: why prototype ≠ production (scale, security, compliance), why prompts need version control, graceful degradation for reliability, semantic vs. exact match caching, output tokens costing 3-5x input tokens, model cascading for cost optimization, why testing AI is different (probabilistic), circuit breaker pattern purpose, when to use API-based vs. self-hosted deployment, and semantic versioning for prompts (MAJOR.MINOR.PATCH). Production deployment requires rigorous planning!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
