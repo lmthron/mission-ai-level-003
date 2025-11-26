@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission AI: Level 003 Module 5 Review Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1B365D 0%, #2a4a7a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1B365D;
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 4px solid #7CB342;
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 3px solid #4A90E2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #4A90E2;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .intro h2 {
+            color: #1B365D;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .concept-section {
+            margin-bottom: 35px;
+        }
+
+        .concept-title {
+            color: #1B365D;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #7CB342;
+        }
+
+        .concept-box h4 {
+            color: #1B365D;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .concept-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .concept-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .concept-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .concept-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #7CB342;
+            font-weight: bold;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #4A90E2;
+        }
+
+        .comparison-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 5px 0;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .good-bad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .good-card {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #7CB342;
+        }
+
+        .bad-card {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e53935;
+        }
+
+        .good-card h4 {
+            color: #558b2f;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .bad-card h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .good-card ul, .bad-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .good-card li, .bad-card li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .steps-box {
+            background: #e3f2fd;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .steps-box h4 {
+            color: #1B365D;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        .steps-box ol {
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .steps-box li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #4A90E2, #7CB342);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box strong {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #7CB342, #9CCC65);
+            color: white;
+            padding: 35px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-size: 16px;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: white;
+            color: #7CB342;
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .three-col-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-top: 3px solid #4A90E2;
+        }
+
+        .three-col-card h4 {
+            color: #1B365D;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .three-col-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .three-col-card li {
+            padding: 4px 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid, .good-bad-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .three-col-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge-icon">🔬</div>
+            <h1>MISSION AI: LEVEL 003</h1>
+            <p class="subtitle">Module 5 Review Guide</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>RAG: Building Knowledge-Aware AI Systems</h2>
+                <p>This guide covers the essential concepts from Module 5 to help you prepare for the checkpoint quiz. Focus on understanding RAG architecture, chunking strategies, embeddings, search methods, and decision frameworks.</p>
+            </div>
+
+            <!-- The Knowledge Problem -->
+            <div class="concept-section">
+                <div class="concept-title">The Knowledge Problem RAG Solves</div>
+                
+                <div class="concept-box">
+                    <h4>Core Limitation of AI Models</h4>
+                    <p>AI models only know what they were trained on. This creates three problems:</p>
+                    <ul>
+                        <li><strong>Knowledge cutoff:</strong> Models can't answer questions about events after their training date</li>
+                        <li><strong>No private information:</strong> Models can't see your company's internal documents, policies, or data</li>
+                        <li><strong>Hallucinations:</strong> Without grounding, models often make up plausible-sounding but incorrect answers</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>What RAG Enables</h4>
+                    <p><strong>RAG gives AI models access to external knowledge at query time:</strong></p>
+                    <ul>
+                        <li>Real-time information access (documents updated minutes ago)</li>
+                        <li>Private, domain-specific knowledge (your internal documentation)</li>
+                        <li>Reduced hallucinations (responses grounded in actual documents)</li>
+                        <li>Cost-effective updates (update documents, not retrain models)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- What Is RAG -->
+            <div class="concept-section">
+                <div class="concept-title">What Is RAG?</div>
+                
+                <div class="concept-box">
+                    <h4>The Name Explained</h4>
+                    <p><strong>Retrieval Augmented Generation</strong> is an AI framework that enhances large language model outputs by retrieving relevant information from external knowledge sources before generating responses.</p>
+                    <ul>
+                        <li><strong>Retrieval:</strong> Finding relevant information from a knowledge base</li>
+                        <li><strong>Augmented:</strong> Adding that information to the prompt</li>
+                        <li><strong>Generation:</strong> AI model produces response using both its training and the retrieved context</li>
+                    </ul>
+                </div>
+
+                <div class="steps-box">
+                    <h4>The RAG Process</h4>
+                    <ol>
+                        <li><strong>User asks a question</strong> — "What's the return policy for damaged items?"</li>
+                        <li><strong>System searches knowledge base</strong> — Converts question to mathematical representation, finds most relevant documents</li>
+                        <li><strong>System builds enhanced prompt</strong> — Original question + retrieved documents</li>
+                        <li><strong>AI generates grounded response</strong> — Uses both training and retrieved context, can cite sources</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Two-Phase Architecture -->
+            <div class="concept-section">
+                <div class="concept-title">Two-Phase Architecture</div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Phase 1: Indexing (Setup)</h4>
+                        <ul>
+                            <li>• Happens once during setup</li>
+                            <li>• Load and split documents into chunks</li>
+                            <li>• Generate embeddings for each chunk</li>
+                            <li>• Store in vector database</li>
+                            <li>• Expensive work done once</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Phase 2: Retrieval (Every Query)</h4>
+                        <ul>
+                            <li>• Happens for every user query</li>
+                            <li>• Convert query to embedding</li>
+                            <li>• Search for similar chunks</li>
+                            <li>• Add chunks to prompt</li>
+                            <li>• Generate response with LLM</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Key Insight</h4>
+                    <p><strong>Indexing happens once during setup while retrieval happens every query.</strong> This is why RAG is cost-effective — you do expensive embedding work once, then fast similarity search for each query.</p>
+                </div>
+            </div>
+
+            <!-- Chunking Strategies -->
+            <div class="concept-section">
+                <div class="concept-title">Chunking Strategies</div>
+                
+                <div class="concept-box">
+                    <h4>Why Chunking Matters</h4>
+                    <p><strong>Chunking is arguably the most important factor for RAG performance.</strong> How you split documents determines what your system can retrieve.</p>
+                    <ul>
+                        <li><strong>Too large chunks:</strong> Mix multiple topics, vectors become generic, hard to match specific queries</li>
+                        <li><strong>Too small chunks:</strong> Lose important context, incomplete information, miss connections between ideas</li>
+                        <li><strong>The balance:</strong> Small enough for precise retrieval, large enough to be meaningful, contextually complete</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Fixed-Size Chunking</h4>
+                        <ul>
+                            <li>• Split into equal-sized pieces</li>
+                            <li>• Simple, fast, predictable</li>
+                            <li>• May split thoughts mid-sentence</li>
+                            <li>• Best for: Quick prototypes</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Semantic Chunking</h4>
+                        <ul>
+                            <li>• Split based on meaning changes</li>
+                            <li>• Maintains natural thought boundaries</li>
+                            <li>• More expensive, variable sizes</li>
+                            <li>• Best for: High-stakes applications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Document Structure</h4>
+                        <ul>
+                            <li>• Use existing headings/sections</li>
+                            <li>• Respects author's organization</li>
+                            <li>• Doesn't work for unstructured text</li>
+                            <li>• Best for: Technical documentation</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>Recursive/Hierarchical</h4>
+                        <ul>
+                            <li>• Multiple levels of chunks</li>
+                            <li>• Summary → Section → Paragraph</li>
+                            <li>• Most complex to implement</li>
+                            <li>• Best for: Large document collections</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Semantic Chunking Advantage</h4>
+                    <p><strong>The primary advantage of semantic chunking over fixed-size chunking:</strong> Semantic chunking maintains natural thought boundaries by splitting where topics change, keeping related information together in coherent chunks. Fixed-size chunking might split a concept mid-sentence, losing context.</p>
+                </div>
+            </div>
+
+            <!-- Embeddings and Semantic Search -->
+            <div class="concept-section">
+                <div class="concept-title">Embeddings and Semantic Search</div>
+                
+                <div class="concept-box">
+                    <h4>What Are Embeddings?</h4>
+                    <p><strong>Embeddings</strong> are mathematical representations of text that capture semantic meaning. Text that means similar things has similar numbers.</p>
+                    <ul>
+                        <li>"The cat sat on the mat" → [0.2, 0.8, 0.1, 0.6, ...]</li>
+                        <li>"The feline rested on the rug" → [0.19, 0.82, 0.09, 0.59, ...] (similar!)</li>
+                        <li>"It's sunny in Phoenix" → [0.7, 0.1, 0.9, 0.2, ...] (different)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h4>Semantic Search: What Embeddings Enable</h4>
+                    <p><strong>Semantic search finds information based on meaning, not just exact word matches.</strong> This is what embeddings enable that traditional keyword search cannot do.</p>
+                    <ul>
+                        <li><strong>Keyword search:</strong> "car problems" only finds documents containing "car" and "problems"</li>
+                        <li><strong>Semantic search:</strong> "car problems" also finds "automobile issues," "vehicle troubles," "automotive repairs"</li>
+                    </ul>
+                    <p>Because embeddings capture meaning as numbers, semantically similar concepts end up near each other mathematically — even when completely different words are used.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical: Same Embedding Model</h4>
+                    <p><strong>Use the same embedding model for both indexing and queries.</strong> Each model creates its own "semantic space." If you embed documents with one model and queries with another, they won't share the same space, so similarity calculations become meaningless. It's like comparing measurements in different unit systems.</p>
+                </div>
+            </div>
+
+            <!-- Hybrid Search and Reranking -->
+            <div class="concept-section">
+                <div class="concept-title">Hybrid Search and Reranking</div>
+                
+                <div class="concept-box">
+                    <h4>Why Hybrid Search?</h4>
+                    <p><strong>Hybrid search combines semantic (vector) search with traditional keyword search</strong> to get the best of both worlds:</p>
+                    <ul>
+                        <li><strong>Vector search excels at:</strong> Understanding meaning, finding similar content, handling different phrasings</li>
+                        <li><strong>Keyword search excels at:</strong> Exact terminology matching, technical terms and codes, proper nouns and specific identifiers</li>
+                    </ul>
+                    <p>This is especially valuable in technical or specialized domains where exact matches for product codes, error messages, or terminology are critical.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>What Reranking Does</h4>
+                    <p><strong>Reranking provides a second, more accurate pass to improve chunk relevance.</strong></p>
+                    <ul>
+                        <li><strong>Initial retrieval (vector search):</strong> Fast but sometimes imprecise — cast wide net, get top 20 chunks</li>
+                        <li><strong>Reranking:</strong> Slower but more accurate — specialized model scores each chunk against query</li>
+                        <li><strong>Selection:</strong> Take top 5 reranked chunks — narrow to best matches</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Without reranking: 60-70% relevant chunks. With reranking: 85-95% relevant chunks.</p>
+                </div>
+            </div>
+
+            <!-- RAG vs. Alternatives -->
+            <div class="concept-section">
+                <div class="concept-title">RAG vs. Fine-Tuning vs. Long Context</div>
+                
+                <div class="three-col-grid">
+                    <div class="three-col-card">
+                        <h4>RAG</h4>
+                        <ul>
+                            <li>• Retrieve docs at query time</li>
+                            <li>• Update knowledge instantly</li>
+                            <li>• Works with any model</li>
+                            <li>• Can cite sources</li>
+                            <li>• Requires retrieval infrastructure</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Fine-Tuning</h4>
+                        <ul>
+                            <li>• Train model on your data</li>
+                            <li>• No retrieval latency</li>
+                            <li>• Learns style and patterns</li>
+                            <li>• Expensive to update</li>
+                            <li>• Requires ML expertise</li>
+                        </ul>
+                    </div>
+                    <div class="three-col-card">
+                        <h4>Long Context</h4>
+                        <ul>
+                            <li>• Put all docs in prompt</li>
+                            <li>• Simplest approach</li>
+                            <li>• Model sees everything</li>
+                            <li>• Expensive per query</li>
+                            <li>• "Lost in the middle" problem</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="good-bad-grid">
+                    <div class="good-card">
+                        <h4>✅ Use RAG When:</h4>
+                        <ul>
+                            <li>• Knowledge updates frequently</li>
+                            <li>• Large knowledge base</li>
+                            <li>• Need to cite verifiable sources</li>
+                            <li>• Multiple domains or topics</li>
+                            <li>• Cost-conscious operations</li>
+                        </ul>
+                    </div>
+                    <div class="bad-card">
+                        <h4>❌ Consider Alternatives When:</h4>
+                        <ul>
+                            <li>• Need consistent style/tone (fine-tune)</li>
+                            <li>• Stable, rarely-changing knowledge (fine-tune)</li>
+                            <li>• Small document set (long context)</li>
+                            <li>• One-time analysis tasks (long context)</li>
+                            <li>• Latency is critical (fine-tune)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ "Lost in the Middle" Problem</h4>
+                    <p><strong>With long context windows, the model may ignore or pay less attention to information in the middle of long prompts.</strong> Research shows LLMs tend to pay more attention to information at the beginning and end of long contexts, potentially missing important information in the middle. This is why RAG's selective retrieval can outperform simply stuffing everything into a large context window.</p>
+                </div>
+            </div>
+
+            <!-- Key Takeaway -->
+            <div class="highlight-box">
+                <strong>🎯 Key Takeaway</strong>
+                <p>RAG solves the frozen knowledge problem by retrieving relevant external information before generation, giving AI access to current, private, and domain-specific knowledge without retraining. Chunking is the most critical factor for performance — how you split documents determines what can be retrieved. Embeddings enable semantic search that finds similar meanings even with different words (always use the same model for indexing and queries). Hybrid search combines vector and keyword approaches, while reranking provides a second pass for better relevance. Choose RAG when knowledge updates frequently and you need citations; consider fine-tuning for stable domains and consistent style; use long context only for small document sets (beware "lost in the middle").</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box">
+                <h3>Ready to Test Your Knowledge?</h3>
+                <p>You've reviewed RAG architecture fundamentals. Now demonstrate your understanding of knowledge-augmented AI systems and earn Information Retrieval Specialist status.</p>
+                <a href="https://lmthron.github.io/mission-ai-level-003/module5-quiz.html" class="quiz-button">TAKE MODULE 5 QUIZ</a>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">90% required to pass 🎯</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
